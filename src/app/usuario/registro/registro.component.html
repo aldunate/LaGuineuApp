@@ -1,0 +1,20 @@
+<div class="container">
+  <h3>{{ mensaje }} </h3>
+  <div>
+    <div class="form-group">
+      <label for="nombre">Usuario</label>
+      <input (change)="usuarioChange($event)" [(ngModel)]= "nombre" type="text" [class]="usuarioClass"  required>
+    </div>
+    {{usuarioMensaje}}
+    <div class="form-group">
+      <label for="password">Password</label>
+      <input (change)="passwordChange($event)" [(ngModel)]= "password" type="password" [class]="passwordClass" required>
+    </div>
+    <div class="form-group">
+      <label for="password2">Repetir password</label>
+    <input (keyup)="passwordChange($event)" [(ngModel)]="password2" type="password" [class]="passwordClass"  required> 
+    </div>
+    <div>{{passwordMensaje}}</div>
+    <button type="submit" (click)="registro()" class="btn btn-success" >Registrarse</button>
+  </div>
+</div>  
