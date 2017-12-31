@@ -1,0 +1,31 @@
+
+label{
+    margin-bottom: 0px !important;
+  }
+  
+   img:hover {
+      opacity: 1%;
+  }
+   input {
+      display: none;
+  }
+  
+  /* Overlay image */
+   .container {
+      width: 100%;
+    }
+    
+     .image {
+      cursor: pointer; /* "hand" cursor */    
+    }
+  
+     .image:hover {
+      display: block;
+      opacity: 0.4;
+      -webkit-transition: opacity 1s ease-out;
+      -moz-transition: opacity 1s ease-out;
+      -ms-transition: opacity 1s ease-out;
+      -o-transition: opacity 1s ease-out;
+      transition: opacity 1s ease-out;
+    }
+  

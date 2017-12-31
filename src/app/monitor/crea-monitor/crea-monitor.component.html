@@ -1,3 +1,40 @@
-<p>
-  crea-monitor works!
-</p>
+<div class="container">
+  <div class="col-md-12">
+    <h2 class="col-centered"> Nuevo Monitor </h2>
+  </div>
+  <div class="col-md-12">
+    <div class="col-md-12">
+      <div class="row">
+        <mat-input-container floatPlaceholder="auto" class="col-md-6 col-xs-12">
+          <input matInput [(ngModel)]="usuario" type="text" required placeholder="Usuario">
+        </mat-input-container>
+      </div>
+      <div class="row">
+        <mat-input-container floatPlaceholder="auto" class="col-md-6 col-xs-12">
+          <input matInput [(ngModel)]="nombre" type="text" required placeholder="Nombre">
+        </mat-input-container>
+        <mat-input-container floatPlaceholder="auto" class="col-md-6 col-xs-12">
+          <input matInput [(ngModel)]="apellidos" type="text" required placeholder="Apellidos">
+        </mat-input-container>
+      </div>
+      <div class="row">
+        <mat-form-field class="col-md-6 col-xs-12">
+          <input matInput [(ngModel)]="nacimiento" [matDatepicker]="picker" placeholder="Fecha de nacimiento">
+          <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+          <mat-datepicker #picker></mat-datepicker>
+        </mat-form-field>
+        <mat-form-field class="col-md-6 col-xs-12">
+          <mat-select [(ngModel)]="titulacion" placeholder="Titulación" multiple>
+            <mat-option  *ngFor="let titulacion of titulacionList" [value]="titulacion.name">{{titulacion.name}}</mat-option>
+          </mat-select>
+        </mat-form-field>
+      </div>
+
+      <div class="row" style="float:right; margin-top:50px;">
+        <button type="submit" (click)="crearMonitor()" class="btn btn-primary">Crear monitor</button>
+      </div>
+    </div>
+  </div>
+
+
+</div>
