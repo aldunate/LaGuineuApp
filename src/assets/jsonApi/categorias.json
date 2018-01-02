@@ -1,0 +1,14 @@
+[
+    {
+        "Id":1,
+        "Categoria":"Politica"
+    },
+    {
+        "Id":2,
+        "Categoria":"Deportes"
+    },
+    {
+        "Id":3,
+        "Categoria":"Cine"
+    }
+]

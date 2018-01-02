@@ -1,0 +1,81 @@
+<div class="card col-sm-12 cabeceraInfo">
+  <div class="card-body">
+    <div class="col-sm-10 textoTop">
+      <img [src]="imgConf.src" style="float:left;" class="imgPerfil img-rounded">
+
+      <div class="col-sm-8">
+        <div>
+          <span>{{monitor.nombre}} {{monitor.apellidos}}</span>
+          <br>
+          <span>{{monitor.edad}}</span>
+          <br>
+          <span>{{monitor.titulo}}</span>
+        </div>
+      </div>
+    </div>
+
+
+
+  </div>
+</div>
+<div class="col-xs-12">
+  <mat-tab-group>
+    <mat-tab label="MURO">
+      ESTAS EN EL MURO
+    </mat-tab>
+    <mat-tab label="CALENDARIO">
+      <div class="col-md-12 contPestanya" style="height:1000px;">
+        <mat-form-field>
+          <input type="text"  [(ngModel)]="estacionesEscogidas"  placeholder="Estaciones"
+            matInput [matAutocomplete]="auto">
+          <mat-autocomplete #auto="matAutocomplete">
+            <mat-option *ngFor="let estacion of estacionesSelect | async" [value]="estacion">
+              {{ estacion }}
+            </mat-option>
+          </mat-autocomplete>
+        </mat-form-field>
+
+      </div>
+    </mat-tab>
+
+    <mat-tab label="PERSONAL">
+      <div class="col-md-12">
+        <div class="col-sm-12 text-center">
+          <app-generic-img-upload [(imgConf)]="imgConf"></app-generic-img-upload>
+        </div>
+        <div class="col-md-12">
+          <div class="row">
+            <mat-input-container floatPlaceholder="auto" class="col-md-6 col-xs-12">
+              <input matInput [(ngModel)]="usuario" type="text" required placeholder="Usuario" (input)="personalCambios($event.target.value)">
+            </mat-input-container>
+          </div>
+          <div class="row">
+            <mat-input-container floatPlaceholder="auto" class="col-md-6 col-xs-12">
+              <input matInput [(ngModel)]="nombre" type="text" required placeholder="Nombre" (input)="personalCambios($event.target.value)">
+            </mat-input-container>
+            <mat-input-container floatPlaceholder="auto" class="col-md-6 col-xs-12">
+              <input matInput [(ngModel)]="apellidos" type="text" required (input)="personalCambios($event.target.value)" placeholder="Apellidos">
+            </mat-input-container>
+          </div>
+          <div class="row">
+            <mat-form-field class="col-md-6 col-xs-12">
+              <input matInput (input)="personalCambios($event.target.value)" [(ngModel)]="nacimiento" [matDatepicker]="picker" placeholder="Fecha de nacimiento">
+              <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+              <mat-datepicker #picker></mat-datepicker>
+            </mat-form-field>
+            <mat-form-field class="col-md-6 col-xs-12">
+              <mat-select [(ngModel)]="titulacion" placeholder="Titulación" multiple>
+                <mat-option *ngFor="let titulacion of titulacionList" [value]="titulacion.name" (input)="personalCambios($event.target.value)">
+                  {{titulacion.name}}
+                </mat-option>
+              </mat-select>
+            </mat-form-field>
+          </div>
+          <div class="row" style="float:right; margin-top:50px;">
+            <button type="submit" (click)="personalGuardar()" class="btn btn-primary" [disabled]="!cambios">Guardar cambios</button>
+          </div>
+        </div>
+      </div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

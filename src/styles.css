@@ -1,1 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
+
+
+.center-block {
+    display: block !important;
+    margin-left: auto !important;
+    margin-right: auto !important;
+  }
+  
+  .textoTop{
+    font-size: large;
+    text-transform: uppercase;
+    text-align: left;
+    margin: 5px;
+    margin-left: 5%;
+    -webkit-box-shadow: -2px -2px 5px 0px rgba(0,0,0,0.75);
+    -moz-box-shadow: -2px -2px 5px 0px rgba(0,0,0,0.75);
+    box-shadow: -2px -2px 5px 0px rgba(0,0,0,0.75);
+    background:white; border-radius: 2%;border: 0.5px solid hsl(0, 33%, 94%); padding:10px;
+  }
+
+  .contPestanya{
+    padding: 2%;
+  }

@@ -1,0 +1,9 @@
+{
+    "id": 1,
+    "usuario": "adolfo",
+    "nombre": "adolfo",
+    "apellidos": "aldunate",
+    "titulos": ["TD1","TD2"],
+    "nacimiento": "29/06/1991",
+    "imagePerfil": "../../../assets/img/perfiles/adolfoPerfil.jpg"
+}

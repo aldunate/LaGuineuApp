@@ -14,8 +14,7 @@ export class UsuarioService {
   public id: string;
   public nombre: string;
 
-  constructor(private http: HttpClient,
-    , private backendInterceptor: BackendInterceptor) { }
+  constructor(private http: HttpClient,private backendInterceptor: BackendInterceptor) { }
 
   login(usuario, password, respuesta) {
     this.http.post( GlobalVar.uriApi + 'login', {

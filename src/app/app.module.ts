@@ -30,7 +30,7 @@ import { MonitorService } from './monitor/service/monitor.service';
 import { MaterialAngularModule, MY_FORMATS } from './util/plugins/material/materialAngular';
 import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } from '@angular/material';
 import 'hammerjs';
-import { MomentDateAdapter } from '@angular/material-moment-adapter';
+// import { MomentDateAdapter } from '@angular/material-moment-adapter';
 import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
 import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.component';
 
@@ -64,7 +64,7 @@ import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.
     MonitorService,
     // ImgUploadComponent,
     // DatePicker
-    {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+   // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_LOCALE, useValue: 'es'},
     {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
 ],
