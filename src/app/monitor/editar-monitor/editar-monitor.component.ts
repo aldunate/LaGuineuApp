@@ -1,13 +1,14 @@
 
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, ChangeDetectorRef, KeyValueDiffers } from '@angular/core';
 import { MonitorService } from '../service/monitor.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalVar, UtilFechas } from '../../util/global';
+import { GlobalVar, UtilFechas, MultiSelect } from '../../util/global';
 
 import { Observable } from 'rxjs/Observable';
 import { startWith } from 'rxjs/operators/startWith';
 import { map } from 'rxjs/operators/map';
+import { FormControl } from '@angular/forms';
 
 
 
@@ -25,13 +26,14 @@ export class EditarMonitorComponent implements OnInit {
     style: ''
   };
 
-
   // CALENDARIO
   estaciones: any;
-  estacionesEscogidas = [''];
-  estacionesSelect: any;
-
-  filteredOptions: Observable<string[]>;
+  auxEst: any;
+  estacionesSelect = [];
+  estLength = 0;
+  confSelEst: any;
+  viewDate = new Date();
+  events = [];
 
   // personal
   cambios = false;
@@ -40,22 +42,21 @@ export class EditarMonitorComponent implements OnInit {
     { id: 2, name: 'TD2' },
     { id: 3, name: 'TD3' },
   ];
-
+  differ: any;
 
   constructor(private monitorService: MonitorService,
     private router: Router, private route: ActivatedRoute) {
     this.iniMuro();
     this.iniCalendario();
     this.iniPersona();
+    this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
+
   }
+
 
   ngOnInit() {
   }
 
-  filter(val: string): string[] {
-    return this.estacionesEscogidas.filter(option =>
-      option.toLowerCase().indexOf(val.toLowerCase()) === 0);
-  }
   respGetMonitor(monitor) {
     monitor.titulo = '';
     for (let i = 0; i < monitor.titulos.length; i++) {
@@ -69,14 +70,11 @@ export class EditarMonitorComponent implements OnInit {
 
   // Pestañas
 
-  /* muro */
-  iniMuro() {
-
-  }
+  /* MURO */
+  iniMuro() { }
 
 
   /* Calendario */
-
   iniCalendario() {
     this.monitorService.getEstaciones(this.respGetEstaciones.bind(this));
     if (this.monitorService.monitor !== undefined) {
@@ -92,28 +90,36 @@ export class EditarMonitorComponent implements OnInit {
   }
 
   respGetEstaciones(estaciones) {
-    this.estacionesSelect = [];
-    for (let i = 0; i < estaciones.length; i++) {
-      this.estacionesSelect.push(estaciones[i].Name);
-    }
     this.estaciones = estaciones;
-    /*this.estacionesSelect = this.estacionesEscogidas.values[0]
-    .pipe(startWith(''), map(val => this.filter(this.estacionesSelect[0]))
-    );*/
+    this.confSelEst.myOptions = MultiSelect.iniOptions(this.estaciones, 'ID', 'Name');
   }
-  onChangeEstaciones(evento) {
-    const s = evento;
+
+
+  onChangeEstaciones(estacion) {
+    if (estacion.length > 0) {
+      if (this.estLength < estacion.length) {
+        // Add
+        this.estacionesSelect.push(this.confSelEst.myOptions.find(auxEst => auxEst.id === estacion[estacion.length - 1]));
+        this.estLength++;
+      } else {
+        // Delete
+        const aux = [];
+        for (let i = 0; i < estacion.length; i++) {
+          aux.push(this.estacionesSelect.find(est => est.id === estacion[i]));
+        }
+        this.estacionesSelect = aux;
+        this.estLength--;
+      }
+    } else {
+      this.estacionesSelect = [];
+    }
   }
 
   // PERSONAL
-
-  iniPersona() {
-
-  }
+  iniPersona() { }
 
   personalCambios(evento) {
     this.cambios = true;
   }
-
 
 }

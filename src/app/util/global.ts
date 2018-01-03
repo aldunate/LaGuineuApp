@@ -35,3 +35,50 @@ export const UtilFechas = Object.freeze({
     }
 });
 
+import { IMultiSelectSettings, IMultiSelectOption, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
+
+
+export const MultiSelect = Object.freeze({
+    iniMultiSelect(labelSingular, labelPlural) {
+        let optionsModel: number[];
+        let myOptions: IMultiSelectOption[];
+        myOptions = [];
+        optionsModel = [];
+        const mySettings: IMultiSelectSettings = {
+            enableSearch: true,
+            checkedStyle: 'fontawesome',
+            buttonClasses: 'btn btn-default',
+            dynamicTitleMaxItems: 3,
+            displayAllSelectedText: true
+        };
+
+        // Text configuration
+        const myTexts: IMultiSelectTexts = {
+            checkAll: 'Seleccionar todas',
+            uncheckAll: 'Quitar todas',
+            checked: labelSingular + ' seleccionada',
+            checkedPlural: labelPlural + ' seleccionadas',
+            searchPlaceholder: 'Buscar',
+            searchEmptyResult: 'Ningun resultado...',
+            searchNoRenderText: 'Sin resultados...',
+            defaultTitle: 'Seleccionar ' + labelPlural
+        };
+        return {
+            myOptions: myOptions,
+            optionsModel: optionsModel,
+            mySettings: mySettings,
+            myTexts: myTexts,
+        }
+
+    },
+    iniOptions(options: any[], varId: string, varName: string) {
+        const array = [];
+        for (let i = 0; i < options.length; i++) {
+            array.push({
+                id: options[i][varId],
+                name: options[i][varName]
+            });
+        }
+        return array;
+    }
+});

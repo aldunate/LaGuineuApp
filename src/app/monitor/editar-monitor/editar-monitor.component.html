@@ -2,7 +2,6 @@
   <div class="card-body">
     <div class="col-sm-10 textoTop">
       <img [src]="imgConf.src" style="float:left;" class="imgPerfil img-rounded">
-
       <div class="col-sm-8">
         <div>
           <span>{{monitor.nombre}} {{monitor.apellidos}}</span>
@@ -13,31 +12,38 @@
         </div>
       </div>
     </div>
-
-
-
   </div>
 </div>
 <div class="col-xs-12">
   <mat-tab-group>
-    <mat-tab label="MURO">
-      ESTAS EN EL MURO
-    </mat-tab>
+   
     <mat-tab label="CALENDARIO">
-      <div class="col-md-12 contPestanya" style="height:1000px;">
-        <mat-form-field>
-          <input type="text"  [(ngModel)]="estacionesEscogidas"  placeholder="Estaciones"
-            matInput [matAutocomplete]="auto">
-          <mat-autocomplete #auto="matAutocomplete">
-            <mat-option *ngFor="let estacion of estacionesSelect | async" [value]="estacion">
-              {{ estacion }}
-            </mat-option>
-          </mat-autocomplete>
-        </mat-form-field>
-
+      <div class="col-md-12 contPestanya" style="height: 1000px;">
+        <div class="form-group col-md-3">
+          <label>Estaciones</label>
+          <br>
+          <ss-multiselect-dropdown [options]="confSelEst.myOptions" [(ngModel)]="confSelEst.optionsModel" [settings]="confSelEst.mySettings"
+            (ngModelChange)="onChangeEstaciones($event)" [texts]="confSelEst.myTexts">
+          </ss-multiselect-dropdown>
+        </div>
+        <div class="col-md-9">
+          <label style="margin-bottom:15px;"> Estaciones agregadas</label>
+          <br>
+          <div class="itemEst" *ngFor="let item of estacionesSelect">
+            <span> {{item.name}}
+            </span>
+          </div>
+        </div>
+        <div class="col-xs-12" style="background:whitesmoke">
+            <mwl-calendar-month-view [viewDate]="viewDate" [events]="events">
+              </mwl-calendar-month-view>      
+        </div>
+       
       </div>
     </mat-tab>
-
+    <mat-tab label="MURO">
+        ESTAS EN EL MURO
+      </mat-tab>
     <mat-tab label="PERSONAL">
       <div class="col-md-12">
         <div class="col-sm-12 text-center">

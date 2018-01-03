@@ -12,6 +12,18 @@ import { NgModule } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
+// Plugins
+// Angular Material
+import { MaterialAngularModule, MY_FORMATS } from './util/plugins/material/materialAngular';
+import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } from '@angular/material';
+import 'hammerjs';
+// Multiselect
+import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+// ANGULAR CALENDAR
+import { CalendarModule  } from 'angular-calendar';
+// Adolfo Plugins
+import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
+
 // Components adolfo
 import { AppComponent } from './app.component';
 import { RegistroComponent } from './usuario/registro/registro.component';
@@ -24,17 +36,7 @@ import { UsuarioService } from './usuario/service/usuario.service';
 import { TokenService } from './usuario/service/token.service';
 import { BackendInterceptor } from './util/service/backend.interceptor';
 import { MonitorService } from './monitor/service/monitor.service';
-
-
-// Plugins
-import { MaterialAngularModule, MY_FORMATS } from './util/plugins/material/materialAngular';
-import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } from '@angular/material';
-import 'hammerjs';
-// import { MomentDateAdapter } from '@angular/material-moment-adapter';
-import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
 import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.component';
-
-
 
 
 @NgModule({
@@ -53,7 +55,8 @@ import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.
     Route,
     MatNativeDateModule, MaterialAngularModule,
     ReactiveFormsModule,
-
+    MultiselectDropdownModule,
+    CalendarModule.forRoot()
   ],
   providers: [
     UsuarioService,
@@ -66,7 +69,8 @@ import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.
     // DatePicker
    // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     {provide: MAT_DATE_LOCALE, useValue: 'es'},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS}
+    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
+    // Angular Calendar
 ],
   bootstrap: [AppComponent]
 })
