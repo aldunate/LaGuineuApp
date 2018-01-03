@@ -1,7 +1,9 @@
 <div class="card col-sm-12 cabeceraInfo">
   <div class="card-body">
     <div class="col-sm-10 textoTop">
-      <img [src]="imgConf.src" style="float:left;" class="imgPerfil img-rounded">
+      <div class="col-sm-2">
+        <img [src]="imgConf.src" class="imgPerfil img-rounded img-responsive">
+      </div>
       <div class="col-sm-8">
         <div>
           <span>{{monitor.nombre}} {{monitor.apellidos}}</span>
@@ -16,7 +18,7 @@
 </div>
 <div class="col-xs-12">
   <mat-tab-group>
-   
+
     <mat-tab label="CALENDARIO">
       <div class="col-md-12 contPestanya" style="height: 1000px;">
         <div class="form-group col-md-3">
@@ -35,15 +37,15 @@
           </div>
         </div>
         <div class="col-xs-12" style="background:whitesmoke">
-            <mwl-calendar-month-view [viewDate]="viewDate" [events]="events">
-              </mwl-calendar-month-view>      
+          <mwl-calendar-month-view [viewDate]="viewDate" [events]="events">
+          </mwl-calendar-month-view>
         </div>
-       
+
       </div>
     </mat-tab>
     <mat-tab label="MURO">
-        ESTAS EN EL MURO
-      </mat-tab>
+      ESTAS EN EL MURO
+    </mat-tab>
     <mat-tab label="PERSONAL">
       <div class="col-md-12">
         <div class="col-sm-12 text-center">
