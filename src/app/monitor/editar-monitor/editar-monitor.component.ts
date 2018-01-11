@@ -1,21 +1,31 @@
 
-import { Component, OnInit, ChangeDetectorRef, KeyValueDiffers } from '@angular/core';
+import { CalendarDateFormatter, DateFormatterParams } from 'angular-calendar';
+import { getISOWeek } from 'date-fns';
+import { DatePipe } from '@angular/common';
+
+export class CustomDateFormatter extends CalendarDateFormatter {
+  public weekViewTitle({ date, locale }: DateFormatterParams): string {
+    const year: string = new DatePipe(locale).transform(date, 'y', locale);
+    const weekNumber: number = getISOWeek(date);
+    return `Semaine ${weekNumber} en ${year}`;
+  }
+}
+
+import { Component, OnInit, ChangeDetectorRef, KeyValueDiffers, EventEmitter, Output } from '@angular/core';
 import { MonitorService } from '../service/monitor.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
 import { GlobalVar, UtilFechas, MultiSelect } from '../../util/global';
-
-import { Observable } from 'rxjs/Observable';
-import { startWith } from 'rxjs/operators/startWith';
-import { map } from 'rxjs/operators/map';
 import { FormControl } from '@angular/forms';
 
-
+import { ChangeDetectionStrategy } from '@angular/core';
+import { CalendarEvent, DAYS_OF_WEEK } from 'angular-calendar';
 
 @Component({
   selector: 'app-editar-monitor',
   templateUrl: './editar-monitor.component.html',
-  styleUrls: ['./editar-monitor.component.css']
+  styleUrls: ['./editar-monitor.component.css'],
+  providers: [{ provide: CalendarDateFormatter, useClass: CustomDateFormatter }]
 })
 export class EditarMonitorComponent implements OnInit {
 
@@ -32,8 +42,15 @@ export class EditarMonitorComponent implements OnInit {
   estacionesSelect = [];
   estLength = 0;
   confSelEst: any;
+
+  // angular calendar
+  view = 'month';
   viewDate = new Date();
   events = [];
+  locale = 'es';
+  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
+  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+
 
   // personal
   cambios = false;
@@ -94,7 +111,6 @@ export class EditarMonitorComponent implements OnInit {
     this.confSelEst.myOptions = MultiSelect.iniOptions(this.estaciones, 'ID', 'Name');
   }
 
-
   onChangeEstaciones(estacion) {
     if (estacion.length > 0) {
       if (this.estLength < estacion.length) {
@@ -114,6 +130,11 @@ export class EditarMonitorComponent implements OnInit {
       this.estacionesSelect = [];
     }
   }
+
+  viewDateChange($event){
+    
+  }
+
 
   // PERSONAL
   iniPersona() { }

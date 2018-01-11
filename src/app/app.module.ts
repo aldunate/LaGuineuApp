@@ -1,11 +1,8 @@
-
 // ng serve -  echo 65536 | sudo tee -a /proc/sys/fs/inotify/max_user_watches
 
-
-
 // Angular core
-import {platformBrowserDynamic} from '@angular/platform-browser-dynamic';
-import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { NgModule } from '@angular/core';
@@ -20,7 +17,7 @@ import 'hammerjs';
 // Multiselect
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
 // ANGULAR CALENDAR
-import { CalendarModule  } from 'angular-calendar';
+
 // Adolfo Plugins
 import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
 
@@ -38,6 +35,13 @@ import { BackendInterceptor } from './util/service/backend.interceptor';
 import { MonitorService } from './monitor/service/monitor.service';
 import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.component';
 
+import { CommonModule } from '@angular/common';
+import { CalendarModule } from 'angular-calendar';
+
+import { registerLocaleData } from '@angular/common';
+import localeFr from '@angular/common/locales/es';
+import { CalendarHeaderComponent } from './util/generic/calendario/calendar-header';
+registerLocaleData(localeFr);
 
 @NgModule({
   declarations: [
@@ -48,7 +52,9 @@ import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.
     LoginComponent,
     CreaMonitorComponent,
     ImgUploadComponent,
-    EditarMonitorComponent
+    EditarMonitorComponent,
+    // Calendar
+    CalendarHeaderComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
@@ -56,7 +62,9 @@ import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.
     MatNativeDateModule, MaterialAngularModule,
     ReactiveFormsModule,
     MultiselectDropdownModule,
-    CalendarModule.forRoot()
+    //  Calendar
+    CalendarModule.forRoot(),
+    CommonModule,
   ],
   providers: [
     UsuarioService,
@@ -67,11 +75,10 @@ import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.
     MonitorService,
     // ImgUploadComponent,
     // DatePicker
-   // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
-    {provide: MAT_DATE_LOCALE, useValue: 'es'},
-    {provide: MAT_DATE_FORMATS, useValue: MY_FORMATS},
-    // Angular Calendar
-],
+    // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
+    { provide: MAT_DATE_LOCALE, useValue: 'es' },
+    { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
