@@ -1,0 +1,20 @@
+[
+    {
+        "start": "2018-01-20",
+        "allDay": true,
+        "title": "",
+        "color": {
+            "primary": "#e3bc08",
+            "secondary": "#FDF1BA"
+        }
+    },
+    {
+        "start": "2018-01-21",
+        "allDay": true,
+        "title": "",
+        "color": {
+            "primary": "#e3bc08",
+            "secondary": "#FDF1BA"
+        }
+    }
+]

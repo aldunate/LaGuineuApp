@@ -1,5 +1,5 @@
 
-import { CalendarDateFormatter, DateFormatterParams } from 'angular-calendar';
+import { CalendarDateFormatter, DateFormatterParams, CalendarUtils } from 'angular-calendar';
 import { getISOWeek } from 'date-fns';
 import { DatePipe } from '@angular/common';
 export class CustomDateFormatter extends CalendarDateFormatter {
@@ -40,6 +40,9 @@ export const colors: any = {
 })
 export class GenericCalendarComponent {
 
+  utils: CalendarUtils;
+
+  @Input() config: any;
   @Input() view: string;
   @Input() viewDate: Date;
   @Input() locale = 'es';
@@ -47,14 +50,8 @@ export class GenericCalendarComponent {
   @Output() viewChange: EventEmitter<string> = new EventEmitter();
   @Output() viewDateChange: EventEmitter<Date> = new EventEmitter();
 
-  diasDisponibles = [];
-  diasNoDisponibles = [];
-
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
-
-  mesVista = moment(new Date(), 'MM', 'es');
-  mes = this.mesVista.subtract(1, 'month').startOf('month').format('MMMM');
 
   constructor() { }
 
@@ -83,10 +80,6 @@ export class GenericCalendarComponent {
         day.cssClass = 'noDisponibleCell calendarCell';
       }
     });
-  }
-
-  changeDate(viewDate) {
-    let x = 1;
   }
 
 }

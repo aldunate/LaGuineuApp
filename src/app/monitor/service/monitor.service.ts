@@ -36,11 +36,21 @@ export class MonitorService {
   }
 
   saveCalendario(pestCalendario, respuesta) {
-    pestCalendario = { 'calendario': pestCalendario };
-    const form = new FormData();
-    form.append('data', JSON.stringify(pestCalendario));
-    this.http.post('../../../assets/jsonApi/calendario', form)
+    this.http.post('../../../assets/jsonApi/calendario', {
+      'calendario': JSON.stringify(pestCalendario)
+    })
       .subscribe((response) => {
+        respuesta(response);
+      });
+  }
+
+
+  getCalendario(monitor, respuesta) {
+    this.http.get(GlobalVar.uriApi + 'monitorCalendario', {
+      params: new HttpParams().set('id', monitor.id)
+    })
+      .subscribe((response) => {
+        this.monitor.calendarioEvents = response;
         respuesta(response);
       });
   }

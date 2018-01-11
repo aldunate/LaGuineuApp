@@ -8,7 +8,9 @@ import { GlobalVar, UtilFechas, MultiSelect } from '../../util/global';
 import { FormControl } from '@angular/forms';
 
 import { ChangeDetectionStrategy } from '@angular/core';
-import { CalendarEvent } from 'angular-calendar';
+import { CalendarEvent, CalendarUtils } from 'angular-calendar';
+import { Subject } from 'rxjs/Subject';
+import { MonthView } from 'calendar-utils';
 
 export const colors: any = {
   red: {
@@ -47,6 +49,12 @@ export class EditarMonitorComponent implements OnInit {
   estacionesSelect = [];
   estLength = 0;
   confSelEst: any;
+  configCalendar = {
+    headerRight: false
+  };
+  refresh: Subject<any> = new Subject();
+  utils: CalendarUtils;
+  viewMonth: MonthView;
 
   // angular calendar
   view = 'month';
@@ -98,6 +106,7 @@ export class EditarMonitorComponent implements OnInit {
     this.monitor.edad = UtilFechas.calculaEdad(monitor.nacimiento);
     this.monitor.edad += ' años';
     this.imgConf.src = monitor.imagePerfil;
+    this.monitorService.getCalendario(this.monitor, this.respGetCalendario.bind(this));
   }
 
   // Pestañas
@@ -112,6 +121,7 @@ export class EditarMonitorComponent implements OnInit {
     if (this.monitorService.monitor !== undefined) {
       this.monitor = this.monitorService.monitor;
       this.imgConf.src = this.monitor.imagePerfil;
+      this.monitorService.getCalendario(this.monitor, this.respGetCalendario.bind(this));
     } else {
       const id = this.router.url.split('/');
       this.monitor = {
@@ -146,7 +156,20 @@ export class EditarMonitorComponent implements OnInit {
     }
   }
 
-  viewDateChange($event) {
+  respGetCalendario(events) {
+    for (let i = 0; i < events.length; i++) {
+      events[i].start = new Date(events[i].start);
+    }
+    this.events = events;
+    this.refresh.next();
+
+    /*
+    this.viewMonth = this.utils.getMonthView({
+      events: this.events,
+      viewDate: this.viewDate,
+      weekStartsOn: 1
+    });
+    */
 
   }
 
@@ -158,8 +181,8 @@ export class EditarMonitorComponent implements OnInit {
     const jsonCalendar = JSON.stringify(calendario);
     this.monitorService.saveCalendario(calendario, this.respSaveCalendario.bind(this));
   }
-  respSaveCalendario() {
 
+  respSaveCalendario(eventos) {
   }
 
   // PERSONAL

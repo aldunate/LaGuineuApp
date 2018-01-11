@@ -42,10 +42,11 @@
       <div class="col-xs-12" >
         <div style="background: white!important;">
           <app-generic-calendar 
+            [config] = "configCalendar"
             [(viewDate)]="viewDate" 
             [(view)]="view" 
             [locale]="locale" 
-            [events]="events"
+            [(events)]="events"
             (viewDateChange)="viewDateChange($event)">
           </app-generic-calendar>
         </div>

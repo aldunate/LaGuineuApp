@@ -8,7 +8,7 @@
         <div class="btn btn-default" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
           Actual
         </div>
-        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate);changeDate(viewDate,$event)">
+        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
           Siguiente
         </div>
       </div>
@@ -16,7 +16,7 @@
     <div class="col-md-4" style="text-align: center">
       <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' | uppercase }} </h4>
     </div>
-    <div class="col-md-4" style="text-align: right">
+    <div class="col-md-4" style="text-align: right" *ngIf="config.headerRight" >
       <div class="btn-group">
         <div class="btn btn-primary" (click)="viewChange.emit('month')" [class.active]="view === 'month'">
           Mes
