@@ -8,3 +8,14 @@
 .disponibleCell {
     background-color: rgb(13, 102, 17) !important;
   }
+
+  .calendarCell:hover{
+    opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+    cursor:pointer;
+    }
+
+    .calendarCell:hover span{
+      visibility: visible!important;  
+    }
+  

@@ -35,4 +35,14 @@ export class MonitorService {
       });
   }
 
+  saveCalendario(pestCalendario, respuesta) {
+    pestCalendario = { 'calendario': pestCalendario };
+    const form = new FormData();
+    form.append('data', JSON.stringify(pestCalendario));
+    this.http.post('../../../assets/jsonApi/calendario', form)
+      .subscribe((response) => {
+        respuesta(response);
+      });
+  }
+
 }

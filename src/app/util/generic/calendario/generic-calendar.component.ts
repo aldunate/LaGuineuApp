@@ -15,6 +15,21 @@ import { DAYS_OF_WEEK } from 'angular-calendar';
 import { CalendarEvent } from 'angular-calendar';
 import { CalendarMonthViewDay } from 'angular-calendar';
 
+export const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA'
+  }
+};
+
 @Component({
   selector: 'app-generic-calendar',
   styleUrls: ['./generic-calendar.component.css'],
@@ -41,24 +56,31 @@ export class GenericCalendarComponent {
   mesVista = moment(new Date(), 'MM', 'es');
   mes = this.mesVista.subtract(1, 'month').startOf('month').format('MMMM');
 
-  constructor() {
-  
-   }
+  constructor() { }
 
   dayClicked($event) {
-    if ($event.day.cssClass === 'noDisponibleCell') {
-      $event.day.cssClass = 'disponibleCell';
-      this.diasDisponibles.push($event.day);
+    if ($event.day.cssClass === 'noDisponibleCell calendarCell') {
+      $event.day.cssClass = 'disponibleCell calendarCell';
+      this.events.push({
+        start: $event.day.date,
+        allDay: true,
+        title: '',
+        color: colors.red,
+      });
     } else {
-      $event.day.cssClass = 'noDisponibleCell';
-      this.diasDisponibles.push($event.day);
+      const index = this.events.findIndex(event => event.start.getTime() === $event.day.date.getTime());
+      this.events.splice(index, 1);
+      $event.day.cssClass = 'noDisponibleCell calendarCell';
     }
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach(day => {
-      if (day.date.getDate() % 2 === 1 && day.inMonth) {
-        day.cssClass = 'odd-cell';
+      const found = this.events.find(event => event.start.getTime() === day.date.getTime());
+      if (found !== undefined) {
+        day.cssClass = 'disponibleCell calendarCell';
+      } else {
+        day.cssClass = 'noDisponibleCell calendarCell';
       }
     });
   }

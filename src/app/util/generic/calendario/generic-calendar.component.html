@@ -1,65 +1,50 @@
-<div class="row text-center">
-    <div class="col-md-4">
+<div class="row">
+  <div class="col-md-12">
+    <div class="col-md-4" style="text-align: left">
       <div class="btn-group">
-        <div
-          class="btn btn-primary"
-          mwlCalendarPreviousView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="viewDateChange.next(viewDate)">
+        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
           Anterior
         </div>
-        <div
-          class="btn btn-default"
-          mwlCalendarToday
-          [(viewDate)]="viewDate"
-          (viewDateChange)="viewDateChange.next(viewDate)">
+        <div class="btn btn-default" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
           Actual
         </div>
-        <div
-          class="btn btn-primary"
-          mwlCalendarNextView
-          [view]="view"
-          [(viewDate)]="viewDate"
-          (viewDateChange)="viewDateChange.next(viewDate);changeDate(viewDate,$event)">
+        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate);changeDate(viewDate,$event)">
           Siguiente
         </div>
       </div>
     </div>
-    <div class="col-md-4">
-    <h3>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' | uppercase }} </h3>
+    <div class="col-md-4" style="text-align: center">
+      <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' | uppercase }} </h4>
     </div>
-    <div class="col-md-4">
+    <div class="col-md-4" style="text-align: right">
       <div class="btn-group">
-        <div
-          class="btn btn-primary"
-          (click)="viewChange.emit('month')"
-          [class.active]="view === 'month'">
+        <div class="btn btn-primary" (click)="viewChange.emit('month')" [class.active]="view === 'month'">
           Mes
         </div>
-        <div
-          class="btn btn-primary"
-          (click)="viewChange.emit('week')"
-          [class.active]="view === 'week'">
+        <div class="btn btn-primary" (click)="viewChange.emit('week')" [class.active]="view === 'week'">
           Semana
         </div>
-        <div
-          class="btn btn-primary"
-          (click)="viewChange.emit('day')"
-          [class.active]="view === 'day'">
+        <div class="btn btn-primary" (click)="viewChange.emit('day')" [class.active]="view === 'day'">
           Día
         </div>
       </div>
     </div>
   </div>
-  <div [ngSwitch]="view">
-    <mwl-calendar-month-view *ngSwitchCase="'month'"
-     [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
-      [weekendDays]="weekendDays"  (dayClicked)="dayClicked($event)" (beforeViewRender)="beforeMonthViewRender($event)">
-    </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
-      [weekendDays]="weekendDays">
-    </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]="locale">
-    </mwl-calendar-day-view>
+</div>
+<ng-template #customCellTemplate let-day="day" let-locale="locale" let-event="event">
+  <div class="cal-cell-top">
+    <span class="cal-day-number" style="color:white;font-weight: bold;">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
   </div>
+  <span style="visibility:hidden;color:white;font-weight: bold; text-align: center;">Cambiar disponibilidad</span>
+</ng-template>
+
+<div [ngSwitch]="view">
+  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
+    [weekendDays]="weekendDays" (dayClicked)="dayClicked($event)" (beforeViewRender)="beforeMonthViewRender($event)" [cellTemplate]="customCellTemplate">
+  </mwl-calendar-month-view>
+  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
+    [weekendDays]="weekendDays">
+  </mwl-calendar-week-view>
+  <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]="locale">
+  </mwl-calendar-day-view>
+</div>

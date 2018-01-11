@@ -1,0 +1,4 @@
+{
+    "estaciones" : [{ "name": 1}],
+    "eventos": [{"start": "2018-1-1"}]
+}

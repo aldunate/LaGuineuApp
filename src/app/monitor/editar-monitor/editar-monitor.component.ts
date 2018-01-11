@@ -53,15 +53,15 @@ export class EditarMonitorComponent implements OnInit {
   viewDate = new Date();
   events: CalendarEvent[] = [
     {
-      start: new Date(),
+      start: new Date(new Date().setHours(0, 0, 0, 0)),
       allDay: true,
-      title: 'One day excluded event',
+      title: '',
       color: colors.red,
     },
     {
-      start: new Date(),
+      start: new Date('2018/01/21'),
       allDay: true,
-      title: 'Multiple weeks event',
+      title: '',
       color: colors.blue
     }
   ];
@@ -84,9 +84,7 @@ export class EditarMonitorComponent implements OnInit {
     this.iniCalendario();
     this.iniPersona();
     this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
-
   }
-
 
   ngOnInit() {
   }
@@ -152,6 +150,17 @@ export class EditarMonitorComponent implements OnInit {
 
   }
 
+  saveCalendario() {
+    const calendario = {
+      estaciones: this.estacionesSelect,
+      eventos: this.events
+    };
+    const jsonCalendar = JSON.stringify(calendario);
+    this.monitorService.saveCalendario(calendario, this.respSaveCalendario.bind(this));
+  }
+  respSaveCalendario() {
+
+  }
 
   // PERSONAL
   iniPersona() { }
