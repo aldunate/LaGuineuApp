@@ -1,15 +1,4 @@
 
-import { CalendarDateFormatter, DateFormatterParams } from 'angular-calendar';
-import { getISOWeek } from 'date-fns';
-import { DatePipe } from '@angular/common';
-
-export class CustomDateFormatter extends CalendarDateFormatter {
-  public weekViewTitle({ date, locale }: DateFormatterParams): string {
-    const year: string = new DatePipe(locale).transform(date, 'y', locale);
-    const weekNumber: number = getISOWeek(date);
-    return `Semaine ${weekNumber} en ${year}`;
-  }
-}
 
 import { Component, OnInit, ChangeDetectorRef, KeyValueDiffers, EventEmitter, Output } from '@angular/core';
 import { MonitorService } from '../service/monitor.service';
@@ -19,13 +8,29 @@ import { GlobalVar, UtilFechas, MultiSelect } from '../../util/global';
 import { FormControl } from '@angular/forms';
 
 import { ChangeDetectionStrategy } from '@angular/core';
-import { CalendarEvent, DAYS_OF_WEEK } from 'angular-calendar';
+import { CalendarEvent } from 'angular-calendar';
+
+export const colors: any = {
+  red: {
+    primary: '#ad2121',
+    secondary: '#FAE3E3'
+  },
+  blue: {
+    primary: '#1e90ff',
+    secondary: '#D1E8FF'
+  },
+  yellow: {
+    primary: '#e3bc08',
+    secondary: '#FDF1BA'
+  }
+};
+
+
 
 @Component({
   selector: 'app-editar-monitor',
   templateUrl: './editar-monitor.component.html',
-  styleUrls: ['./editar-monitor.component.css'],
-  providers: [{ provide: CalendarDateFormatter, useClass: CustomDateFormatter }]
+  styleUrls: ['./editar-monitor.component.css']
 })
 export class EditarMonitorComponent implements OnInit {
 
@@ -46,10 +51,22 @@ export class EditarMonitorComponent implements OnInit {
   // angular calendar
   view = 'month';
   viewDate = new Date();
-  events = [];
+  events: CalendarEvent[] = [
+    {
+      start: new Date(),
+      allDay: true,
+      title: 'One day excluded event',
+      color: colors.red,
+    },
+    {
+      start: new Date(),
+      allDay: true,
+      title: 'Multiple weeks event',
+      color: colors.blue
+    }
+  ];
+
   locale = 'es';
-  weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
-  weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
 
   // personal
@@ -131,8 +148,8 @@ export class EditarMonitorComponent implements OnInit {
     }
   }
 
-  viewDateChange($event){
-    
+  viewDateChange($event) {
+
   }
 
 

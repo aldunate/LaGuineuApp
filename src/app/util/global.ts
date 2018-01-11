@@ -32,6 +32,10 @@ export const UtilFechas = Object.freeze({
     },
     stringToDate(fecha: string) {
         return new Date(fecha).toDateString;
+    },
+    addHours(fecha, horas) {
+        fecha.setTime(fecha.getTime() + (horas * 60 * 60 * 1000));
+        return fecha;
     }
 });
 

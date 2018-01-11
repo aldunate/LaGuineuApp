@@ -1,0 +1,10 @@
+.cal-month-view{
+    border: 0.5px solid rgba(0, 0, 0, 0.11);
+}
+.noDisponibleCell {
+    background-color: rgb(148, 11, 34) !important;
+  }
+
+.disponibleCell {
+    background-color: rgb(13, 102, 17) !important;
+  }

@@ -36,21 +36,15 @@
           </div>
         </div>
       </div>
-      <div class="col-xs-12" style="background:whitesmoke">
+      <div class="col-xs-12" >
         <div style="background: white!important;">
-          <app-calendar-header [(viewDate)]="viewDate" [(view)]="view" 
-          [locale]="locale" (viewDateChange)="viewDateChange($event)">
-          </app-calendar-header>
-        </div>
-        <div [ngSwitch]="view">
-          <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
-            [weekendDays]="weekendDays">
-          </mwl-calendar-month-view>
-          <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
-            [weekendDays]="weekendDays">
-          </mwl-calendar-week-view>
-          <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]="locale">
-          </mwl-calendar-day-view>
+          <app-generic-calendar 
+            [(viewDate)]="viewDate" 
+            [(view)]="view" 
+            [locale]="locale" 
+            [events]="events"
+            (viewDateChange)="viewDateChange($event)">
+          </app-generic-calendar>
         </div>
       </div>
     </mat-tab>

@@ -16,7 +16,6 @@ import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } f
 import 'hammerjs';
 // Multiselect
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
-// ANGULAR CALENDAR
 
 // Adolfo Plugins
 import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
@@ -40,7 +39,7 @@ import { CalendarModule } from 'angular-calendar';
 
 import { registerLocaleData } from '@angular/common';
 import localeFr from '@angular/common/locales/es';
-import { CalendarHeaderComponent } from './util/generic/calendario/calendar-header';
+import { GenericCalendarComponent } from './util/generic/calendario/generic-calendar.component';
 registerLocaleData(localeFr);
 
 @NgModule({
@@ -54,7 +53,7 @@ registerLocaleData(localeFr);
     ImgUploadComponent,
     EditarMonitorComponent,
     // Calendar
-    CalendarHeaderComponent
+    GenericCalendarComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
