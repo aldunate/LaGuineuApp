@@ -1,7 +1,7 @@
 
 export function uriApiFun(apiDir: string) {
     const mockBackend = true;
-    const uriApi = 'http://localhost:57989/api/';
+    const uriApi = 'http://localhost:59911/api/';
     const uriJson = '../jsonApi/';
 
     if (mockBackend) {
@@ -11,10 +11,28 @@ export function uriApiFun(apiDir: string) {
 }
 
 export const GlobalVar = Object.freeze({
-    mockBackend: true,
-    // uriApi: 'http://localhost:57989/api/',
-    uriApi: 'file:///home/computadora/JoinderNote/src/app/util/jsonApi/',
-    jsonApi: 'file:///home/computadora/JoinderNote/src/app/util/jsonApi/'
+    mockBackend: false,
+    uriApi: 'http://localhost:59911/api/',
+    // uriApi: 'file:///home/computadora/JoinderNote/src/app/util/jsonApi/',
+    jsonApi: 'file:///home/computadora/JoinderNote/src/app/util/jsonApi/',
+    imgPerfil: '../../../assets/img/perfiles/'
+});
+
+export const UtilCalendario = Object.freeze({
+  colors: {
+    red: {
+      primary: '#ad2121',
+      secondary: '#FAE3E3'
+    },
+    blue: {
+      primary: '#1e90ff',
+      secondary: '#D1E8FF'
+    },
+    yellow: {
+      primary: '#e3bc08',
+      secondary: '#FDF1BA'
+    }
+  }
 });
 
 
@@ -26,8 +44,15 @@ export const UtilFechas = Object.freeze({
     },
     espAdate(fecha: string) {
         /* Formato dd/mm/yyyy a Date*/
-        const aux = fecha.split('/');
-        const date = Date.parse(aux[1] + '/' + aux[0] + '/' + aux[2]);
+        let date;
+        let aux = fecha.split('/');
+        if ( aux.length === 1) {
+          aux = fecha.split('T');
+          aux = aux[0].split('-');
+          date = Date.parse(aux[0] + '-' + aux[1] + '-' + aux[2]);
+        }else {
+          date = Date.parse(aux[1] + '/' + aux[0] + '/' + aux[2]);
+        }
         return new Date(date);
     },
     stringToDate(fecha: string) {
@@ -75,13 +100,57 @@ export const MultiSelect = Object.freeze({
         }
 
     },
+    iniSingleSelect(labelSingular, search) {
+      let optionsModel: number[];
+      let myOptions: IMultiSelectOption[];
+      myOptions = [];
+      optionsModel = [];
+      const mySettings: IMultiSelectSettings = {
+          enableSearch: search,
+          checkedStyle: 'fontawesome',
+          buttonClasses: 'btn btn-default',
+          dynamicTitleMaxItems: 3,
+          displayAllSelectedText: true,
+          selectionLimit: 1,
+          autoUnselect: true,
+      };
+
+      // Text configuration
+      const myTexts: IMultiSelectTexts = {
+          checkAll: 'Seleccionar todas',
+          uncheckAll: 'Quitar todas',
+          checked: labelSingular + ' seleccionada',
+          checkedPlural: labelSingular + ' seleccionadas',
+          searchPlaceholder: 'Buscar',
+          searchEmptyResult: 'Ningun resultado...',
+          searchNoRenderText: 'Sin resultados...',
+          defaultTitle: 'Seleccionar ' + labelSingular
+      };
+      return {
+          myOptions: myOptions,
+          optionsModel: optionsModel,
+          mySettings: mySettings,
+          myTexts: myTexts,
+      }
+
+  },
     iniOptions(options: any[], varId: string, varName: string) {
         const array = [];
+        let name = varName;
+        const aux = name.split(',');
+
         for (let i = 0; i < options.length; i++) {
+          if (aux.length > 1) {
+            name = '';
+            for ( let j = 0; j < aux.length ; j++){
+              name += ' ' + options[i][aux[j]];
+            }
+          }else{
             array.push({
-                id: options[i][varId],
-                name: options[i][varName]
-            });
+              id: options[i][varId],
+              name: options[i][varName]
+          });
+          }
         }
         return array;
     }

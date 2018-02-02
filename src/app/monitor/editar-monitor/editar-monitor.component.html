@@ -6,7 +6,7 @@
       </div>
       <div class="col-sm-8">
         <div>
-          <span>{{monitor.nombre}} {{monitor.apellidos}}</span>
+          <span>{{monitor.Nombre}} {{monitor.Apellidos}}</span>
           <br>
           <span>{{monitor.edad}}</span>
           <br>
@@ -41,11 +41,11 @@
       </div>
       <div class="col-xs-12" >
         <div style="background: white!important;">
-          <app-generic-calendar 
+          <app-generic-calendar
             [config] = "configCalendar"
-            [(viewDate)]="viewDate" 
-            [(view)]="view" 
-            [locale]="locale" 
+            [(viewDate)]="viewDate"
+            [(view)]="view"
+            [locale]="locale"
             [(events)]="events"
             (viewDateChange)="viewDateChange($event)">
           </app-generic-calendar>

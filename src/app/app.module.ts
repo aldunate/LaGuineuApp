@@ -38,9 +38,25 @@ import { CommonModule } from '@angular/common';
 import { CalendarModule } from 'angular-calendar';
 
 import { registerLocaleData } from '@angular/common';
-import localeFr from '@angular/common/locales/es';
+import localeEs from '@angular/common/locales/es';
 import { GenericCalendarComponent } from './util/generic/calendario/generic-calendar.component';
-registerLocaleData(localeFr);
+import { NuevaEscuelaComponent } from './escuela/nueva-escuela/nueva-escuela.component';
+import { EditarEscuelaComponent } from './escuela/editar-escuela/editar-escuela.component';
+import { EscuelaService } from './escuela/service/escuela.service';
+import { GestionEscuelaComponent } from './escuela/gestion-escuela/gestion-escuela.component';
+import { NuevaClaseComponent } from './clase/nueva-clase/nueva-clase.component';
+import { EstacionComponent } from './estacion/estacion/estacion.component';
+import { EstacionService } from './estacion/service/estacion.service';
+import { ClienteComponent } from './cliente/cliente/cliente.component';
+import { ClubComponent } from './club/club/club.component';
+import { ClienteService } from './cliente/service/cliente.service';
+import { ClubService } from './club/service/club.service';
+import { UtilService } from './util/service/util.service';
+import { FooterComponent } from './main/footer/footer.component';
+// import { TableGenericComponent } from './util/generic/table-generic/table-generic.component';
+import { TableAdolfoComponent } from './generic/table-adolfo/table-adolfo.component';
+
+registerLocaleData(localeEs);
 
 @NgModule({
   declarations: [
@@ -51,9 +67,20 @@ registerLocaleData(localeFr);
     LoginComponent,
     CreaMonitorComponent,
     ImgUploadComponent,
+   //  TableGenericComponent,
     EditarMonitorComponent,
     // Calendar
-    GenericCalendarComponent
+    GenericCalendarComponent,
+    NuevaEscuelaComponent,
+    EditarEscuelaComponent,
+    GestionEscuelaComponent,
+    NuevaClaseComponent,
+    EstacionComponent,
+    ClienteComponent,
+    ClubComponent,
+    FooterComponent,
+    TableAdolfoComponent
+
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
@@ -63,7 +90,7 @@ registerLocaleData(localeFr);
     MultiselectDropdownModule,
     //  Calendar
     CalendarModule.forRoot(),
-    CommonModule,
+    CommonModule
   ],
   providers: [
     UsuarioService,
@@ -72,6 +99,11 @@ registerLocaleData(localeFr);
     BackendInterceptor,
     TokenService,
     MonitorService,
+    EscuelaService,
+    EstacionService,
+    ClienteService,
+    ClubService,
+    UtilService,
     // ImgUploadComponent,
     // DatePicker
     // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

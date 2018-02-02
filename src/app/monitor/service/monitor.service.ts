@@ -5,29 +5,19 @@ import { GlobalVar } from '../../util/global';
 
 @Injectable()
 export class MonitorService {
-
   monitor: any;
-
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
-
-  getEstaciones(respuesta) {
-    this.http.get(GlobalVar.uriApi + 'estaciones')
-      .subscribe((response) => respuesta(response));
-  }
-
   crearMonitor(monitor, respuesta) {
-    this.http.post(GlobalVar.uriApi + 'monitor', {
-      'monitor': monitor
-    })
+    this.http.post(GlobalVar.uriApi + 'monitor', monitor)
       .subscribe((response) => {
         this.monitor = response;
         respuesta(response);
       });
   }
 
-  getMonitor(monitor, respuesta) {
+  getMonitor(idMonitor, respuesta) {
     this.http.get(GlobalVar.uriApi + 'monitor', {
-      params: new HttpParams().set('id', monitor.id)
+      params: new HttpParams().set('id', idMonitor)
     })
       .subscribe((response) => {
         this.monitor = response;
@@ -35,24 +25,22 @@ export class MonitorService {
       });
   }
 
-  saveCalendario(pestCalendario, respuesta) {
-    this.http.post('../../../assets/jsonApi/calendario', {
-      'calendario': JSON.stringify(pestCalendario)
+  saveCalendario(monitor, respuesta) {
+    this.http.post(GlobalVar.uriApi + 'monitorCalendario', {
+      FechasDisponibles: monitor.FechasDisponibles,
+      EstacionesDisponibles: monitor.EstacionesDisponibles,
+      IdMonitor: monitor.Id
     })
       .subscribe((response) => {
         respuesta(response);
       });
   }
-
-
-  getCalendario(monitor, respuesta) {
-    this.http.get(GlobalVar.uriApi + 'monitorCalendario', {
-      params: new HttpParams().set('id', monitor.id)
+  getMonitoresEscuela(idEscuela, respuesta) {
+    this.http.get(GlobalVar.uriApi + 'monitor', {
+      params: new HttpParams().set('idEscuela', idEscuela)
     })
       .subscribe((response) => {
-        this.monitor.calendarioEvents = response;
         respuesta(response);
       });
   }
-
 }

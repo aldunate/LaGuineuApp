@@ -2,13 +2,15 @@ import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Output } from 
 import { TokenService } from '../../usuario/service/token.service';
 import { HttpClient } from '@angular/common/http';
 import { MonitorService } from '../service/monitor.service';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormsModule } from '@angular/forms';
 
 // Material Angular
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
 // import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
+import { Monitor } from '../../util/model/monitor';
 // import * as _moment from 'moment';
 // const moment = _moment;
 
@@ -21,45 +23,21 @@ import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/materia
 })
 export class CreaMonitorComponent implements OnInit {
 
-  // Elementos referenciados
-  @ViewChild(MatDatepicker)
-  datepicker: MatDatepicker<Date>;
-
-  monitor: any;
-  usuario: any;
-  nombre: string;
-  apellidos: string;
-  nacimiento: any;
-  titulacion: any;
-
-  titulacionList = [
-    { id: 1, name: 'TD1' },
-    { id: 2, name: 'TD2' },
-    { id: 3, name: 'TD3' },
-  ];
+  Monitor: Monitor;
 
   constructor(private http: HttpClient, private tokenService: TokenService,
-    private monitorService: MonitorService, private router: Router, public nacimientoEl: ElementRef) {
+    private monitorService: MonitorService, private router: Router) {
+
   }
 
-  ngOnInit() {
-    //  const x = $(this.nacimientoEl.nativeElement);
-  }
+  ngOnInit() { }
 
   crearMonitor() {
-    this.monitor = {
-      'usuario': this.usuario,
-      'nombre': this.nombre,
-      'apellidos': this.apellidos,
-      'nacimiento': this.nacimiento,
-      'titulacion': this.titulacion
-    };
-    this.monitorService.crearMonitor(this.monitor, this.resCrearMonitor.bind(this));
+    this.monitorService.crearMonitor(this.Monitor, this.resCrearMonitor.bind(this));
   }
 
-  resCrearMonitor(monitor) {
-    this.monitor = monitor;
-    this.router.navigate(['/editar-monitor/' + monitor.id]);
+  resCrearMonitor(id) {
+    this.router.navigate(['/monitor/' + id]);
   }
 
 

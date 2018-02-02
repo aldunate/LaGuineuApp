@@ -7,7 +7,11 @@ import { Component, OnInit } from '@angular/core';
 })
 export class MainComponent implements OnInit {
 
-  constructor() { }
+  public opciones: any;
+
+  constructor() {
+    this.opciones = 1;
+  }
 
   ngOnInit() {
   }
