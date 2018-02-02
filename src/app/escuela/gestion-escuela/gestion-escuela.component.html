@@ -12,30 +12,31 @@
     <mat-tab label="MURO">
       <div class="col-md-12 contPestanya">
 
+
+        <table datatable class="table row-border hover" datatable [dtOptions]="tablas.monitores.dtOptions" [dtTrigger]="tablas.monitores.dtTrigger" >
+          <thead>
+            <tr>
+              <th>Nombre</th>
+              <th>Apellidos</th>
+              <th>Fecha Nacimiento</th>
+              <th>Ir</th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr *ngFor="let monitor of tablas.monitores.dtDatos">
+              <td>{{ monitor.Nombre }} </td>
+              <td>{{ monitor.Apellidos}}</td>
+              <td>{{ monitor.FechaNacimiento}}</td>
+              <td><button type="button" class="btn btn-primary"
+                 (click)="irMonitor(monitor.Id)"> Ver monitor</button></td>
+            </tr>
+          </tbody>
+          </table>
+
       </div>
     </mat-tab>
     <mat-tab label="MONITORES">
       <div class="col-md-12 contPestanya">
-        <table class="table table-responsive table-bordered  table-hover" style="background: rgb(252, 252, 252)">
-          <thead>
-            <tr>
-              <th scope="row">Nombre</th>
-              <td> Apellidos </td>
-              <td> Edad </td>
-              <td></td>
-            </tr>
-          </thead>
-          <tbody *ngFor="let monitor of Monitores">
-            <tr>
-              <th>{{monitor.Nombre}}</th>
-              <td>{{monitor.Apellidos}} </td>
-              <td>{{monitor.FechaNacimiento}} Edad</td>
-              <td>
-                <button type="button" class="btn btn-primary" (click)="irMonitor(monitor.Id)"> Ver monitor</button>
-              </td>
-            </tr>
-          </tbody>
-        </table>
 
 
       </div>

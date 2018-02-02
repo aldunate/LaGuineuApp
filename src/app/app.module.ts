@@ -16,6 +16,8 @@ import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } f
 import 'hammerjs';
 // Multiselect
 import { MultiselectDropdownModule } from 'angular-2-dropdown-multiselect';
+// DataTable
+import { DataTablesModule } from 'angular-datatables';
 
 // Adolfo Plugins
 import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
@@ -53,8 +55,6 @@ import { ClienteService } from './cliente/service/cliente.service';
 import { ClubService } from './club/service/club.service';
 import { UtilService } from './util/service/util.service';
 import { FooterComponent } from './main/footer/footer.component';
-// import { TableGenericComponent } from './util/generic/table-generic/table-generic.component';
-import { TableAdolfoComponent } from './generic/table-adolfo/table-adolfo.component';
 
 registerLocaleData(localeEs);
 
@@ -78,9 +78,7 @@ registerLocaleData(localeEs);
     EstacionComponent,
     ClienteComponent,
     ClubComponent,
-    FooterComponent,
-    TableAdolfoComponent
-
+    FooterComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
@@ -90,7 +88,9 @@ registerLocaleData(localeEs);
     MultiselectDropdownModule,
     //  Calendar
     CalendarModule.forRoot(),
-    CommonModule
+    CommonModule,
+    // Datatable
+    DataTablesModule
   ],
   providers: [
     UsuarioService,

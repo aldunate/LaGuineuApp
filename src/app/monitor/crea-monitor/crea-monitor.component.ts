@@ -23,7 +23,7 @@ import { Monitor } from '../../util/model/monitor';
 })
 export class CreaMonitorComponent implements OnInit {
 
-  Monitor: Monitor;
+  Monitor = new Monitor();
 
   constructor(private http: HttpClient, private tokenService: TokenService,
     private monitorService: MonitorService, private router: Router) {

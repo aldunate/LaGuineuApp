@@ -31,6 +31,7 @@ export class GestionEscuelaComponent implements OnInit {
     Email: '',
     FotoPerfil: ''
   };
+
   Monitores: any;
   imgConf = {
     src: '../../../assets/img/sinPerfil-660x660.png',
@@ -38,32 +39,27 @@ export class GestionEscuelaComponent implements OnInit {
     style: ''
   };
 
-  monitorTabla = {
-    settings: {
-      actions: false,
-      // hideHeader: true,
-      hideSubHeader: true,
-
-      columns: {
-        Nombre: {
-          title: 'Nombre',
-
+  tablas = {
+    monitores: {
+      dtOptions: {
+        pagingType: 'simple_numbers',
+        pageLength: 10,
+        language: {
+          paginate: {
+            next: 'Siguiente',
+            previous: 'Anterior'
+          }
         },
-        Apellidos: {
-          title: 'Apellidos'
-        },
-        FechaNacimiento: {
-          title: 'Edad'
-        },
-        irMonitor: {
-          title: '',
-          type: 'html'
-        },
-      }
-    },
-    source: []
+        lengthChange: false,
+        bFilter: false
+      },
+      dtDatos: [],
+      dtTrigger: new Subject()
+    }
   };
 
+  dtOptions: DataTables.Settings = {};
+dtSearch: DataTables.SearchSettings = {};
 
   constructor(private escuelaService: EscuelaService,
     private monitorService: MonitorService,
@@ -72,9 +68,11 @@ export class GestionEscuelaComponent implements OnInit {
     const idEscuela = Number.parseInt(aux[aux.length - 1]);
     this.escuelaService.getEscuela(idEscuela, this.respGetEscuela.bind(this));
     this.monitorService.getMonitoresEscuela(idEscuela, this.respGetMonitoresEscuela.bind(this));
+
   }
 
   ngOnInit() {
+
   }
 
   respGetEscuela(escuela) {
@@ -85,11 +83,9 @@ export class GestionEscuelaComponent implements OnInit {
   }
 
   respGetMonitoresEscuela(monitores) {
-    this.Monitores = monitores;
-    for (let i = 0; i < monitores.length; i++) {
-      monitores[i].irMonitor = ' <button type="button" class="btn btn-primary" (click)="irMonitor(monitores[i].Id)"> Ver monitor</button>';
-    }
-    this.monitorTabla.source = monitores;
+    this.tablas.monitores.dtDatos = monitores;
+    this.tablas.monitores.dtTrigger.next();
+
 
   }
 
