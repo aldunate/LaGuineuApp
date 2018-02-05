@@ -54,12 +54,17 @@ export class GestionEscuelaComponent implements OnInit {
         bFilter: false
       },
       dtDatos: [],
-      dtTrigger: new Subject()
+      dtTrigger: new Subject(),
+      columnas: [{ title: 'Nombre', dato: 'Nombre' },
+      { title: 'Apellidos', dato: 'Apellidos' },
+      { title: 'Fecha Nacimiento', dato: 'FechaNacimiento' }
+      ],
+      filtros: [{ model: '', id: 'txt-Nombre' , type: 'text', placeholder: 'Buscar ' }]
     }
   };
 
   dtOptions: DataTables.Settings = {};
-dtSearch: DataTables.SearchSettings = {};
+  dtSearch: DataTables.SearchSettings = {};
 
   constructor(private escuelaService: EscuelaService,
     private monitorService: MonitorService,
@@ -68,11 +73,9 @@ dtSearch: DataTables.SearchSettings = {};
     const idEscuela = Number.parseInt(aux[aux.length - 1]);
     this.escuelaService.getEscuela(idEscuela, this.respGetEscuela.bind(this));
     this.monitorService.getMonitoresEscuela(idEscuela, this.respGetMonitoresEscuela.bind(this));
-
   }
 
   ngOnInit() {
-
   }
 
   respGetEscuela(escuela) {
@@ -85,8 +88,6 @@ dtSearch: DataTables.SearchSettings = {};
   respGetMonitoresEscuela(monitores) {
     this.tablas.monitores.dtDatos = monitores;
     this.tablas.monitores.dtTrigger.next();
-
-
   }
 
   irMonitor(idMonitor) {

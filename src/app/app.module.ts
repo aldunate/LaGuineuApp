@@ -55,6 +55,7 @@ import { ClienteService } from './cliente/service/cliente.service';
 import { ClubService } from './club/service/club.service';
 import { UtilService } from './util/service/util.service';
 import { FooterComponent } from './main/footer/footer.component';
+import { DatatableGenericComponent } from './util/generic/datatable-generic/datatable-generic.component';
 
 registerLocaleData(localeEs);
 
@@ -78,7 +79,8 @@ registerLocaleData(localeEs);
     EstacionComponent,
     ClienteComponent,
     ClubComponent,
-    FooterComponent
+    FooterComponent,
+    DatatableGenericComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,

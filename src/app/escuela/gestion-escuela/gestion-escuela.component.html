@@ -11,34 +11,12 @@
   <mat-tab-group>
     <mat-tab label="MURO">
       <div class="col-md-12 contPestanya">
-
-
-        <table datatable class="table row-border hover" datatable [dtOptions]="tablas.monitores.dtOptions" [dtTrigger]="tablas.monitores.dtTrigger" >
-          <thead>
-            <tr>
-              <th>Nombre</th>
-              <th>Apellidos</th>
-              <th>Fecha Nacimiento</th>
-              <th>Ir</th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr *ngFor="let monitor of tablas.monitores.dtDatos">
-              <td>{{ monitor.Nombre }} </td>
-              <td>{{ monitor.Apellidos}}</td>
-              <td>{{ monitor.FechaNacimiento}}</td>
-              <td><button type="button" class="btn btn-primary"
-                 (click)="irMonitor(monitor.Id)"> Ver monitor</button></td>
-            </tr>
-          </tbody>
-          </table>
-
+        <app-datatable-generic [dt]="tablas.monitores" >
+        </app-datatable-generic>
       </div>
     </mat-tab>
     <mat-tab label="MONITORES">
       <div class="col-md-12 contPestanya">
-
-
       </div>
     </mat-tab>
     <mat-tab label="PERSONAL">
