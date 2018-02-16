@@ -55,11 +55,25 @@ export class GestionEscuelaComponent implements OnInit {
       },
       dtDatos: [],
       dtTrigger: new Subject(),
-      columnas: [{ title: 'Nombre', dato: 'Nombre' },
-      { title: 'Apellidos', dato: 'Apellidos' },
-      { title: 'Fecha Nacimiento', dato: 'FechaNacimiento' }
+      columnas: [{ title: 'Nombre', data: 'Nombre' },
+      { title: 'Apellidos', data: 'Apellidos' },
+      { title: 'Fecha Nacimiento', data: 'FechaNacimiento' }
       ],
-      filtros: [{ model: '', id: 'txt-Nombre' , type: 'text', placeholder: 'Buscar ' }]
+      filtros: [
+        {
+          label: 'Nombre',
+          id: 'txt-Nombre',
+          type: 'text',
+          placeholder: 'Buscar nombre',
+          class: 'col-xs-3'
+        },
+        {
+          label: 'Apellidos',
+          id: 'txt-Apellidos',
+          type: 'text',
+          placeholder: 'Buscar apellidos',
+          class: 'col-xs-3'
+        }]
     }
   };
 

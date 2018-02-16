@@ -32,22 +32,38 @@ export class DatatableGenericComponent implements OnInit {
     filtros: []
   };
 
-  defecto = {
-    class: 'form-control'
-  };
-
   tabla = {
     dtOptions: {
+      pagingType: 'full_numbers',
+      pageLength: 10,
       aaData: [],
       data: [],
-      pagingType: 'simple_numbers',
-      pageLength: 10,
-      language: {
-        paginate: {
-          next: 'Siguiente',
-          previous: 'Anterior'
-        }
-      },
+      columns: [],
+      language:
+        {
+          sProcessing: 'Procesando...',
+          sLengthMenu: 'Mostrar _MENU_ registros',
+          sZeroRecords: 'No se encontraron resultados',
+          sEmptyTable: 'Ningún dato disponible en esta tabla',
+          sInfo: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+          sInfoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
+          sInfoFiltered: '(filtrado de un total de _MAX_ registros)',
+          sInfoPostFix: '',
+          sSearch: 'Buscar:',
+          sUrl: '',
+          sInfoThousands: ',',
+          sLoadingRecords: 'Cargando...',
+          oPaginate: {
+            sFirst: 'Primero',
+            sLast: 'Último',
+            sNext: 'Siguiente',
+            sPrevious: 'Anterior'
+          },
+          oAria: {
+            sSortAscending: ': Activar para ordenar la columna de manera ascendente',
+            sSortDescending: ': Activar para ordenar la columna de manera descendente'
+          }
+        },
       lengthChange: false,
       bFilter: false
     },
@@ -55,6 +71,7 @@ export class DatatableGenericComponent implements OnInit {
     dtTrigger: new Subject(),
     columnas: []
   };
+
 
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
@@ -65,6 +82,9 @@ export class DatatableGenericComponent implements OnInit {
 
   respGetMonitoresEscuela(monitores) {
     this.tabla.dtDatos = monitores;
+    this.tabla.dtOptions.data = monitores;
+    this.tabla.dtOptions.aaData = monitores;
+    // this.tabla.dtOptions.mData = monitores;
     this.tabla.dtTrigger.next();
   }
 
@@ -82,11 +102,7 @@ export class DatatableGenericComponent implements OnInit {
   }
 
   ngOnInit() {
-    for (let i = 0; i < this.dt.filtros.length; i++) {
-      if (this.dt.filtros[i].class === undefined) {
-        this.dt.filtros[i].class = this.defecto.class;
-      }
-    }
+    this.tabla.dtOptions.columns = this.dt.columnas;
   }
 
 }
