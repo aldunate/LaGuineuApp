@@ -1,25 +1,11 @@
 <div class="row">
-  <div class="form-group" *ngFor="let filtro of dt.filtros" [class]="filtro.class">
+  <div class="form-group" *ngFor="let filtro of dt.dtFiltros" [class]="filtro.class">
     <label>{{filtro.label}}</label>
-    <input [id]="filtro.id"
-    (keyup)="inputChange($event)"
-    [id]="filtro.id"
-    [type]="filtro.type" class="form-control"  [placeholder]="filtro.placeholder">
+    <input (keyup)="inputChange($event)" [(ngModel)]="filtro.model"
+    [type]="filtro.type" class="form-control" [placeholder]="filtro.placeholder">
   </div>
 </div>
 <br>
 
-<table datatable class="table table-bordered row-border hover"
-[dtOptions]="tabla.dtOptions"
-[dtTrigger]="tabla.dtTrigger" >
-  <thead>
-    <tr>
-      <th *ngFor="let item of dt.columnas">{{item.title}}</th>
-    </tr>
-  </thead>
-  <tbody>
-    <tr *ngFor="let dato of tabla.dtDatos">
-      <td *ngFor="let item of dt.columnas">{{ dato[item.data] }} </td>
-    </tr>
-  </tbody>
-  </table>
+<table datatable class="table table-bordered hover" [dtOptions]="dt.dtOptions" [dtTrigger]="dt.dtTrigger" (click)="clickOnTable($event)">
+</table>

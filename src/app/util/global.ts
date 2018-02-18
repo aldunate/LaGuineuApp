@@ -17,6 +17,74 @@ export const GlobalVar = Object.freeze({
   jsonApi: 'file:///home/computadora/JoinderNote/src/app/util/jsonApi/',
   imgPerfil: '../../../assets/img/perfiles/'
 });
+import { Subject } from 'rxjs/Subject';
+
+export const UtilDataTable = Object.freeze({
+  iniDataTable(filtros, columnas) {
+    return {
+      dtOptions: {
+        pagingType: 'full_numbers',
+        pageLength: 10,
+        aaData: [],
+        data: [],
+        columns: columnas,
+        language:
+          {
+            sProcessing: 'Procesando...',
+            sLengthMenu: 'Mostrar _MENU_ registros',
+            sZeroRecords: 'No se encontraron resultados',
+            sEmptyTable: 'Ningún dato disponible en esta tabla',
+            sInfo: 'Mostrando registros del _START_ al _END_ de un total de _TOTAL_ registros',
+            sInfoEmpty: 'Mostrando registros del 0 al 0 de un total de 0 registros',
+            sInfoFiltered: '(filtrado de un total de _MAX_ registros)',
+            sInfoPostFix: '',
+            sSearch: 'Buscar:',
+            sUrl: '',
+            sInfoThousands: ',',
+            sLoadingRecords: 'Cargando...',
+            oPaginate: {
+              sFirst: 'Primero',
+              sLast: 'Último',
+              sNext: 'Siguiente',
+              sPrevious: 'Anterior'
+            },
+            oAria: {
+              sSortAscending: ': Activar para ordenar la columna de manera ascendente',
+              sSortDescending: ': Activar para ordenar la columna de manera descendente'
+            }
+          },
+        lengthChange: false,
+        bFilter: false
+      },
+      dtDatos: [],
+      dtTrigger: new Subject(),
+      dtFiltros: filtros
+    };
+  },
+  iniFiltro(data, label?, clase?, type?, placeholder?, ) {
+    if (label === undefined) {
+      label = data;
+    }
+    if (type === undefined) {
+      type = 'text';
+    }
+    if (clase === undefined) {
+      clase = 'col-xs-6 col-md-3';
+    }
+    if (placeholder === undefined) {
+      placeholder = 'Buscar ' + label;
+    }
+    return {
+      label: label,
+      data: data,
+      model: '',
+      type: type,
+      placeholder: placeholder,
+      class: clase
+    };
+  }
+});
+
 
 export const UtilCalendario = Object.freeze({
   colors: {
@@ -66,12 +134,15 @@ export const UtilFechas = Object.freeze({
 
 import { IMultiSelectSettings, IMultiSelectOption, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
 
+export class ConfMultiSelect {
+  dataModel: any[];  // Datos
+  selectedModel: IMultiSelectOption[];  // Datos seleccionados
+  mySettings: IMultiSelectSettings;
+  myTexts: IMultiSelectTexts;
+}
+
 export const MultiSelect = Object.freeze({
   iniMultiSelect(labelSingular, labelPlural) {
-    let optionsModel: number[];
-    let myOptions: IMultiSelectOption[];
-    myOptions = [];
-    optionsModel = [];
     const mySettings: IMultiSelectSettings = {
       enableSearch: true,
       checkedStyle: 'fontawesome',
@@ -79,7 +150,6 @@ export const MultiSelect = Object.freeze({
       dynamicTitleMaxItems: 3,
       displayAllSelectedText: true
     };
-
     // Text configuration
     const myTexts: IMultiSelectTexts = {
       checkAll: 'Seleccionar todas',
@@ -92,11 +162,11 @@ export const MultiSelect = Object.freeze({
       defaultTitle: 'Seleccionar ' + labelPlural
     };
     return {
-      myOptions: myOptions,
-      optionsModel: optionsModel,
+      dataModel: [],  // Datos
+      selectedModel: [],  // Datos seleccionados
       mySettings: mySettings,
       myTexts: myTexts,
-    }
+    };
 
   },
   iniSingleSelect(labelSingular, search) {
@@ -129,11 +199,11 @@ export const MultiSelect = Object.freeze({
       myOptions: myOptions,
       optionsModel: optionsModel,
       mySettings: mySettings,
-      myTexts: myTexts,
-    }
+      myTexts: myTexts
+    };
 
   },
-  iniOptions(options: any[], varId: string, varName: string) {
+  iniDataModel(options: any[], varId: string, varName: string) {
     const array = [];
     let name = varName;
     const aux = name.split(',');

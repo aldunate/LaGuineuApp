@@ -11,7 +11,12 @@
   <mat-tab-group>
     <mat-tab label="MURO">
       <div class="col-md-12 contPestanya">
-        <app-datatable-generic [dt]="tablas.monitores" >
+        <button (click)="addMonitor()" class="btn btn-success">Añadir monitor</button>
+        <div *ngIf="visibleMonitor">
+          <h4>Añadir Monitor</h4>
+        </div>
+        <div style="margin-bottom:20px;"></div>
+        <app-datatable-generic [dt]="tablas.monitor" (clickTable)="clickTable($event)">
         </app-datatable-generic>
       </div>
     </mat-tab>
@@ -19,9 +24,24 @@
       <div class="col-md-12 contPestanya">
       </div>
     </mat-tab>
-    <mat-tab label="PERSONAL">
+    <mat-tab label="AJUSTES">
       <div class="col-md-12 contPestanya">
 
+        <div class="form-group col-md-3">
+          <label>Estaciones</label>
+          <br>
+          <ss-multiselect-dropdown [options]="confSelEst.dataModel" [(ngModel)]="confSelEst.selectedModel" [settings]="confSelEst.mySettings"
+            [texts]="confSelEst.myTexts" (ngModelChange)="changeMultiselect($event)">
+          </ss-multiselect-dropdown>
+        </div>
+        <div class="col-md-9">
+          <label style="margin-bottom:15px;"> Estaciones agregadas</label>
+          <br>
+          <div class="selectedItem" *ngFor="let item of etiquetas">
+            <span> {{item.name}}
+            </span>
+          </div>
+        </div>
       </div>
     </mat-tab>
   </mat-tab-group>

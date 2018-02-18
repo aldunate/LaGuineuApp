@@ -1,0 +1,43 @@
+
+/*  MULTISELECT  CODE GENERAL  */
+
+  confSelEst: ConfMultiSelect;
+  etiquetas: any;
+
+  constructor(private escuelaService: EscuelaService, private estacionService: EstacionService) {
+    this.estacionService.getEstaciones(function (estaciones) {
+      this.escuelaService.getEscuelaEstacion(1, function(estacionSelected){
+        for (const estacion of estacionSelected) {
+          this.confSelEst.selectedModel.push(estacion.IdEstacion);
+          this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
+        }
+      }.bind(this));
+      this.confSelEst.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
+    }.bind(this));
+    this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
+  }
+
+  changeMultiselect(evento) {
+    this.etiquetas = [];
+    for (const id of this.confSelEst.selectedModel) {
+      this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === id));
+    }
+  }
+
+  <div class="form-group col-md-3">
+  <label>Estaciones</label>
+  <br>
+  <ss-multiselect-dropdown [options]="confSelEst.dataModel" [(ngModel)]="confSelEst.selectedModel"
+  [settings]="confSelEst.mySettings"
+    [texts]="confSelEst.myTexts" (ngModelChange)="changeMultiselect($event)">
+  </ss-multiselect-dropdown>
+</div>
+<div class="col-md-9">
+  <label style="margin-bottom:15px;"> Estaciones agregadas</label>
+  <br>
+  <div class="selectedItem" *ngFor="let item of etiquetas">
+    <span> {{item.name}}
+    </span>
+  </div>
+</div>
+

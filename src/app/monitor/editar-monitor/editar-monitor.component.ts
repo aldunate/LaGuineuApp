@@ -109,6 +109,7 @@ export class EditarMonitorComponent implements OnInit {
       const IdEstacion = this.monitor.EstacionesDisponibles[i].IdEstacion;
       this.estacionesSelect.push(this.confSelEst.myOptions.find(
         x => x.id === IdEstacion));
+        this.confSelEst.optionsModel.push(this.monitor.EstacionesDisponibles[i].IdEstacion);
     }
   }
 
@@ -122,7 +123,7 @@ export class EditarMonitorComponent implements OnInit {
 
   }
   viewDateChange($event) {
-    let x = 1;
+    const x = 1;
   }
   respGetEstaciones(estaciones) {
     this.estaciones = estaciones;
@@ -134,7 +135,9 @@ export class EditarMonitorComponent implements OnInit {
     if (estacion.length > 0) {
       if (this.estLength < estacion.length) {
         // Add
-        this.estacionesSelect.push(this.confSelEst.myOptions.find(auxEst => auxEst.id === estacion[estacion.length - 1]));
+        this.estacionesSelect.push(
+          this.confSelEst.myOptions.find(auxEst => auxEst.id === estacion[estacion.length - 1])
+        );
         this.estLength++;
       } else {
         // Delete

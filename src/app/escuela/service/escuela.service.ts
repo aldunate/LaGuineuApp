@@ -18,6 +18,14 @@ export class EscuelaService {
         respuesta(response);
       });
   }
+  getEscuelaEstacion(idEscuela, respuesta) {
+    this.http.get(GlobalVar.uriApi + 'escuela', {
+      params: new HttpParams().set('idEscuela', idEscuela)
+    })
+      .subscribe((response) => {
+        respuesta(response);
+      });
+  }
 
   crearEscuela(escuela, usuario, respuesta) {
     this.http.post(GlobalVar.uriApi + 'escuela', {
