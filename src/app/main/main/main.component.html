@@ -1,20 +1,3 @@
 <p>
   main works!
 </p>
-
-<div class="form-group col-md-3">
-  <label>Estaciones</label>
-  <br>
-  <ss-multiselect-dropdown [options]="confSelEst.dataModel" [(ngModel)]="confSelEst.selectedModel"
-  [settings]="confSelEst.mySettings"
-    [texts]="confSelEst.myTexts" (ngModelChange)="changeMultiselect($event)">
-  </ss-multiselect-dropdown>
-</div>
-<div class="col-md-9">
-  <label style="margin-bottom:15px;"> Estaciones agregadas</label>
-  <br>
-  <div class="selectedItem" *ngFor="let item of etiquetas">
-    <span> {{item.name}}
-    </span>
-  </div>
-</div>

@@ -128,7 +128,7 @@ export class EditarMonitorComponent implements OnInit {
   respGetEstaciones(estaciones) {
     this.estaciones = estaciones;
     this.estaciones.forEach(function(v){ delete v.Contry; delete v.IdDefecto; delete v.Notes; });
-    this.confSelEst.myOptions = MultiSelect.iniOptions(this.estaciones, 'Id', 'Name');
+    this.confSelEst.myOptions = MultiSelect.iniDataModel(this.estaciones, 'Id', 'Name');
   }
 
   onChangeEstaciones(estacion) {

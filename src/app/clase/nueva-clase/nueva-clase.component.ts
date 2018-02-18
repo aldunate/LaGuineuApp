@@ -76,7 +76,7 @@ export class NuevaClaseComponent implements OnInit {
 
   respGetEstaciones(estaciones) {
     this.Estaciones = estaciones;
-    this.confSelEst.myOptions = MultiSelect.iniOptions(this.Estaciones, 'Id', 'Name');
+    this.confSelEst.myOptions = MultiSelect.iniDataModel(this.Estaciones, 'Id', 'Name');
   }
 
   onChangeEstaciones(estacion) {

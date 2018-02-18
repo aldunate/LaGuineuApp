@@ -38,11 +38,11 @@ export class ClubComponent implements OnInit {
   }
   repGetNiveles(niveles) {
     this.Niveles = niveles;
-    this.confMulti.niveles.myOptions = MultiSelect.iniOptions(niveles, 'Id', 'Nombre');
+    this.confMulti.niveles.myOptions = MultiSelect.iniDataModel(niveles, 'Id', 'Nombre');
   }
   respGetClientes(clientes) {
     this.Clientes = clientes;
-    this.confMulti.clientes.myOptions = MultiSelect.iniOptions(clientes, 'Id', 'Nombre');
+    this.confMulti.clientes.dataModel = MultiSelect.iniDataModel(clientes, 'Id', 'Nombre');
   }
 
   nombreChange(nombre) {

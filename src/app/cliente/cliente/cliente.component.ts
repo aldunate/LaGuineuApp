@@ -58,16 +58,16 @@ export class ClienteComponent implements OnInit {
 
   respGetDeportes(deportes) {
     this.Deportes = deportes;
-    this.confMulti.deportes.myOptions = MultiSelect.iniOptions(deportes, 'Id', 'Nombre');
+    this.confMulti.deportes.myOptions = MultiSelect.iniDataModel(deportes, 'Id', 'Nombre');
   }
 
   repGetNiveles(niveles) {
     this.Niveles = niveles;
-    this.confMulti.niveles.myOptions = MultiSelect.iniOptions(niveles, 'Id', 'Nombre');
+    this.confMulti.niveles.myOptions = MultiSelect.iniDataModel(niveles, 'Id', 'Nombre');
   }
   respGetClubs(clubs) {
     this.Clubs = clubs;
-    this.confMulti.clubs.myOptions = MultiSelect.iniOptions(clubs, 'Id', 'Nombre');
+    this.confMulti.clubs.myOptions = MultiSelect.iniDataModel(clubs, 'Id', 'Nombre');
   }
 
 
