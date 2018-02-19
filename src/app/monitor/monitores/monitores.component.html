@@ -1,0 +1,10 @@
+<div class="col-xs-12">
+  <button (click)="addMonitor()" class="btn btn-success">Añadir monitor</button>
+  <div *ngIf="visibleMonitor" >
+    <h4>Añadir Monitor</h4>
+  </div>
+  <div style="margin-bottom:20px;"></div>
+  <app-datatable-generic [dt]="tablas.monitor" (clickTable)="clickTable($event)">
+  </app-datatable-generic>
+</div>
+<div>

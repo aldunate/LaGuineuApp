@@ -56,6 +56,8 @@ import { ClubService } from './club/service/club.service';
 import { UtilService } from './util/service/util.service';
 import { FooterComponent } from './main/footer/footer.component';
 import { DatatableGenericComponent } from './util/generic/datatable-generic/datatable-generic.component';
+import { SideBarComponent } from './main/side-bar/side-bar.component';
+import { MonitoresComponent } from './monitor/monitores/monitores.component';
 
 registerLocaleData(localeEs);
 
@@ -80,7 +82,9 @@ registerLocaleData(localeEs);
     ClienteComponent,
     ClubComponent,
     FooterComponent,
-    DatatableGenericComponent
+    DatatableGenericComponent,
+    SideBarComponent,
+    MonitoresComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,

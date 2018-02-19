@@ -1,11 +1,10 @@
 /* You can add global styles to this file, and also import other style files */
-@import "~@angular/material/prebuilt-themes/deeppurple-amber.css";
 @import "~angular-calendar/css/angular-calendar.css";
 @import "../node_modules/datatables.net-dt/css/jquery.dataTables.css";
-@import "./assets/css/sb-admin.css";
 
 .selectedItem{
-  display: inline-block;
+  margin: 1px;
+  /*display: inline-block;
   font-size: large;
   -webkit-box-shadow: -1px -1px 1px -1px rgba(0,0,0,0.75);
   -moz-box-shadow: -1px -1px 1px -1px rgba(0,0,0,0.75);
@@ -13,7 +12,7 @@
   background:white; border-radius: 2%;border: 0.5px solid hsl(0, 33%, 94%); padding:10px;
   margin: auto;
   margin-left: 10px;
-  margin-bottom: 10px;
+  margin-bottom: 10px;*/
 }
 
 .center-block {

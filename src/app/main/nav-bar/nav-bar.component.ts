@@ -1,6 +1,8 @@
-import { Component, OnInit, Input } from '@angular/core';
+import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { TokenService } from '../../usuario/service/token.service';
-import { AppComponent } from '../../app.component';
+import { ROUTES } from '../side-bar/side-bar.component';
+import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+
 
 @Component({
   selector: 'app-nav-bar',
@@ -9,27 +11,76 @@ import { AppComponent } from '../../app.component';
 })
 export class NavBarComponent implements OnInit {
   logueado: boolean;
-  listMenu = [
-    { Nombre: 'Home', Router: 'main' }
-  ];
-  constructor(private tokenService: TokenService) {
+  private listTitles: any[];
+  location: Location;
+  private toggleButton: any;
+  private sidebarVisible: boolean;
+
+  constructor(location: Location, private element: ElementRef, private tokenService: TokenService) {
     tokenService.onLoguin.subscribe((value) => {
       this.logueado = value;
       this.changeUserStatus();
     });
+    this.location = location;
+    this.sidebarVisible = false;
+  }
+
+  ngOnInit() {
+    this.listTitles = ROUTES.filter(listTitle => listTitle);
+    const navbar: HTMLElement = this.element.nativeElement;
+    this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
   }
 
   changeUserStatus() {
     if (this.logueado) {
-    }else {
+    } else {
     }
   }
 
   logout() {
     this.tokenService.remove();
   }
-  ngOnInit() { }
 
+  sidebarOpen() {
+    const toggleButton = this.toggleButton;
+    const body = document.getElementsByTagName('body')[0];
+    setTimeout(function () {
+      toggleButton.classList.add('toggled');
+    }, 500);
+    body.classList.add('nav-open');
+
+    this.sidebarVisible = true;
+  }
+  sidebarClose() {
+    const body = document.getElementsByTagName('body')[0];
+    this.toggleButton.classList.remove('toggled');
+    this.sidebarVisible = false;
+    body.classList.remove('nav-open');
+  }
+  sidebarToggle() {
+    // const toggleButton = this.toggleButton;
+    // const body = document.getElementsByTagName('body')[0];
+    if (this.sidebarVisible === false) {
+      this.sidebarOpen();
+    } else {
+      this.sidebarClose();
+    }
+  }
+
+  getTitle() {
+    let titlee = this.location.prepareExternalUrl(this.location.path());
+    if (titlee.charAt(0) === '#') {
+      titlee = titlee.slice(2);
+    }
+    titlee = titlee.split('/').pop();
+
+    for (let item = 0; item < this.listTitles.length; item++) {
+      if (this.listTitles[item].path === titlee) {
+        return this.listTitles[item].title;
+      }
+    }
+    return 'Dashboard';
+  }
 
 }
 
