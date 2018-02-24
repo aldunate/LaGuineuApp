@@ -1,21 +1,4 @@
-<div class="card col-sm-12 cabeceraInfo">
-  <div class="card-body">
-    <div class="col-sm-10 textoTop">
-      <div class="col-sm-2">
-        <img [src]="imgConf.src" class="imgPerfil img-rounded img-responsive">
-      </div>
-      <div class="col-sm-8">
-        <div>
-          <span>{{monitor.Nombre}} {{monitor.Apellidos}}</span>
-          <br>
-          <span>{{monitor.edad}}</span>
-          <br>
-          <span>{{monitor.titulo}}</span>
-        </div>
-      </div>
-    </div>
-  </div>
-</div>
+
 <div class="col-xs-12">
   <mat-tab-group>
     <mat-tab label="CALENDARIO">
@@ -34,7 +17,7 @@
           <label style="margin-bottom:15px;"> Estaciones agregadas</label>
           <br>
           <div class="itemEst" *ngFor="let item of estacionesSelect">
-            <span> {{item.name}}
+            <span class="card content"> {{item.name}}
             </span>
           </div>
         </div>

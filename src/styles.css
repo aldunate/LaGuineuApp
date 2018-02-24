@@ -1,5 +1,5 @@
 /* You can add global styles to this file, and also import other style files */
-@import '../node_modules/@angular/material/prebuilt-themes/purple-green.css';
+@import '../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~angular-calendar/css/angular-calendar.css";
 @import "../node_modules/datatables.net-dt/css/jquery.dataTables.css";
 
@@ -78,26 +78,8 @@ td{
 
   ss-multiselect-dropdown{
     width: 100%!important;
-    background:  red!important;
   }
 
   ss-multiselect-dropdown button{
     width: 100%!important;
   }
-
-
-  /*!
-
- =========================================================
- * Material Dashboard PRO Angular CLI - V1.2.0
- =========================================================
-
- * Product Page: https://www.creative-tim.com/product/material-dashboard-pro-angular2
- * Copyright 2017 Creative Tim (https://www.creative-tim.com)
- * License Creative Tim (https://www.creative-tim.com/license)
-
- =========================================================
-
- * The above copyright notice and this permission notice shall be included in all copies or substantial portions of the Software.
-
- */
