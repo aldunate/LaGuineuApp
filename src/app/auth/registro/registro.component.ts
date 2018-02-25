@@ -3,7 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { Response } from '@angular/http';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../service/usuario.service';
+import { AuthService } from '../service/auth.service';
 import { Output } from '@angular/core/src/metadata/directives';
 
 
@@ -27,15 +27,13 @@ export class RegistroComponent implements OnInit {
   passwordMensaje = '';
   params: URLSearchParams;
 
-  constructor(private http: HttpClient, private usuarioService: UsuarioService, private router: Router) { }
+  constructor(private http: HttpClient, private authService: AuthService, private router: Router) { }
   ngOnInit() { }
 
   registro() {
-    this.usuarioService.registro(this.nombre, this.password, this.regristoRespuesta.bind(this));
-  }
-
-  regristoRespuesta(response: object) {
-    this.router.navigate(['']);
+    this.authService.registro(this.nombre, this.password, function(response){
+      this.router.navigate(['']);
+    }.bind(this));
   }
 
   usuarioRespuesta(response: object) {
@@ -47,7 +45,7 @@ export class RegistroComponent implements OnInit {
   }
   usuarioChange(event: Object) {
     if (this.nombre !== '') {
-      this.usuarioService.usuarioExiste(this.nombre, this.usuarioRespuesta.bind(this));
+      this.authService.usuarioExiste(this.nombre, this.usuarioRespuesta.bind(this));
     }
   }
 

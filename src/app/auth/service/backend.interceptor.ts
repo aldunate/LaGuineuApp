@@ -1,16 +1,11 @@
-import { LoginComponent } from './../../usuario/login/login.component';
-import { GlobalVar } from './../global';
+import { LoginComponent } from '../login/login.component';
 import { Injectable } from '@angular/core';
-import {
-  HttpRequest,
-  HttpHandler,
-  HttpEvent,
-  HttpInterceptor
-} from '@angular/common/http';
+import { HttpRequest, HttpHandler, HttpEvent, HttpInterceptor } from '@angular/common/http';
 import { Observable } from 'rxjs/Observable';
 import { get } from 'es-cookie';
 import { HttpClient } from '@angular/common/http/src/client';
 import { HttpHeaders } from '@angular/common/http/src/headers';
+import { GlobalVar } from '../../util/global';
 
 
 @Injectable()

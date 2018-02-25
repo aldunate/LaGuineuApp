@@ -22,6 +22,7 @@ import { EstacionService } from '../../estacion/service/estacion.service';
 export class EditarMonitorComponent implements OnInit {
 
   monitor: any;
+  idMonitor: number;
   imgConf = {
     src: '../../../assets/img/sinPerfil-660x660.png',
     class: 'image img-rounded img-responsive img200x200',
@@ -57,17 +58,10 @@ export class EditarMonitorComponent implements OnInit {
 
   constructor(private monitorService: MonitorService,
     private router: Router, private route: ActivatedRoute, private estacionService: EstacionService) {
-      const aux = this.router.url.split('/');
-      const idMonitor = Number.parseInt(aux[aux.length - 1]);
+    const aux = this.router.url.split('/');
+    this.idMonitor = Number.parseInt(aux[aux.length - 1]);
 
-    this.monitorService.getMonitor( idMonitor, this.respGetMonitor.bind(this));
-    this.monitor = {
-      Nombre: '',
-      Apellidos: '',
-      edad: '',
-      titulo: ''
-    };
-
+    this.getMonitor();
     this.iniMuro();
     this.iniCalendario();
     this.iniPersona();
@@ -77,40 +71,49 @@ export class EditarMonitorComponent implements OnInit {
   ngOnInit() {
   }
 
-  respGetMonitor(monitor) {
-    monitor.titulo = '';
-    for (let i = 0; i < monitor.Titulos.length; i++) {
-      monitor.titulo += ' ' + monitor.Titulos[i].Titulo;
-    }
-    this.monitor = monitor;
-    this.monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
-    this.monitor.edad += ' años';
-    if (this.monitor.FortoPerfil !== undefined) {
-      this.imgConf.src = '../../../assets/img/perfiles/' + monitor.FotoPerfil;
-    }
+  getMonitor() {
+    this.monitor = {
+      Id: this.idMonitor,
+      Nombre: '',
+      Apellidos: '',
+      edad: '',
+      titulo: ''
+    };
 
-    // Monitor disponible
-    const fechasDisponibles = []; // this.monitor.FechasDisponibles;
-    for (let i = 0; i < this.monitor.FechasDisponibles.length; i++) {
-      fechasDisponibles.push({
-        start: new Date(this.monitor.FechasDisponibles[i].FechaEvento),
-        allDay: true,
-        title: 'Disponible',
-        color: {
-          primary: '#e3bc08',
-          secondary: '#FDF1BA'
-        }
-      });
-    }
-    this.events = fechasDisponibles;
-    this.refresh.next();
-    // Monitor Estaciones
-    for (let i = 0; i < this.monitor.EstacionesDisponibles.length; i++ ) {
-      const IdEstacion = this.monitor.EstacionesDisponibles[i].IdEstacion;
-      this.estacionesSelect.push(this.confSelEst.myOptions.find(
-        x => x.id === IdEstacion));
+    this.monitorService.getMonitor(this.idMonitor, function (monitor) {
+      monitor.titulo = '';
+      for (let i = 0; i < monitor.Titulos.length; i++) {
+        monitor.titulo += ' ' + monitor.Titulos[i].Titulo;
+      }
+      this.monitor = monitor;
+      this.monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
+      this.monitor.edad += ' años';
+      if (this.monitor.FortoPerfil !== undefined) {
+        this.imgConf.src = '../../../assets/img/perfiles/' + monitor.FotoPerfil;
+      }
+      // Monitor disponible
+      const fechasDisponibles = []; // this.monitor.FechasDisponibles;
+      for (let i = 0; i < this.monitor.FechasDisponibles.length; i++) {
+        fechasDisponibles.push({
+          start: new Date(this.monitor.FechasDisponibles[i].FechaEvento),
+          allDay: true,
+          title: 'Disponible',
+          color: {
+            primary: '#e3bc08',
+            secondary: '#FDF1BA'
+          }
+        });
+      }
+      this.events = fechasDisponibles;
+      this.refresh.next();
+      // Monitor Estaciones
+      for (let i = 0; i < this.monitor.EstacionesDisponibles.length; i++) {
+        const IdEstacion = this.monitor.EstacionesDisponibles[i].IdEstacion;
+        this.estacionesSelect.push(this.confSelEst.myOptions.find(
+          x => x.id === IdEstacion));
         this.confSelEst.optionsModel.push(this.monitor.EstacionesDisponibles[i].IdEstacion);
-    }
+      }
+    }.bind(this));
   }
 
   // Pestañas
@@ -127,7 +130,7 @@ export class EditarMonitorComponent implements OnInit {
   }
   respGetEstaciones(estaciones) {
     this.estaciones = estaciones;
-    this.estaciones.forEach(function(v){ delete v.Contry; delete v.IdDefecto; delete v.Notes; });
+    this.estaciones.forEach(function (v) { delete v.Contry; delete v.IdDefecto; delete v.Notes; });
     this.confSelEst.myOptions = MultiSelect.iniDataModel(this.estaciones, 'Id', 'Name');
   }
 

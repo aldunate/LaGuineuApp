@@ -1,11 +1,11 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { Router } from '@angular/router';
-import { UsuarioService } from '../service/usuario.service';
-import { TokenService } from '../service/token.service';
+import { TokenService } from '../../auth/service/token.service';
 import { NavBarComponent } from '../../main/nav-bar/nav-bar.component';
 import { AppComponent } from '../../app.component';
-
+import { AuthService } from '../service/auth.service';
+import { GlobalVar } from '../../util/global';
 
 @Component({
   selector: 'app-login',
@@ -21,19 +21,20 @@ export class LoginComponent implements OnInit {
   usuarioClass = 'form-control';
   usuarioMensaje = '';
   passwordMensaje = '';
+  logueado: boolean;
 
-  constructor(private http: HttpClient, private usuarioService: UsuarioService,
-    private router: Router, private tokenService: TokenService, private appComp: AppComponent) { }
+  constructor(private http: HttpClient, private authService: AuthService,
+    private router: Router, private tokenService: TokenService, private appComp: AppComponent) {
+      this.logueado = this.tokenService.logueado;
+  }
   ngOnInit() { }
 
   login() {
-    this.usuarioService.login(this.nombre, this.password, this.loginRespuesta.bind(this));
-  }
-
-  loginRespuesta(token: any) {
-    this.tokenService.create(token);
-    this.password = '';
-    this.router.navigate(['/']);
+    this.authService.login(this.nombre, this.password, function (token) {
+      this.tokenService.create(token);
+      this.password = '';
+      this.router.navigate(['/']);
+    }.bind(this));
   }
 
 }

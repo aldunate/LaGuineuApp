@@ -1,4 +1,3 @@
-
 <div class="col-xs-12">
   <mat-tab-group>
     <mat-tab label="CALENDARIO">
@@ -6,28 +5,25 @@
         <div class="col-xs-12" style="text-align:right">
           <button type="button" class="btn btn-success" (click)="saveCalendario()">Guardar cambios</button>
         </div>
-        <div class="form-group col-md-3">
+        <div class="col-md-4">
           <label>Estaciones</label>
           <br>
           <ss-multiselect-dropdown [options]="confSelEst.myOptions" [(ngModel)]="confSelEst.optionsModel" [settings]="confSelEst.mySettings"
             (ngModelChange)="onChangeEstaciones($event)" [texts]="confSelEst.myTexts">
           </ss-multiselect-dropdown>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
           <label style="margin-bottom:15px;"> Estaciones agregadas</label>
           <br>
-          <div class="itemEst" *ngFor="let item of estacionesSelect">
-            <span class="card content"> {{item.name}}
-            </span>
+          <div class="col-xs-4 row text-center" style="margin-right:1px;" *ngFor="let item of estacionesSelect">
+            <div class="card" style="padding:1%;">{{item.name}}</div>
           </div>
         </div>
       </div>
       <div class="col-xs-12">
-        <div style="background: white!important;">
-          <app-generic-calendar [config]="configCalendar" [(viewDate)]="viewDate" [(view)]="view" [locale]="locale" [(events)]="events"
-            (viewDateChange)="viewDateChange($event)">
-          </app-generic-calendar>
-        </div>
+        <app-generic-calendar [config]="configCalendar" [(viewDate)]="viewDate" [(view)]="view" [locale]="locale" [(events)]="events"
+          (viewDateChange)="viewDateChange($event)">
+        </app-generic-calendar>
       </div>
     </mat-tab>
     <mat-tab label="MURO">

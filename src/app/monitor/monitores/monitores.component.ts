@@ -33,7 +33,7 @@ export class MonitoresComponent implements OnInit {
       ]
     )
   };
-  visibleMonitor = false;
+
 
   constructor(private escuelaService: EscuelaService,
     private monitorService: MonitorService,
@@ -77,10 +77,6 @@ export class MonitoresComponent implements OnInit {
   }
 
   addMonitor() {
-    if (this.visibleMonitor) {
-      this.visibleMonitor = false;
-    } else {
-      this.visibleMonitor = true;
-    }
+    this.router.navigate(['/crea-monitor']);
   }
 }

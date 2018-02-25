@@ -1,5 +1,5 @@
 <div class="row">
-  <div class="form-group form-black label-floating is-empty" *ngFor="let filtro of dt.dtFiltros"
+  <div  *ngFor="let filtro of dt.dtFiltros"
    [class]="'form-black label-floating is-empty' + filtro.class">
     <label class="control-label">{{filtro.label}}</label>
     <input (keyup)="inputChange($event)" [(ngModel)]="filtro.model"

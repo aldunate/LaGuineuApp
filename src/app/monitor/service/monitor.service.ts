@@ -1,14 +1,19 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
-import { BackendInterceptor } from '../../util/service/backend.interceptor';
+import { BackendInterceptor } from '../../auth/service/backend.interceptor';
 import { GlobalVar } from '../../util/global';
 
 @Injectable()
 export class MonitorService {
   monitor: any;
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
-  crearMonitor(monitor, respuesta) {
-    this.http.post(GlobalVar.uriApi + 'monitor', monitor)
+  crearMonitor(monitor, titulos, usuario, respuesta) {
+    delete monitor.titulos;
+    this.http.post(GlobalVar.uriApi + 'monitor', {
+      Monitor: monitor,
+      Titulos: titulos,
+      Usuario: usuario
+    })
       .subscribe((response) => {
         this.monitor = response;
         respuesta(response);

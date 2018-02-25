@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BackendInterceptor } from '../../util/service/backend.interceptor';
+import { BackendInterceptor } from '../../auth/service/backend.interceptor';
 import { HttpClient } from '@angular/common/http';
 import { GlobalVar } from '../../util/global';
 

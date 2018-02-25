@@ -106,12 +106,19 @@ export const UtilCalendario = Object.freeze({
 
 export const UtilFechas = Object.freeze({
   calculaEdad(birthdate: any) {
-    birthdate = new Date(UtilFechas.espAdate(birthdate));
+    const fecha = UtilFechas.espAdate(birthdate);
+    if (fecha === null) {
+      return null;
+    }
+    birthdate = new Date(fecha);
     const timeDiff = new Date().getFullYear() - birthdate.getFullYear();
     return timeDiff;
   },
   espAdate(fecha: string) {
     /* Formato dd/mm/yyyy a Date*/
+    if (fecha === null || fecha === undefined) {
+      return null;
+    }
     let date;
     let aux = fecha.split('/');
     if (aux.length === 1) {

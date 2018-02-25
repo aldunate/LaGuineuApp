@@ -24,16 +24,18 @@ import { ImgUploadComponent } from './util/generic/img-upload/img-upload.compone
 
 // Components adolfo
 import { AppComponent } from './app.component';
-import { RegistroComponent } from './usuario/registro/registro.component';
+import { RegistroComponent } from './auth/registro/registro.component';
 import { MainComponent } from './main/main/main.component';
 import { NavBarComponent } from './main/nav-bar/nav-bar.component';
-import { LoginComponent } from './usuario/login/login.component';
+import { LoginComponent } from './auth/login/login.component';
 import { CreaMonitorComponent } from './monitor/crea-monitor/crea-monitor.component';
 import { Route } from './app.route';
 import { UsuarioService } from './usuario/service/usuario.service';
-import { TokenService } from './usuario/service/token.service';
-import { BackendInterceptor } from './util/service/backend.interceptor';
+import { TokenService } from './auth/service/token.service';
+import { BackendInterceptor } from './auth/service/backend.interceptor';
+import { LoginActivate } from './auth/service/login-activate.interceptor';
 import { MonitorService } from './monitor/service/monitor.service';
+import { AuthService } from './auth/service/auth.service';
 import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.component';
 
 import { CommonModule } from '@angular/common';
@@ -58,6 +60,7 @@ import { FooterComponent } from './main/footer/footer.component';
 import { DatatableGenericComponent } from './util/generic/datatable-generic/datatable-generic.component';
 import { SideBarComponent } from './main/side-bar/side-bar.component';
 import { MonitoresComponent } from './monitor/monitores/monitores.component';
+import { FieldErrorComponent } from './util/generic/field-error/field-error.component';
 
 registerLocaleData(localeEs);
 
@@ -84,7 +87,8 @@ registerLocaleData(localeEs);
     FooterComponent,
     DatatableGenericComponent,
     SideBarComponent,
-    MonitoresComponent
+    MonitoresComponent,
+    FieldErrorComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
@@ -102,7 +106,9 @@ registerLocaleData(localeEs);
     UsuarioService,
     // Interceptors
     { provide: HTTP_INTERCEPTORS, useClass: BackendInterceptor, multi: true },
+    AuthService,
     BackendInterceptor,
+    LoginActivate,
     TokenService,
     MonitorService,
     EscuelaService,

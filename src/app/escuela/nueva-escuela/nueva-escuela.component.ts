@@ -34,21 +34,16 @@ export class NuevaEscuelaComponent implements OnInit {
   };
 
   constructor(private http: HttpClient, private escuelaService: EscuelaService,
-    private usuarioService: UsuarioService, private router: Router) { }
+    private router: Router) { }
 
   ngOnInit() { }
 
-  usuarioExiste(event: Object) {
-    if (this.Usuario.Nombre !== '') {
-      this.usuarioService.usuarioExiste(this.Usuario.Nombre, this.respUsuarioExiste.bind(this));
-    }
-  }
 
   respUsuarioExiste(response: object) {
     // El usuario existe
     if (response !== null) {
       this.errorMensaje.usuario = 'El usuario ya existe';
-    }else{
+    } else {
       this.errorMensaje.usuario = '';
     }
   }
@@ -59,7 +54,7 @@ export class NuevaEscuelaComponent implements OnInit {
         this.formClass = 'form-control  ng-valid';
         this.errorMensaje.password = '';
       } else {
-        if (this.password2.length > 0 && this.Usuario.Password.length > 0){
+        if (this.password2.length > 0 && this.Usuario.Password.length > 0) {
           this.formClass = 'form-control  ng-invalid'; // No funciona
           this.errorMensaje.password = 'Las contraseñas no coinciden';
         }

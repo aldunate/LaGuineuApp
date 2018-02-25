@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpParams, HttpClient } from '@angular/common/http';
 import { GlobalVar } from '../../util/global';
-import { BackendInterceptor } from '../../util/service/backend.interceptor';
+import { BackendInterceptor } from '../../auth/service/backend.interceptor';
 
 @Injectable()
 export class ClienteService {

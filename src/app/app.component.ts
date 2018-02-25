@@ -5,6 +5,7 @@ import { Router, NavigationEnd, NavigationStart } from '@angular/router';
 import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { NavBarComponent } from './main/nav-bar/nav-bar.component';
+import { TokenService } from './auth/service/token.service';
 // declare const $: any;
 
 @Component({
@@ -18,10 +19,13 @@ export class AppComponent implements OnInit, AfterViewInit {
   private _router: Subscription;
   private lastPoppedUrl: string;
   private yScrollStack: number[] = [];
+  public logueado: boolean;
 
   @ViewChild(NavBarComponent) navbar: NavBarComponent;
 
-  constructor(public location: Location, private router: Router) { }
+  constructor(public location: Location, private router: Router, private tokenService: TokenService) {
+    this.logueado = tokenService.logueado;
+  }
 
   ngOnInit() {
     // $.material.init();
