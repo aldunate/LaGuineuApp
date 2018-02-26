@@ -1,0 +1,21 @@
+.card{
+  margin-top: 30%;
+  background-color: #b1aeaa;
+  padding: 6%;
+  background: rgb(100, 84, 84); /* Fall-back for browsers that don't
+  support rgba */
+background: rgba(129, 108, 108, 0.5);
+ /* opacity: 0.5;
+    filter: alpha(opacity=50); /* For IE8 and earlier */
+}
+
+.card-title{
+  text-align: center;
+  font-weight: bold;
+  font-size:xx-large;
+}
+
+label{
+  font-size: large;
+  color: black;
+}

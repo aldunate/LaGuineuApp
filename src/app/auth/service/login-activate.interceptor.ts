@@ -6,12 +6,13 @@ import { TokenService } from './token.service';
 @Injectable()
 export class LoginActivate implements CanActivate {
   constructor(private tokenService: TokenService, private router: Router) { }
+
   canActivate(
     route: ActivatedRouteSnapshot,
     state: RouterStateSnapshot
   ): Observable<boolean> | Promise<boolean> | boolean {
     if (!this.tokenService.logueado) {
-      this.router.navigate(['login']);
+      // this.router.navigate(['login']);
     }
     return true;
   }

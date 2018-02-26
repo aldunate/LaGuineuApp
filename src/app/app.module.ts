@@ -61,6 +61,8 @@ import { DatatableGenericComponent } from './util/generic/datatable-generic/data
 import { SideBarComponent } from './main/side-bar/side-bar.component';
 import { MonitoresComponent } from './monitor/monitores/monitores.component';
 import { FieldErrorComponent } from './util/generic/field-error/field-error.component';
+import { LoginLayoutComponent } from './util/layout/login.layout';
+import { HomeLayoutComponent } from './util/layout/home.layout';
 
 registerLocaleData(localeEs);
 
@@ -73,7 +75,9 @@ registerLocaleData(localeEs);
     LoginComponent,
     CreaMonitorComponent,
     ImgUploadComponent,
-   //  TableGenericComponent,
+    LoginLayoutComponent,
+    HomeLayoutComponent,
+    //  TableGenericComponent,
     EditarMonitorComponent,
     // Calendar
     GenericCalendarComponent,

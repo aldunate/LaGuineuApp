@@ -25,7 +25,7 @@ export class TokenService {
     this.token = Cookies.get('LaGuineu');
     if (this.token !== undefined) {
       this.onLogueado(true);
-      localStorage.setItem('token', this.token);
+      localStorage.setItem('LaGuineu', this.token);
     } else {
       this.remove();
     }
@@ -39,7 +39,7 @@ export class TokenService {
 
   remove() {
     Cookies.remove('LaGuineu');
-    localStorage.removeItem('token');
+    localStorage.removeItem('LaGuineu');
     this.token = undefined;
     this.exp = undefined;
     this.crea = undefined;
@@ -49,7 +49,7 @@ export class TokenService {
   create(token: any) {
     this.rellena(token);
     Cookies.set('LaGuineu', this.token, { expires: 1, path: '' });
-    localStorage.setItem('token', this.token);
+    localStorage.setItem('LaGuineu', this.token);
     this.onLogueado(true);
   }
 

@@ -21,6 +21,15 @@ export class BackendInterceptor implements HttpInterceptor {
         body: ''
       });
     } else {
+      const token = localStorage.getItem('LaGuineu');
+      if (token !== null) {
+        request = request.clone({
+          setHeaders: {
+            Authorization: `Bearer ${token}`
+          }
+        });
+      }
+
 
     }
     return next.handle(request);

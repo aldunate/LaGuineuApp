@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { TokenService } from '../../auth/service/token.service';
 import { ROUTES } from '../side-bar/side-bar.component';
-import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common';
+import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 
 
 @Component({
@@ -10,7 +10,6 @@ import {Location, LocationStrategy, PathLocationStrategy} from '@angular/common'
   styleUrls: ['./nav-bar.component.css']
 })
 export class NavBarComponent implements OnInit {
-  logueado: boolean;
   private listTitles: any[];
   location: Location;
   private toggleButton: any;
@@ -18,7 +17,6 @@ export class NavBarComponent implements OnInit {
 
   constructor(location: Location, private element: ElementRef, private tokenService: TokenService) {
     tokenService.onLoguin.subscribe((value) => {
-      this.logueado = value;
       this.changeUserStatus();
     });
     this.location = location;
@@ -31,11 +29,7 @@ export class NavBarComponent implements OnInit {
     this.toggleButton = navbar.getElementsByClassName('navbar-toggle')[0];
   }
 
-  changeUserStatus() {
-    if (this.logueado) {
-    } else {
-    }
-  }
+  changeUserStatus() { }
 
   logout() {
     this.tokenService.remove();

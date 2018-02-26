@@ -10,7 +10,7 @@ export class AuthService {
 
   login(usuario, password, respuesta) {
     this.http.post(GlobalVar.uriApi + 'login', {
-      'password': password,
+      'Password': password,
       'Nombre': usuario
     })
       .subscribe((response) => respuesta(response));
