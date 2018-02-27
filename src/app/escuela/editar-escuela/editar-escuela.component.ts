@@ -38,20 +38,19 @@ export class EditarEscuelaComponent implements OnInit {
 
   constructor(private escuelaService: EscuelaService,
     private router: Router, private route: ActivatedRoute) {
-      const aux = this.router.url.split('/');
-      const idEscuela = Number.parseInt(aux[aux.length - 1]);
+    const aux = this.router.url.split('/');
+    const idEscuela = Number.parseInt(aux[aux.length - 1]);
 
-    this.escuelaService.getEscuela( idEscuela, this.respGetEscuela.bind(this));
+    this.escuelaService.getEscuela(
+      function (escuela) {
+        this.Escuela = escuela;
+        if (this.Escuela.FotoPerfil !== undefined) {
+          this.imgConf.src = '../../../assets/img/perfiles/' + this.Escuela.FotoPerfil;
+        }
+      }.bind(this));
   }
 
   ngOnInit() {
-  }
-
-  respGetEscuela(escuela) {
-    this.Escuela = escuela;
-    if (this.Escuela.FotoPerfil !== undefined) {
-      this.imgConf.src = '../../../assets/img/perfiles/' + this.Escuela.FotoPerfil;
-    }
   }
 
   // Pestañas

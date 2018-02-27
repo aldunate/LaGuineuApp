@@ -2,8 +2,11 @@
   <mat-tab-group>
     <mat-tab label="CALENDARIO">
       <div class="col-md-12 contPestanya">
-        <div class="col-xs-12" style="text-align:right">
-          <button type="button" class="btn btn-success" (click)="saveCalendario()">Guardar cambios</button>
+        <div class="col-xs-12">
+          <button type="button" class="btn btn-success btn-fill" (click)="saveCalendario()">Guardar cambios</button>
+        </div>
+        <div class="col-xs-12">
+          <h4>Seleccionar estaciones disponibles</h4>
         </div>
         <div class="col-md-4">
           <label>Estaciones</label>
@@ -15,10 +18,13 @@
         <div class="col-md-8">
           <label style="margin-bottom:15px;"> Estaciones agregadas</label>
           <br>
-          <div class="col-xs-4 row text-center" style="margin-right:1px;" *ngFor="let item of estacionesSelect">
-            <div class="card" style="padding:1%;">{{item.name}}</div>
+          <div class="selectedItem" style="margin-right:1px;" *ngFor="let item of estacionesSelect">
+            <div>{{item.name}}</div>
           </div>
         </div>
+      </div>
+      <div class="col-xs-12">
+        <h4>Seleccionar fechas disponibles</h4>
       </div>
       <div class="col-xs-12">
         <app-generic-calendar [config]="configCalendar" [(viewDate)]="viewDate" [(view)]="view" [locale]="locale" [(events)]="events"

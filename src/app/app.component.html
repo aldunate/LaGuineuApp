@@ -10,5 +10,5 @@
   </div>
 </div>
 <div class="wrapper content" *ngIf="!logueado">
-  <router-outlet name="loginOutlet"></router-outlet>
+  <app-login (logueado)="changeLogueado($event)"> </app-login>
 </div>

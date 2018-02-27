@@ -24,8 +24,11 @@ export class AppComponent implements OnInit, AfterViewInit {
   @ViewChild(NavBarComponent) navbar: NavBarComponent;
 
   constructor(public location: Location, private router: Router, private tokenService: TokenService) {
-    this.logueado =  tokenService.logueado;
+    this.logueado = tokenService.logueado;
     // true;
+  }
+  changeLogueado(evento) {
+    this.logueado = evento;
   }
 
   ngOnInit() {

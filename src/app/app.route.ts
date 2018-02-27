@@ -16,13 +16,27 @@ import { LoginLayoutComponent } from './util/layout/login.layout';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './util/layout/home.layout';
 
+
+declare interface RouteInfo {
+  path: string;
+  title: string;
+  icon: string;
+  class: string;
+}
+export const ROUTES: RouteInfo[] = [
+  { path: 'main', title: 'Main', icon: 'dashboard', class: '' },
+  { path: 'monitores', title: 'Monitores', icon: 'notifications', class: '' },
+  { path: 'escuela', title: 'Escuela', icon: 'notifications', class: '' },
+  { path: 'gestion-escuela', title: 'Gestion escuela', icon: 'notifications', class: '' }
+];
+
 const appRoutes: Routes = [
   { path: 'registro', component: RegistroComponent },
   { path: 'crea-monitor', component: CreaMonitorComponent },
-  { path: 'monitores/:id', component: MonitoresComponent, canActivate: [LoginActivate] },
+  { path: 'monitores', component: MonitoresComponent, canActivate: [LoginActivate] },
   { path: 'monitor/:id', component: EditarMonitorComponent },
-  { path: 'escuela/:id', component: EditarEscuelaComponent },
-  { path: 'gestion-escuela/:id', component: GestionEscuelaComponent },
+  { path: 'escuela', component: EditarEscuelaComponent },
+  { path: 'gestion-escuela', component: GestionEscuelaComponent },
   { path: 'nueva-escuela', component: NuevaEscuelaComponent },
   { path: 'clase', component: NuevaClaseComponent },
   { path: 'cliente', component: ClienteComponent },

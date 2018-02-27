@@ -40,10 +40,8 @@ export class MonitorService {
         respuesta(response);
       });
   }
-  getMonitoresEscuela(idEscuela, respuesta) {
-    this.http.get(GlobalVar.uriApi + 'monitor', {
-      params: new HttpParams().set('idEscuela', idEscuela)
-    })
+  getMonitoresEscuela(respuesta) {
+    this.http.get(GlobalVar.uriApi + 'monitor')
       .subscribe((response) => {
         respuesta(response);
       });

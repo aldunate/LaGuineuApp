@@ -1,17 +1,8 @@
 import { Component, OnInit } from '@angular/core';
+import { ROUTES } from '../../app.route';
 
 declare const $: any;
-declare interface RouteInfo {
-  path: string;
-  title: string;
-  icon: string;
-  class: string;
-}
-export const ROUTES: RouteInfo[] = [
-  { path: 'main', title: 'Main', icon: 'dashboard', class: '' },
-  { path: 'monitores/1', title: 'Monitores', icon: 'notifications', class: '' },
-  { path: 'escuela/1', title: 'Escuela', icon: 'notifications', class: '' }
-];
+
 
 @Component({
   selector: 'app-side-bar',

@@ -49,14 +49,14 @@ export class MonitoresComponent implements OnInit {
   }
 
   iniEscuela() {
-    this.escuelaService.getEscuela(this.Escuela.Id,
+    this.escuelaService.getEscuela(
       function (escuela) {
         this.Escuela = escuela;
       }.bind(this));
   }
 
   iniMonitorTabla() {
-    this.monitorService.getMonitoresEscuela(this.Escuela.Id,
+    this.monitorService.getMonitoresEscuela(
       function (monitores) {
         for (const monitor of monitores) {
           monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);

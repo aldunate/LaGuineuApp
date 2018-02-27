@@ -41,7 +41,7 @@ export class LoginComponent implements OnInit {
         function (token) {
           if (token !== null) {
             this.tokenService.create(token);
-            this.logueado.emit();
+            this.logueado.emit(true);
           }
           this.error = true;
         }.bind(this));

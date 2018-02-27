@@ -65,8 +65,6 @@ export class GestionEscuelaComponent implements OnInit {
     private router: Router, private route: ActivatedRoute,
     private estacionService: EstacionService) {
 
-    const aux = this.router.url.split('/');
-    this.Escuela.Id = Number.parseInt(aux[aux.length - 1]);
     this.iniEscuela();
     this.iniSelectedEstacion();
     this.iniMonitorTabla();
@@ -76,7 +74,7 @@ export class GestionEscuelaComponent implements OnInit {
   }
 
   iniEscuela() {
-    this.escuelaService.getEscuela(this.Escuela.Id,
+    this.escuelaService.getEscuela(
       function (escuela) {
         this.Escuela = escuela;
         if (this.Escuela.FotoPerfil !== undefined) {
@@ -92,7 +90,7 @@ export class GestionEscuelaComponent implements OnInit {
     MONITORES */
 
   iniMonitorTabla() {
-    this.monitorService.getMonitoresEscuela(this.Escuela.Id,
+    this.monitorService.getMonitoresEscuela(
       function (monitores) {
         for (const monitor of monitores) {
           monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
@@ -125,12 +123,13 @@ export class GestionEscuelaComponent implements OnInit {
 
   iniSelectedEstacion() {
     this.estacionService.getEstaciones(function (estaciones) {
-      this.escuelaService.getEscuelaEstacion(1, function (estacionSelected) {
-        for (const estacion of estacionSelected) {
-          this.confSelEst.selectedModel.push(estacion.IdEstacion);
-          this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
-        }
-      }.bind(this));
+      this.escuelaService.getEscuelaEstacion(0, // Parametro falso
+        function (estacionSelected) {
+          for (const estacion of estacionSelected) {
+            this.confSelEst.selectedModel.push(estacion.IdEstacion);
+            this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
+          }
+        }.bind(this));
       this.confSelEst.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
     }.bind(this));
     this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');

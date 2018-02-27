@@ -1,7 +1,7 @@
 import { Component, OnInit, Input, ElementRef } from '@angular/core';
 import { TokenService } from '../../auth/service/token.service';
-import { ROUTES } from '../side-bar/side-bar.component';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
+import { ROUTES } from '../../app.route';
 
 
 @Component({

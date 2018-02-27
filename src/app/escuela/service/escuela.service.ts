@@ -9,18 +9,18 @@ export class EscuelaService {
   escuela: any;
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
-  getEscuela(idEscuela, respuesta) {
+  getEscuela(respuesta) {
     this.http.get(GlobalVar.uriApi + 'escuela', {
-      params: new HttpParams().set('id', idEscuela)
     })
       .subscribe((response) => {
         this.escuela = response;
         respuesta(response);
       });
   }
-  getEscuelaEstacion(idEscuela, respuesta) {
+
+  getEscuelaEstacion(idFalso, respuesta) {
     this.http.get(GlobalVar.uriApi + 'escuela', {
-      params: new HttpParams().set('idEscuela', idEscuela)
+      params: new HttpParams().set('idFalso', idFalso)
     })
       .subscribe((response) => {
         respuesta(response);
