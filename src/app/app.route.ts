@@ -41,17 +41,7 @@ const appRoutes: Routes = [
   { path: 'clase', component: NuevaClaseComponent },
   { path: 'cliente', component: ClienteComponent },
   { path: 'main', component: MainComponent },
-  { path: '**', component: MainComponent },
-  /*{
-    path: '', component: HomeLayoutComponent, canActivate: [LoginActivate], children: []
-  },*/
-  {
-    path: '',
-    component: LoginComponent, outlet: 'loginOutlet',
-    children: [
-      { path: 'login', component: LoginComponent, outlet: 'loginOutlet' }
-    ]
-  }
+  { path: '', component: MainComponent }
 ];
 
 

@@ -25,10 +25,12 @@
       </div>
       <div class="col-xs-12">
         <h4>Seleccionar fechas disponibles</h4>
+        <div class="form-group">
+          <input class="form-control datetimepicker" placeholder="Datetime Picker Here" type="text">
+        </div>
       </div>
-      <div class="col-xs-12">
-        <app-generic-calendar [config]="configCalendar" [(viewDate)]="viewDate" [(view)]="view" [locale]="locale" [(events)]="events"
-          (viewDateChange)="viewDateChange($event)">
+      <div class="col-xs-12" *ngIf="cargado">
+        <app-generic-calendar [configCalendario]="configCalendario">
         </app-generic-calendar>
       </div>
     </mat-tab>

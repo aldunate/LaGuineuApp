@@ -4,7 +4,7 @@ import { Component, OnInit, ChangeDetectorRef, KeyValueDiffers, EventEmitter, Ou
 import { MonitorService } from '../service/monitor.service';
 import { Router } from '@angular/router';
 import { ActivatedRoute } from '@angular/router';
-import { GlobalVar, UtilFechas, MultiSelect } from '../../util/global';
+import { GlobalVar, UtilFechas, MultiSelect, ConfigCalendario, UtilCalendario } from '../../util/global';
 import { FormControl } from '@angular/forms';
 
 import { ChangeDetectionStrategy } from '@angular/core';
@@ -35,18 +35,9 @@ export class EditarMonitorComponent implements OnInit {
   estacionesSelect = [];
   estLength = 0;
   confSelEst: any;
-  configCalendar = {
-    headerRight: false
-  };
-  refresh: Subject<any> = new Subject();
-  utils: CalendarUtils;
-  viewMonth: MonthView;
 
   // angular calendar
-  view = 'month';
-  viewDate = new Date();
-  events: CalendarEvent[] = [];
-  locale = 'es';
+  configCalendario = new ConfigCalendario();
   // personal
   cambios = false;
   titulacionList = [
@@ -55,12 +46,12 @@ export class EditarMonitorComponent implements OnInit {
     { id: 3, name: 'TD3' },
   ];
   differ: any;
+  cargado = false;
 
   constructor(private monitorService: MonitorService,
     private router: Router, private route: ActivatedRoute, private estacionService: EstacionService) {
     const aux = this.router.url.split('/');
     this.idMonitor = Number.parseInt(aux[aux.length - 1]);
-
     this.getMonitor();
     this.iniMuro();
     this.iniCalendario();
@@ -80,40 +71,30 @@ export class EditarMonitorComponent implements OnInit {
       titulo: ''
     };
 
-    this.monitorService.getMonitor(this.idMonitor, function (monitor) {
-      monitor.titulo = '';
-      for (let i = 0; i < monitor.Titulos.length; i++) {
-        monitor.titulo += ' ' + monitor.Titulos[i].Titulo;
-      }
-      this.monitor = monitor;
-      this.monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
-      this.monitor.edad += ' años';
-      if (this.monitor.FortoPerfil !== undefined) {
-        this.imgConf.src = '../../../assets/img/perfiles/' + monitor.FotoPerfil;
-      }
-      // Monitor disponible
-      const fechasDisponibles = []; // this.monitor.FechasDisponibles;
-      for (let i = 0; i < this.monitor.FechasDisponibles.length; i++) {
-        fechasDisponibles.push({
-          start: new Date(this.monitor.FechasDisponibles[i].FechaEvento),
-          allDay: true,
-          title: 'Disponible',
-          color: {
-            primary: '#e3bc08',
-            secondary: '#FDF1BA'
-          }
-        });
-      }
-      this.events = fechasDisponibles;
-      this.refresh.next();
-      // Monitor Estaciones
-      for (let i = 0; i < this.monitor.EstacionesDisponibles.length; i++) {
-        const IdEstacion = this.monitor.EstacionesDisponibles[i].IdEstacion;
-        this.estacionesSelect.push(this.confSelEst.myOptions.find(
-          x => x.id === IdEstacion));
-        this.confSelEst.optionsModel.push(this.monitor.EstacionesDisponibles[i].IdEstacion);
-      }
-    }.bind(this));
+    this.monitorService.getMonitor(this.idMonitor,
+      function (monitor) {
+        monitor.titulo = '';
+        for (let i = 0; i < monitor.Titulos.length; i++) {
+          monitor.titulo += ' ' + monitor.Titulos[i].Titulo;
+        }
+        this.monitor = monitor;
+        this.monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
+        this.monitor.edad += ' años';
+        if (this.monitor.FortoPerfil !== undefined) {
+          this.imgConf.src = '../../../assets/img/perfiles/' + monitor.FotoPerfil;
+        }
+        // Monitor disponible
+        this.configCalendario.events = UtilCalendario.iniEvents(this.monitor.FechasDisponibles, 'Disponible');
+        this.configCalendario.trigger.next(this.configCalendario.events);
+        this.cargado = true;
+        // Monitor Estaciones
+        for (let i = 0; i < this.monitor.EstacionesDisponibles.length; i++) {
+          const IdEstacion = this.monitor.EstacionesDisponibles[i].IdEstacion;
+          this.estacionesSelect.push(this.confSelEst.myOptions.find(
+            x => x.id === IdEstacion));
+          this.confSelEst.optionsModel.push(this.monitor.EstacionesDisponibles[i].IdEstacion);
+        }
+      }.bind(this));
   }
 
   // Pestañas
@@ -122,9 +103,27 @@ export class EditarMonitorComponent implements OnInit {
 
   /* Calendario */
   iniCalendario() {
+    $('.datepicker').datetimepicker({
+      format: 'MM/DD/YYYY',
+      icons: {
+          time: 'fa fa-clock-o',
+          date: 'fa fa-calendar',
+          up: 'fa fa-chevron-up',
+          down: 'fa fa-chevron-down',
+          previous: 'fa fa-chevron-left',
+          next: 'fa fa-chevron-right',
+          today: 'fa fa-screenshot',
+          clear: 'fa fa-trash',
+          close: 'fa fa-remove',
+          inline: true
+      }
+   });
+    this.configCalendario.vistas.headerRight = false;
+    this.configCalendario.vistas.selectMonth = true;
+    this.configCalendario = UtilCalendario.iniCalendario(this.configCalendario);
     this.estacionService.getEstaciones(this.respGetEstaciones.bind(this));
-
   }
+
   viewDateChange($event) {
     const x = 1;
   }
@@ -133,6 +132,7 @@ export class EditarMonitorComponent implements OnInit {
     this.estaciones.forEach(function (v) { delete v.Contry; delete v.IdDefecto; delete v.Notes; });
     this.confSelEst.myOptions = MultiSelect.iniDataModel(this.estaciones, 'Id', 'Name');
   }
+
 
   onChangeEstaciones(estacion) {
     if (estacion.length > 0) {
@@ -161,24 +161,22 @@ export class EditarMonitorComponent implements OnInit {
     delete this.monitor.edad;
     delete this.monitor.titulo;
     this.monitor.Opcion = 'Calendario';
-    for (let i = 0; i < this.estacionesSelect.length; i++) {
+    for (const estacion of this.estacionesSelect) {
       this.monitor.EstacionesDisponibles.push({
-        IdEstacion: this.estacionesSelect[i].id,
+        IdEstacion: estacion.id,
         idMonitor: this.monitor.Id,
         Id: 0
       });
     }
-    for (let i = 0; i < this.events.length; i++) {
+    /*for (const evento of this.configCalendario.events) {
       this.monitor.FechasDisponibles.push({
-        FechaEvento: new Date(this.events[i].start),
+        FechaEvento: new Date(evento.start),
         IdMonitor: this.monitor.Id,
         Id: 0
       });
-    }
-    this.monitorService.saveCalendario(this.monitor, this.respSaveCalendario.bind(this));
-  }
-
-  respSaveCalendario(eventos) {
+    }*/
+    this.monitorService.saveCalendario(this.monitor, function (eventos) {
+    }.bind(this));
   }
 
   // PERSONAL

@@ -2,11 +2,11 @@
     border: 0.5px solid rgba(0, 0, 0, 0.11);
 }
 .noDisponibleCell {
-    background-color: rgb(148, 11, 34) !important;
+    background-color: rgb(97, 9, 24) !important;
   }
 
 .disponibleCell {
-    background-color: rgb(13, 102, 17) !important;
+    background-color: rgb(3, 97, 8) !important;
   }
 
   .calendarCell:hover{
@@ -16,6 +16,5 @@
     }
 
     .calendarCell:hover span{
-      visibility: visible!important;  
+      visibility: visible!important;
     }
-  

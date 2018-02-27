@@ -1,52 +1,56 @@
-<div class="row">
-  <div class="col-xs-12" style="margin-bottom: 2%;margin-top: 2%;">
-    <div class="col-xs-12" style="text-align: center;font-weight:bold;">
-      <h4>{{ viewDate | calendarDate:(view + 'ViewTitle'):'es' | uppercase }} </h4>
-      <div ></div>
-    </div>
-    <div class="col-xs-12" style="text-align: center">
-      <div class="btn-group">
-        <div class="btn btn-primary" mwlCalendarPreviousView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
-          Anterior
-        </div>
-        <div class="btn btn-default" mwlCalendarToday [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
-          Actual
-        </div>
-        <div class="btn btn-primary" mwlCalendarNextView [view]="view" [(viewDate)]="viewDate" (viewDateChange)="viewDateChange.next(viewDate)">
-          Siguiente
+<div>
+  <div class="row">
+    <div class="col-xs-12" style="margin-bottom: 2%;margin-top: 2%;">
+      <div class="col-xs-12" style="text-align: center;font-weight:bold;">
+        <h4>{{ configCalendario.viewDate | calendarDate:(configCalendario.view + 'ViewTitle'):'es' | uppercase }} </h4>
+      </div>
+      <div class="col-xs-12" style="text-align: center">
+        <div class="btn-group">
+          <div class="btn btn-primary" mwlCalendarPreviousView [view]="configCalendario.view" [(viewDate)]="configCalendario.viewDate"
+            (viewDateChange)="viewDateChange.next(configCalendario.viewDate)">
+            Anterior
+          </div>
+          <div class="btn btn-default" mwlCalendarToday [(viewDate)]="configCalendario.viewDate" (viewDateChange)="viewDateChange.next(configCalendario.viewDate)">
+            Actual
+          </div>
+          <div class="btn btn-primary" mwlCalendarNextView [view]="configCalendario.view" [(viewDate)]="configCalendario.viewDate"
+            (viewDateChange)="viewDateChange.next(configCalendario.viewDate)">
+            Siguiente
+          </div>
         </div>
       </div>
-    </div>
-
-    <div class="col-xs-12" style="text-align: right" *ngIf="config.headerRight">
-      <div class="btn-group">
-        <div class="btn btn-primary" (click)="viewChange.emit('month')" [class.active]="view === 'month'">
-          Mes
-        </div>
-        <div class="btn btn-primary" (click)="viewChange.emit('week')" [class.active]="view === 'week'">
-          Semana
-        </div>
-        <div class="btn btn-primary" (click)="viewChange.emit('day')" [class.active]="view === 'day'">
-          Día
+      <div class="col-xs-12" style="text-align: right" *ngIf="configCalendario.vistas.headerRight">
+        <div class="btn-group">
+          <div class="btn btn-primary" (click)="viewChange.emit('month')" [class.active]="configCalendario.view === 'month'">
+            Mes
+          </div>
+          <div class="btn btn-primary" (click)="viewChange.emit('week')" [class.active]="configCalendario.view === 'week'">
+            Semana
+          </div>
+          <div class="btn btn-primary" (click)="viewChange.emit('day')" [class.active]="configCalendario.view === 'day'">
+            Día
+          </div>
         </div>
       </div>
     </div>
   </div>
-</div>
-<ng-template #customCellTemplate let-day="day" let-locale="locale" let-event="event">
-  <div class="cal-cell-top">
-    <span class="cal-day-number" style="color:white;font-weight: bold;">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+  <ng-template #customCellTemplate let-day="day" let-locale="locale" let-event="event">
+    <div class="cal-cell-top">
+      <span class="cal-day-number" style="color:white;font-weight: bold;font-size:x-large;">{{ day.date | calendarDate:'monthViewDayNumber':locale }}</span>
+    </div>
+    <span style="visibility:hidden;color:white;font-weight: bold; text-align: center;font-size:large;">Cambiar disponibilidad</span>
+  </ng-template>
+  <div [ngSwitch]="configCalendario.view">
+    <mwl-calendar-month-view *ngSwitchCase="'month'" []
+    [viewDate]="configCalendario.viewDate" [events]="configCalendario.events"
+      [locale]="configCalendario.locale"
+      [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (dayClicked)="dayClicked($event)"
+      (beforeViewRender)="beforeMonthViewRender($event)" [cellTemplate]="customCellTemplate">
+    </mwl-calendar-month-view>
+    <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="configCalendario.viewDate" [events]="configCalendario.events"
+      [locale]="configCalendario.locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays">
+    </mwl-calendar-week-view>
+    <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="configCalendario.viewDate" [events]="configCalendario.events" [locale]="configCalendario.locale">
+    </mwl-calendar-day-view>
   </div>
-  <span style="visibility:hidden;color:white;font-weight: bold; text-align: center;">Cambiar disponibilidad</span>
-</ng-template>
-
-<div [ngSwitch]="view">
-  <mwl-calendar-month-view *ngSwitchCase="'month'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
-    [weekendDays]="weekendDays" (dayClicked)="dayClicked($event)" (beforeViewRender)="beforeMonthViewRender($event)" [cellTemplate]="customCellTemplate">
-  </mwl-calendar-month-view>
-  <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="viewDate" [events]="events" [locale]="locale" [weekStartsOn]="weekStartsOn"
-    [weekendDays]="weekendDays">
-  </mwl-calendar-week-view>
-  <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="viewDate" [events]="events" [locale]="locale">
-  </mwl-calendar-day-view>
 </div>

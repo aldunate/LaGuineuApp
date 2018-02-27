@@ -9,11 +9,14 @@ export class CustomDateFormatter extends CalendarDateFormatter {
     return `Semana ${weekNumber} del ${year}`;
   }
 }
-import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewEncapsulation } from '@angular/core';
+import { Component, Input, Output, EventEmitter, ChangeDetectionStrategy, ViewEncapsulation, OnInit, ViewChildren } from '@angular/core';
 import * as moment from 'moment';
 import { DAYS_OF_WEEK } from 'angular-calendar';
 import { CalendarEvent } from 'angular-calendar';
 import { CalendarMonthViewDay } from 'angular-calendar';
+import { ConfigCalendario } from '../../global';
+import { Subject } from 'rxjs/Subject';
+import { Observable } from 'rxjs/Observable';
 
 export const colors: any = {
   red: {
@@ -30,6 +33,7 @@ export const colors: any = {
   }
 };
 
+
 @Component({
   selector: 'app-generic-calendar',
   styleUrls: ['./generic-calendar.component.css'],
@@ -38,48 +42,49 @@ export const colors: any = {
   encapsulation: ViewEncapsulation.None,
   providers: [{ provide: CalendarDateFormatter, useClass: CustomDateFormatter }]
 })
-export class GenericCalendarComponent {
+export class GenericCalendarComponent implements OnInit {
 
-  utils: CalendarUtils;
-
-  @Input() config: any;
-  @Input() view: string;
-  @Input() viewDate: Date;
-  @Input() locale = 'es';
-  @Input() events: CalendarEvent[];
-  @Output() viewChange: EventEmitter<string> = new EventEmitter();
-  @Output() viewDateChange: EventEmitter<Date> = new EventEmitter();
-
+  @Input() configCalendario: ConfigCalendario;
+  viewChange: EventEmitter<string> = new EventEmitter();
+  viewDateChange: EventEmitter<Date> = new EventEmitter();
+  refresh: Subject<any> = new Subject();
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
 
-  constructor() { }
+  constructor() {
+  }
+
+
+  ngOnInit(): void {
+  }
 
   dayClicked($event) {
     if ($event.day.cssClass === 'noDisponibleCell calendarCell') {
       $event.day.cssClass = 'disponibleCell calendarCell';
-      this.events.push({
+      this.configCalendario.events.push({
         start: $event.day.date,
         allDay: true,
         title: '',
         color: colors.red,
       });
     } else {
-      const index = this.events.findIndex(event => event.start.getTime() === $event.day.date.getTime());
-      this.events.splice(index, 1);
+      const index = this.configCalendario.events.findIndex(event => event.start.getTime() === $event.day.date.getTime());
+      this.configCalendario.events.splice(index, 1);
       $event.day.cssClass = 'noDisponibleCell calendarCell';
     }
+    this.refresh.next();
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
     body.forEach(day => {
-      const found = this.events.find(event => event.start.getTime() === day.date.getTime());
+      const found = this.configCalendario.events.find(event => event.start.getTime() === day.date.getTime());
       if (found !== undefined) {
         day.cssClass = 'disponibleCell calendarCell';
       } else {
         day.cssClass = 'noDisponibleCell calendarCell';
       }
     });
+    this.refresh.next();
   }
 
 }

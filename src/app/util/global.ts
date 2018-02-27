@@ -61,7 +61,7 @@ export const UtilDataTable = Object.freeze({
       dtFiltros: filtros
     };
   },
-  iniFiltro(data, label?, clase?, type?, placeholder?, ) {
+  iniFiltro(data, label?, clase?, type?, placeholder?) {
     if (label === undefined) {
       label = data;
     }
@@ -85,21 +85,55 @@ export const UtilDataTable = Object.freeze({
   }
 });
 
+export class ConfigCalendario {
+  vistas = {
+    headerRight: true,
+    selectMonth: false
+  };
+  view = 'month';
+  viewDate: Date = new Date();
+  locale = 'es';
+  events$: Observable<Array<{ events: any }>>;
+  events: CalendarEvent[] = [];
+  trigger = new Subject();
+  constructor() {
+  }
+}
 
 export const UtilCalendario = Object.freeze({
-  colors: {
-    red: {
-      primary: '#ad2121',
-      secondary: '#FAE3E3'
-    },
-    blue: {
-      primary: '#1e90ff',
-      secondary: '#D1E8FF'
-    },
-    yellow: {
-      primary: '#e3bc08',
-      secondary: '#FDF1BA'
+  // No lo uso por ahora
+  iniCalendario(config: ConfigCalendario) {
+    if (config.locale == null) {
+      config.locale = 'es';
     }
+    if (config.viewDate == null) {
+      config.viewDate = new Date();
+    }
+    if (config.view == null) {
+      config.view = 'month';
+    }
+    if (config.vistas.headerRight == null) {
+      config.vistas.headerRight = true;
+    }
+    if (config.vistas.selectMonth == null) {
+      config.vistas.selectMonth = false;
+    }
+    return config;
+  },
+  iniEvents(eventos, title) {
+    const events = [];
+    for (const fechaDisponible of eventos) {
+      events.push({
+        start: new Date(fechaDisponible.FechaEvento),
+        allDay: true,
+        title: title,
+        color: {
+          primary: '#e3bc08',
+          secondary: '#FDF1BA'
+        }
+      });
+    }
+    return events;
   }
 });
 
@@ -140,6 +174,8 @@ export const UtilFechas = Object.freeze({
 });
 
 import { IMultiSelectSettings, IMultiSelectOption, IMultiSelectTexts } from 'angular-2-dropdown-multiselect';
+import { CalendarEvent } from 'calendar-utils';
+import { Observable } from 'rxjs/Observable';
 
 export class ConfMultiSelect {
   dataModel: any[];  // Datos
