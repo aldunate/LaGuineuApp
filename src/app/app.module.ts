@@ -11,7 +11,7 @@ import { RouterModule, Routes } from '@angular/router';
 
 // Plugins
 // Angular Material
-import { MaterialAngularModule, MY_FORMATS } from './util/plugins/material/materialAngular';
+import { MaterialAngularModule, MY_FORMATS } from './util/module/materialAngular';
 import { MatNativeDateModule, MAT_DATE_FORMATS, MAT_DATE_LOCALE, DateAdapter } from '@angular/material';
 import 'hammerjs';
 // Multiselect
@@ -21,6 +21,8 @@ import { DataTablesModule } from 'angular-datatables';
 
 // Adolfo Plugins
 import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
+// Ng PRime
+
 
 // Components adolfo
 import { AppComponent } from './app.component';
@@ -63,6 +65,8 @@ import { MonitoresComponent } from './monitor/monitores/monitores.component';
 import { FieldErrorComponent } from './util/generic/field-error/field-error.component';
 import { LoginLayoutComponent } from './util/layout/login.layout';
 import { HomeLayoutComponent } from './util/layout/home.layout';
+import { PrimeNGModule } from './util/module/primeNGModule';
+import { MonitorAjustesComponent } from './monitor/monitor-ajustes/monitor-ajustes.component';
 
 registerLocaleData(localeEs);
 
@@ -92,12 +96,14 @@ registerLocaleData(localeEs);
     DatatableGenericComponent,
     SideBarComponent,
     MonitoresComponent,
-    FieldErrorComponent
+    FieldErrorComponent,
+    MonitorAjustesComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
     Route,
     MatNativeDateModule, MaterialAngularModule,
+    PrimeNGModule,
     ReactiveFormsModule,
     MultiselectDropdownModule,
     //  Calendar

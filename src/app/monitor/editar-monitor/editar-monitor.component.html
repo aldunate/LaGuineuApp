@@ -1,51 +1,68 @@
 <div class="col-xs-12">
   <mat-tab-group>
-    <mat-tab label="CALENDARIO">
-      <div class="col-md-12 contPestanya">
-        <div class="col-xs-12">
-          <button type="button" class="btn btn-success btn-fill" (click)="saveCalendario()">Guardar cambios</button>
-        </div>
-        <div class="col-xs-12">
-          <h4>Seleccionar estaciones disponibles</h4>
-        </div>
-        <div class="col-md-4">
-          <label>Estaciones</label>
-          <br>
-          <ss-multiselect-dropdown [options]="confSelEst.myOptions" [(ngModel)]="confSelEst.optionsModel" [settings]="confSelEst.mySettings"
-            (ngModelChange)="onChangeEstaciones($event)" [texts]="confSelEst.myTexts">
-          </ss-multiselect-dropdown>
-        </div>
-        <div class="col-md-8">
-          <label style="margin-bottom:15px;"> Estaciones agregadas</label>
-          <br>
-          <div class="selectedItem" style="margin-right:1px;" *ngFor="let item of estacionesSelect">
-            <div>{{item.name}}</div>
-          </div>
-        </div>
-      </div>
-      <div class="col-xs-12">
-        <h4>Seleccionar fechas disponibles</h4>
-        <div class="form-group">
-          <input class="form-control datetimepicker" placeholder="Datetime Picker Here" type="text">
-        </div>
-      </div>
-      <div class="col-xs-12" *ngIf="cargado">
-        <app-generic-calendar [configCalendario]="configCalendario">
-        </app-generic-calendar>
+    <mat-tab label="AJUSTES">
+      <div *ngIf="monitorCargado">
+        <app-monitor-ajustes [monitor]="monitor"></app-monitor-ajustes>
       </div>
     </mat-tab>
     <mat-tab label="MURO">
       ESTAS EN EL MURO
     </mat-tab>
     <mat-tab label="PERSONAL">
-      <div class="col-md-12">
-        <div class="col-sm-12 text-center">
-          <app-generic-img-upload [(imgConf)]="imgConf"></app-generic-img-upload>
-        </div>
-        <div class="col-md-12">
+      <div class="col-md-12 marginTop" *ngIf="monitorCargado">
+        <div class="row">
 
+          <div class="col-md-2 col-xs-12">
+            <app-generic-img-upload [(imgConf)]="imgConf"></app-generic-img-upload>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label>Nombre*</label>
+            <input type="text" [(ngModel)]="monitor.Nombre" class="form-control">
+            <div *ngIf="" class="alert alert-danger">
+              El nombre es obligatorio.
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label>Apellidos*</label>
+            <input type="text" [(ngModel)]="monitor.Apellidos" class="form-control">
+            <div *ngIf="" class="alert alert-danger">
+              Los apellidos son obligatorios.
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label>Email*</label>
+            <input type="email" [(ngModel)]="monitor.Email" class="form-control">
+            <div *ngIf="" class="alert alert-danger">
+              <div *ngIf="">
+                Introduzca un email valido
+              </div>
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label>Teléfono*</label>
+            <input type="tel" [(ngModel)]="monitor.Telefono" class="form-control">
+            <div *ngIf="" class="alert alert-danger">
+              El teléfono es obligatorio.
+            </div>
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label>Fecha Nacimiento</label>
+            <input type="date" [(ngModel)]="monitor.FechaNacimiento" class="form-control">
+          </div>
+          <div class="form-group col-md-4 col-xs-6">
+            <label>Títulos</label>
+            <br>
+            <ss-multiselect-dropdown [options]="selTitulo.dataModel" [(ngModel)]="selTitulo.selectedModel" [settings]="selTitulo.mySettings"
+              [texts]="selTitulo.myTexts" [(ngModel)]="monitor.titulos">
+            </ss-multiselect-dropdown>
+          </div>
+          <div class="btnUpMargin">
+            <button class="btn btn-success btn-lg btn-fill" (click)="savePersonal()" type="button">Guardar datos personales</button>
+          </div>
         </div>
+
       </div>
+      <div style="margin-top: 2%;"></div>
     </mat-tab>
   </mat-tab-group>
 </div>

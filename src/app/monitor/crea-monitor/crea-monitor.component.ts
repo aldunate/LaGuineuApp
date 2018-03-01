@@ -85,7 +85,7 @@ export class CreaMonitorComponent implements OnInit {
           IdTitulo: titulo
         });
       }
-      this.monitorService.crearMonitor(this.monitorForm.value, titulos, { Nombre: this.usuario },
+      this.monitorService.postMonitor(this.monitorForm.value, titulos, { Nombre: this.usuario },
         function (id) {
           this.router.navigate(['/monitor/' + id]);
         }.bind(this));

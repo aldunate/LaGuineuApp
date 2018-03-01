@@ -1,0 +1,40 @@
+<div class="">
+  <button type="button" class="btn btn-success btn-fill" style="text-align: right;margin-top:3%;" (click)="saveCalendario()">Guardar</button>
+  <div class="col-xs-12">
+    <h4>Seleccionar estaciones disponibles</h4>
+  </div>
+  <div class="form-group col-md-3">
+    <label>Estaciones</label>
+    <br>
+    <ss-multiselect-dropdown [options]="confSelEst.dataModel" [(ngModel)]="confSelEst.selectedModel" [settings]="confSelEst.mySettings"
+      [texts]="confSelEst.myTexts" (ngModelChange)="changeMultiselect($event)">
+    </ss-multiselect-dropdown>
+  </div>
+  <div class="col-md-9">
+    <label style="margin-bottom:15px;"> Estaciones agregadas</label>
+    <br>
+    <div class="selectedItem" *ngFor="let item of etiquetas">
+      <span> {{item.name}}
+      </span>
+    </div>
+  </div>
+</div>
+<div>
+  <h4>Seleccionar fechas disponibles</h4>
+  <div class="col-xs-6 col-md-4">
+    <label>Inicio</label>
+    <br>
+    <p-calendar class="pCalendarDatePicker" [(ngModel)]="datePickerInicio.date" [locale]="datePickerInicio.locale" dateFormat="dd/mm/yy"
+      [showIcon]="true" (onSelect)="changeDatePicker($event,'inicio')"></p-calendar>
+  </div>
+  <div class="col-xs-6 col-md-4">
+    <label class="control-label">Fin</label>
+    <br>
+    <p-calendar (onSelect)="changeDatePicker($event,'fin')" class="pCalendarDatePicker" [(ngModel)]="datePickerFin.date" [locale]="datePickerFin.locale"
+      [minDate]="datePickerInicio.date" dateFormat="dd/mm/yy" [showIcon]="true"></p-calendar>
+  </div>
+</div>
+<div class="col-xs-12">
+  <app-generic-calendar [configCalendario]="configCalendario">
+  </app-generic-calendar>
+</div>

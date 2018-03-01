@@ -7,7 +7,8 @@ import { GlobalVar } from '../../util/global';
 export class MonitorService {
   monitor: any;
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
-  crearMonitor(monitor, titulos, usuario, respuesta) {
+
+  postMonitor(monitor, titulos, usuario, respuesta) {
     delete monitor.titulos;
     this.http.post(GlobalVar.uriApi + 'monitor', {
       Monitor: monitor,

@@ -47,15 +47,19 @@ export class GenericCalendarComponent implements OnInit {
   @Input() configCalendario: ConfigCalendario;
   viewChange: EventEmitter<string> = new EventEmitter();
   viewDateChange: EventEmitter<Date> = new EventEmitter();
-  refresh: Subject<any> = new Subject();
   weekStartsOn: number = DAYS_OF_WEEK.MONDAY;
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
+  body: CalendarMonthViewDay[];
 
+  refresh: Subject<any> = new Subject();
   constructor() {
   }
 
 
   ngOnInit(): void {
+    this.configCalendario.trigger.subscribe(x => {
+      this.refresh.next();
+    });
   }
 
   dayClicked($event) {
@@ -76,6 +80,7 @@ export class GenericCalendarComponent implements OnInit {
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
+    this.body = body;
     body.forEach(day => {
       const found = this.configCalendario.events.find(event => event.start.getTime() === day.date.getTime());
       if (found !== undefined) {

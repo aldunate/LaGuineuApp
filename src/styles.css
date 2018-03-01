@@ -73,3 +73,16 @@ td{
   ss-multiselect-dropdown button{
     width: 100%!important;
   }
+
+
+  .btnUpMargin{
+    margin-top:1%;
+    margin-bottom:1%;
+    margin-right: 3%;
+    text-align: right;
+  }
+
+  .marginTop{
+    margin-top:1%;
+    margin-bottom:1%;
+  }

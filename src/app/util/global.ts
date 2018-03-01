@@ -99,6 +99,22 @@ export class ConfigCalendario {
   constructor() {
   }
 }
+export class DatePicker {
+  locale = {
+    firstDayOfWeek: 1,
+    dayNames: ['domingo', 'lunes', 'martes', 'miércoles', 'jueves', 'viernes', 'sábado'],
+    dayNamesShort: ['dom', 'lun', 'mar', 'mié', 'jue', 'vie', 'sáb'],
+    dayNamesMin: ['D', 'L', 'M', 'X', 'J', 'V', 'S'],
+    monthNames: ['enero', 'febrero', 'marzo', 'abril', 'mayo', 'junio', 'julio', 'agosto', 'septiembre', 'octubre', 'noviembre',
+      'diciembre'],
+    monthNamesShort: ['ene', 'feb', 'mar', 'abr', 'may', 'jun', 'jul', 'ago', 'sep', 'oct', 'nov', 'dic'],
+    today: 'Hoy',
+    clear: 'Borrar'
+  };
+  date: Date;
+
+  constructor() { }
+}
 
 export const UtilCalendario = Object.freeze({
   // No lo uso por ahora
@@ -204,12 +220,12 @@ export const MultiSelect = Object.freeze({
       searchNoRenderText: 'Sin resultados...',
       defaultTitle: 'Seleccionar ' + labelPlural
     };
-    return {
-      dataModel: [],  // Datos
-      selectedModel: [],  // Datos seleccionados
-      mySettings: mySettings,
-      myTexts: myTexts,
-    };
+    const aux = new ConfMultiSelect;
+    aux.mySettings = mySettings;
+    aux.myTexts = myTexts;
+    aux.selectedModel = [];
+    aux.dataModel = [];
+    return aux;
 
   },
   iniSingleSelect(labelSingular, search) {
@@ -238,6 +254,7 @@ export const MultiSelect = Object.freeze({
       searchNoRenderText: 'Sin resultados...',
       defaultTitle: 'Seleccionar ' + labelSingular
     };
+
     return {
       myOptions: myOptions,
       optionsModel: optionsModel,

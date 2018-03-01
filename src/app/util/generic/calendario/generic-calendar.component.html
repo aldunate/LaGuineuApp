@@ -41,16 +41,14 @@
     <span style="visibility:hidden;color:white;font-weight: bold; text-align: center;font-size:large;">Cambiar disponibilidad</span>
   </ng-template>
   <div [ngSwitch]="configCalendario.view">
-    <mwl-calendar-month-view *ngSwitchCase="'month'" []
-    [viewDate]="configCalendario.viewDate" [events]="configCalendario.events"
-      [locale]="configCalendario.locale"
-      [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (dayClicked)="dayClicked($event)"
+    <mwl-calendar-month-view *ngSwitchCase="'month'" [refresh]="configCalendario.trigger" [viewDate]="configCalendario.viewDate" [events]="configCalendario.events"
+      [locale]="configCalendario.locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays" (dayClicked)="dayClicked($event)"
       (beforeViewRender)="beforeMonthViewRender($event)" [cellTemplate]="customCellTemplate">
     </mwl-calendar-month-view>
-    <mwl-calendar-week-view *ngSwitchCase="'week'" [viewDate]="configCalendario.viewDate" [events]="configCalendario.events"
+    <mwl-calendar-week-view *ngSwitchCase="'week'" [refresh]="configCalendario.trigger"  [viewDate]="configCalendario.viewDate" [events]="configCalendario.events"
       [locale]="configCalendario.locale" [weekStartsOn]="weekStartsOn" [weekendDays]="weekendDays">
     </mwl-calendar-week-view>
-    <mwl-calendar-day-view *ngSwitchCase="'day'" [viewDate]="configCalendario.viewDate" [events]="configCalendario.events" [locale]="configCalendario.locale">
+    <mwl-calendar-day-view *ngSwitchCase="'day'" [refresh]="configCalendario.trigger" [viewDate]="configCalendario.viewDate" [events]="configCalendario.events" [locale]="configCalendario.locale">
     </mwl-calendar-day-view>
   </div>
 </div>
