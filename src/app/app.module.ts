@@ -30,7 +30,7 @@ import { RegistroComponent } from './auth/registro/registro.component';
 import { MainComponent } from './main/main/main.component';
 import { NavBarComponent } from './main/nav-bar/nav-bar.component';
 import { LoginComponent } from './auth/login/login.component';
-import { CreaMonitorComponent } from './monitor/crea-monitor/crea-monitor.component';
+import { MonitorCreaComponent } from './monitor/monitor-crea/monitor-crea.component';
 import { Route } from './app.route';
 import { UsuarioService } from './usuario/service/usuario.service';
 import { TokenService } from './auth/service/token.service';
@@ -38,7 +38,7 @@ import { BackendInterceptor } from './auth/service/backend.interceptor';
 import { LoginActivate } from './auth/service/login-activate.interceptor';
 import { MonitorService } from './monitor/service/monitor.service';
 import { AuthService } from './auth/service/auth.service';
-import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.component';
+import { MonitorComponent } from './monitor/monitor/monitor.component';
 
 import { CommonModule } from '@angular/common';
 import { CalendarModule } from 'angular-calendar';
@@ -67,6 +67,7 @@ import { LoginLayoutComponent } from './util/layout/login.layout';
 import { HomeLayoutComponent } from './util/layout/home.layout';
 import { PrimeNGModule } from './util/module/primeNGModule';
 import { MonitorAjustesComponent } from './monitor/monitor-ajustes/monitor-ajustes.component';
+import { MonitorPersonalComponent } from './monitor/monitor-personal/monitor-personal.component';
 
 registerLocaleData(localeEs);
 
@@ -77,13 +78,10 @@ registerLocaleData(localeEs);
     MainComponent,
     NavBarComponent,
     LoginComponent,
-    CreaMonitorComponent,
+    MonitorCreaComponent,
     ImgUploadComponent,
     LoginLayoutComponent,
     HomeLayoutComponent,
-    //  TableGenericComponent,
-    EditarMonitorComponent,
-    // Calendar
     GenericCalendarComponent,
     NuevaEscuelaComponent,
     EditarEscuelaComponent,
@@ -97,7 +95,9 @@ registerLocaleData(localeEs);
     SideBarComponent,
     MonitoresComponent,
     FieldErrorComponent,
-    MonitorAjustesComponent
+    MonitorAjustesComponent,
+    MonitorComponent,
+    MonitorPersonalComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,

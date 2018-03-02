@@ -51,15 +51,11 @@ export class GenericCalendarComponent implements OnInit {
   weekendDays: number[] = [DAYS_OF_WEEK.FRIDAY, DAYS_OF_WEEK.SATURDAY];
   body: CalendarMonthViewDay[];
 
-  refresh: Subject<any> = new Subject();
   constructor() {
   }
 
 
   ngOnInit(): void {
-    this.configCalendario.trigger.subscribe(x => {
-      this.refresh.next();
-    });
   }
 
   dayClicked($event) {
@@ -76,7 +72,6 @@ export class GenericCalendarComponent implements OnInit {
       this.configCalendario.events.splice(index, 1);
       $event.day.cssClass = 'noDisponibleCell calendarCell';
     }
-    this.refresh.next();
   }
 
   beforeMonthViewRender({ body }: { body: CalendarMonthViewDay[] }): void {
@@ -89,7 +84,7 @@ export class GenericCalendarComponent implements OnInit {
         day.cssClass = 'noDisponibleCell calendarCell';
       }
     });
-    this.refresh.next();
+    // this.refresh.next();
   }
 
 }

@@ -13,7 +13,6 @@ import { MonthView } from 'calendar-utils';
 import { EscuelaService } from '../service/escuela.service';
 import { MonitorService } from '../../monitor/service/monitor.service';
 import { forEach } from '@angular/router/src/utils/collection';
-import { Monitor } from '../../util/model/monitor';
 import { EstacionService } from '../../estacion/service/estacion.service';
 
 
@@ -36,7 +35,7 @@ export class GestionEscuelaComponent implements OnInit {
   Monitores: any;
   imgConf = {
     src: '../../../assets/img/sinPerfil-660x660.png',
-    class: 'image img-rounded img-responsive img200x200',
+    class: 'image img-rounded img-responsive',
     style: ''
   };
 

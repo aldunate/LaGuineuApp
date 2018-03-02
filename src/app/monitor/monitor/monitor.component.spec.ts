@@ -1,20 +1,20 @@
 import { async, ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { EditarMonitorComponent } from './editar-monitor.component';
+import { MonitorComponent } from './monitor.component';
 
-describe('EditarMonitorComponent', () => {
-  let component: EditarMonitorComponent;
-  let fixture: ComponentFixture<EditarMonitorComponent>;
+describe('MonitorComponent', () => {
+  let component: MonitorComponent;
+  let fixture: ComponentFixture<MonitorComponent>;
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ EditarMonitorComponent ]
+      declarations: [ MonitorComponent ]
     })
     .compileComponents();
   }));
 
   beforeEach(() => {
-    fixture = TestBed.createComponent(EditarMonitorComponent);
+    fixture = TestBed.createComponent(MonitorComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });

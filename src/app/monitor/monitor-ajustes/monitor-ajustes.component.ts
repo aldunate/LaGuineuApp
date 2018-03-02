@@ -11,11 +11,13 @@ import { CalendarEvent } from 'calendar-utils';
 })
 export class MonitorAjustesComponent implements OnInit {
 
-  @Input() monitor: any;
+  monitor: any;
 
   // Estaciones
+  menuAbierto = null;
   etiquetas: any;
   confSelEst: ConfMultiSelect;
+  panelOpenState = false;
   // Calendario
   configCalendario = new ConfigCalendario();
   datePickerInicio = new DatePicker();
@@ -23,7 +25,10 @@ export class MonitorAjustesComponent implements OnInit {
 
   constructor(private monitorService: MonitorService, private estacionService: EstacionService, ) {
     this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
-    this.iniCalendario();
+    this.monitorService.monitor$.subscribe(monitor => {
+      this.monitor = monitor;
+      this.iniCalendario();
+    });
   }
 
   ngOnInit() {

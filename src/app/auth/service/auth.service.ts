@@ -8,6 +8,7 @@ export class AuthService {
 
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
+
   login(usuario, password, respuesta) {
     this.http.post(GlobalVar.uriApi + 'login', {
       'Password': password,

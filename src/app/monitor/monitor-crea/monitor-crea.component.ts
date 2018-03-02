@@ -1,29 +1,22 @@
 import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Output } from '@angular/core';
 import { TokenService } from '../../auth/service/token.service';
 import { HttpClient } from '@angular/common/http';
-import { MonitorService } from '../service/monitor.service';
+import { MonitorService, Monitor } from '../service/monitor.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
-
 // Material Angular
 import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
-// import { MAT_MOMENT_DATE_FORMATS, MomentDateAdapter } from '@angular/material-moment-adapter';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
-import { Monitor } from '../../util/model/monitor';
 import { ConfMultiSelect, MultiSelect } from '../../util/global';
 import { UtilService } from '../../util/service/util.service';
-// import * as _moment from 'moment';
-// const moment = _moment;
-
-
 
 @Component({
-  selector: 'app-crea-monitor',
-  templateUrl: './crea-monitor.component.html',
-  styleUrls: ['./crea-monitor.component.css']
+  selector: 'app-monitor-crea',
+  templateUrl: './monitor-crea.component.html',
+  styleUrls: ['./monitor-crea.component.css']
 })
-export class CreaMonitorComponent implements OnInit {
+export class MonitorCreaComponent implements OnInit {
 
   correcto = false;
   monitor = new Monitor();
@@ -85,7 +78,8 @@ export class CreaMonitorComponent implements OnInit {
           IdTitulo: titulo
         });
       }
-      this.monitorService.postMonitor(this.monitorForm.value, titulos, { Nombre: this.usuario },
+      this.monitorService.postMonitor(this.monitorForm.value, titulos,
+        { Nombre: this.usuario, Email: this.monitorForm.value.email },
         function (id) {
           this.router.navigate(['/monitor/' + id]);
         }.bind(this));

@@ -3,8 +3,7 @@ import { Routes, RouterModule } from '@angular/router';
 import { RegistroComponent } from './auth/registro/registro.component';
 import { MainComponent } from './main/main/main.component';
 import { LoginComponent } from './auth/login/login.component';
-import { CreaMonitorComponent } from './monitor/crea-monitor/crea-monitor.component';
-import { EditarMonitorComponent } from './monitor/editar-monitor/editar-monitor.component';
+import { MonitorCreaComponent } from './monitor/monitor-crea/monitor-crea.component';
 import { EditarEscuelaComponent } from './escuela/editar-escuela/editar-escuela.component';
 import { NuevaEscuelaComponent } from './escuela/nueva-escuela/nueva-escuela.component';
 import { GestionEscuelaComponent } from './escuela/gestion-escuela/gestion-escuela.component';
@@ -15,6 +14,7 @@ import { LoginActivate } from './auth/service/login-activate.interceptor';
 import { LoginLayoutComponent } from './util/layout/login.layout';
 import { AppComponent } from './app.component';
 import { HomeLayoutComponent } from './util/layout/home.layout';
+import { MonitorComponent } from './monitor/monitor/monitor.component';
 
 
 declare interface RouteInfo {
@@ -32,9 +32,9 @@ export const ROUTES: RouteInfo[] = [
 
 const appRoutes: Routes = [
   { path: 'registro', component: RegistroComponent },
-  { path: 'crea-monitor', component: CreaMonitorComponent },
+  { path: 'crea-monitor', component: MonitorCreaComponent },
   { path: 'monitores', component: MonitoresComponent, canActivate: [LoginActivate] },
-  { path: 'monitor/:id', component: EditarMonitorComponent },
+  { path: 'monitor/:id', component: MonitorComponent },
   { path: 'escuela', component: EditarEscuelaComponent },
   { path: 'gestion-escuela', component: GestionEscuelaComponent },
   { path: 'nueva-escuela', component: NuevaEscuelaComponent },

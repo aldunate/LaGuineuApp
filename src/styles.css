@@ -3,6 +3,29 @@
 @import "~angular-calendar/css/angular-calendar.css";
 @import "../node_modules/datatables.net-dt/css/jquery.dataTables.css";
 
+.imgUpload{
+  max-width: 200px!important;
+  max-height: 200px!important;
+}
+
+.btnUpMargin{
+  margin-top:1%;
+  margin-bottom:1%;
+}
+
+.marginTop{
+  margin-top:1%;
+  margin-bottom:1%;
+}
+
+
+.divMenuDropdown{
+  font-size: large!important;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+
 .navbar{
   margin: 0px!important;
   padding: 0px!important;
@@ -74,15 +97,3 @@ td{
     width: 100%!important;
   }
 
-
-  .btnUpMargin{
-    margin-top:1%;
-    margin-bottom:1%;
-    margin-right: 3%;
-    text-align: right;
-  }
-
-  .marginTop{
-    margin-top:1%;
-    margin-bottom:1%;
-  }
