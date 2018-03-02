@@ -1,12 +1,12 @@
-<div class="col-xs-12" >
+<div class="">
   <mat-tab-group>
-    <mat-tab label="AJUSTES">
-      <div class="col-xs-12 marginTop" *ngIf="monitorCargado">
-        <app-monitor-ajustes ></app-monitor-ajustes>
-      </div>
-    </mat-tab>
     <mat-tab label="MURO">
       ESTAS EN EL MURO
+    </mat-tab>
+    <mat-tab label="AJUSTES">
+      <div class="col-xs-12 marginTop" *ngIf="monitorCargado">
+        <app-monitor-ajustes></app-monitor-ajustes>
+      </div>
     </mat-tab>
     <mat-tab label="PERSONAL">
       <div class="col-xs-12 marginTop" *ngIf="monitorCargado">

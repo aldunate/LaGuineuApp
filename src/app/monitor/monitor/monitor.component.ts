@@ -32,9 +32,11 @@ export class MonitorComponent implements OnInit {
     this.monitorService.getMonitor(this.idMonitor);
     this.monitorService.monitor$.subscribe(monitor => {
       this.monitor = monitor;
-      this.monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
-      this.monitor.edad += ' años';
-      this.monitorCargado = true;
+      if (monitor.Monitor !== undefined) {
+        this.monitor.Monitor.edad = UtilFechas.calculaEdad(monitor.Monitor.FechaNacimiento);
+        this.monitor.Monitor.edad += ' años';
+        this.monitorCargado = true;
+      }
     });
   }
 

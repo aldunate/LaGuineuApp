@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePicker, ConfigCalendario, ConfMultiSelect, MultiSelect, UtilCalendario } from '../../util/global';
-import { MonitorService } from '../service/monitor.service';
+import { MonitorService, MonitorModel } from '../service/monitor.service';
 import { EstacionService } from '../../estacion/service/estacion.service';
 import { CalendarEvent } from 'calendar-utils';
 
@@ -11,7 +11,7 @@ import { CalendarEvent } from 'calendar-utils';
 })
 export class MonitorAjustesComponent implements OnInit {
 
-  monitor: any;
+  monitor: MonitorModel;
 
   // Estaciones
   menuAbierto = null;
@@ -105,20 +105,17 @@ export class MonitorAjustesComponent implements OnInit {
   saveCalendario() {
     this.monitor.FechasDisponibles = [];
     this.monitor.EstacionesDisponibles = [];
-    delete this.monitor.edad;
-    delete this.monitor.titulo;
-    this.monitor.Opcion = 'Calendario';
     for (const idEstacion of this.confSelEst.selectedModel) {
       this.monitor.EstacionesDisponibles.push({
         IdEstacion: idEstacion,
-        idMonitor: this.monitor.Id,
+        idMonitor: this.monitor.Monitor.Id,
         Id: 0
       });
     }
     for (const evento of this.configCalendario.events) {
       this.monitor.FechasDisponibles.push({
         FechaEvento: new Date(evento.start),
-        IdMonitor: this.monitor.Id,
+        IdMonitor: this.monitor.Monitor.Id,
         Id: 0
       });
     }

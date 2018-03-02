@@ -1,6 +1,6 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { ConfMultiSelect, MultiSelect } from '../../util/global';
-import { MonitorService } from '../service/monitor.service';
+import { MonitorService, MonitorModel } from '../service/monitor.service';
 import { UtilService } from '../../util/service/util.service';
 
 @Component({
@@ -10,15 +10,11 @@ import { UtilService } from '../../util/service/util.service';
 })
 export class MonitorPersonalComponent implements OnInit {
 
-  monitor: any;
-  usuario = {
-    Nombre: '',
-    Email: ''
-  };
+  monitor: MonitorModel;
   selTitulo: ConfMultiSelect;
   imgConf = {
     src: '../../../assets/img/sinPerfil-660x660.png',
-    class: 'image img-rounded img-responsive',
+    class: 'img-rounded img-responsive',
     style: ''
   };
 
@@ -26,8 +22,11 @@ export class MonitorPersonalComponent implements OnInit {
     this.selTitulo = MultiSelect.iniMultiSelect('título', 'títulos');
     this.monitorService.monitor$.subscribe(monitor => {
       this.monitor = monitor;
-      if (this.monitor.FortoPerfil !== undefined) {
-        this.imgConf.src = '../../../assets/img/perfiles/' + this.monitor.FotoPerfil;
+      const aux: string = this.monitor.Monitor.FechaNacimiento.split('T')[0];
+      this.monitor.Monitor.FechaNacimiento = aux;
+      if (this.monitor.Monitor.FotoPerfil !== undefined && this.monitor.Monitor.FotoPerfil !== ''
+        && this.monitor.Monitor.FotoPerfil !== null) {
+        this.imgConf.src = '../../../assets/img/perfiles/' + this.monitor.Monitor.FotoPerfil;
       }
       this.iniSelectedTitulos();
     });
@@ -49,12 +48,12 @@ export class MonitorPersonalComponent implements OnInit {
 
   savePersonal() {
     const titulos = [];
-    for (const titulo of this.monitor.titulos) {
+    for (const titulo of this.monitor.Titulos) {
       titulos.push({
         IdTitulo: titulo
       });
     }
-    this.monitorService.postMonitor(this.monitor, titulos, this.usuario,
+    this.monitorService.postMonitor(this.monitor,
       function () {
 
       });

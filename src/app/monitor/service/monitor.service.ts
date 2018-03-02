@@ -12,52 +12,61 @@ export class Monitor {
   public Apellidos: string;
   public FechaNacimiento: any;
   public FotoPerfil: string;
-  public FechaCrea: any;
-  public FechaElim: any;
-  public IdUsuario: number;
-  public IdEscuela: number;
+  public Telefono: string;
+}
 
+export class MonitorModel {
+  public Monitor: Monitor;
+  public Usuario: any;
   public Titulos: any[];
   public FechasDisponibles: any[];
   public EstacionesDisponibles: any[];
 
   constructor() {
-    this.Nombre = '';
-    this.Apellidos = '';
-    this.FechaNacimiento = '';
-    this.FotoPerfil = '';
+    /*this.Monitor = {
+      Id: 0,
+      Nombre: '',
+      Apellidos: '',
+      FechaNacimiento: '',
+      FotoPerfil: '',
+      Telefono: ''
+    };
+    this.Usuario = {
+      Email: '',
+      Nombre: ''
+    };
     this.FechasDisponibles = [];
     this.EstacionesDisponibles = [];
-    this.Titulos = [];
+    this.Titulos = [];*/
   }
 }
 
 @Injectable()
 export class MonitorService {
 
-  private monitor = new BehaviorSubject<Monitor>(new Monitor());
+  private monitor = new BehaviorSubject<MonitorModel>(new MonitorModel());
   public monitor$ = this.monitor.asObservable();
 
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
-
-  postMonitor(monitor, titulos, usuario, respuesta) {
-    delete monitor.titulos;
-    this.http.post(GlobalVar.uriApi + 'monitor', {
-      Monitor: monitor,
-      Titulos: titulos,
-      Usuario: usuario
-    })
-      .subscribe((response) => {
-        respuesta(response);
-      });
-  }
 
   getMonitor(idMonitor) {
     this.http.get(GlobalVar.uriApi + 'monitor', {
       params: new HttpParams().set('id', idMonitor)
     })
-      .subscribe((monitor: Monitor) => {
+      .subscribe((monitor: MonitorModel) => {
         this.monitor.next(monitor);
+      });
+  }
+
+  postMonitor(monitor, respuesta) {
+    delete monitor.titulos;
+    this.http.post(GlobalVar.uriApi + 'monitor', {
+      Monitor: monitor.Monitor,
+      Titulos: monitor.Titulos,
+      Usuario: monitor.Usuario
+    })
+      .subscribe((response) => {
+        respuesta(response);
       });
   }
 

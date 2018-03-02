@@ -1,54 +1,56 @@
 <div class="row">
-  <div class="container col-md-4 col-lg-2 col-xs-12">
-    <app-generic-img-upload [imgConf]="imgConf"></app-generic-img-upload>
-  </div>
-  <div class="form-group col-md-4 col-xs-12">
-    <label>Usuario*</label>
-    <input type="text" [(ngModel)]="usuario.Nombre" class="form-control" disabled>
-  </div>
-  <div class="form-group col-md-4 col-xs-12">
-    <label>Email*</label>
-    <input type="email" [(ngModel)]="usuario.Email" class="form-control">
-    <div *ngIf="" class="alert alert-danger">
-      <div *ngIf="">
-        Introduzca un email valido
+  <div class=" row col-md-9">
+    <div class="form-group col-md-4 col-xs-12">
+      <label>Usuario*</label>
+      <input type="text" [(ngModel)]="monitor.Usuario.Nombre" class="form-control" disabled>
+    </div>
+    <div class="form-group col-md-4 col-xs-12">
+      <label>Email*</label>
+      <input type="email" [(ngModel)]="monitor.Usuario.Email" class="form-control">
+      <div *ngIf="" class="alert alert-danger">
+        <div *ngIf="">
+          Introduzca un email valido
+        </div>
       </div>
     </div>
-  </div>
-  <div class="form-group col-md-4 col-xs-12">
-    <label>Nombre*</label>
-    <input type="text" [(ngModel)]="monitor.Nombre" class="form-control">
-    <div *ngIf="" class="alert alert-danger">
-      El nombre es obligatorio.
+    <div class="form-group col-md-4 col-xs-12">
+      <label>Nombre*</label>
+      <input type="text" [(ngModel)]="monitor.Monitor.Nombre" class="form-control">
+      <div *ngIf="" class="alert alert-danger">
+        El nombre es obligatorio.
+      </div>
     </div>
-  </div>
-  <div class="form-group col-md-4 col-xs-12">
-    <label>Apellidos*</label>
-    <input type="text" [(ngModel)]="monitor.Apellidos" class="form-control">
-    <div *ngIf="" class="alert alert-danger">
-      Los apellidos son obligatorios.
+    <div class="form-group col-md-4 col-xs-12">
+      <label>Apellidos*</label>
+      <input type="text" [(ngModel)]="monitor.Monitor.Apellidos" class="form-control">
+      <div *ngIf="" class="alert alert-danger">
+        Los apellidos son obligatorios.
+      </div>
     </div>
-  </div>
 
-  <div class="form-group col-md-4 col-xs-12">
-    <label>Teléfono*</label>
-    <input type="tel" [(ngModel)]="monitor.Telefono" class="form-control">
-    <div *ngIf="" class="alert alert-danger">
-      El teléfono es obligatorio.
+    <div class="form-group col-md-4 col-xs-12">
+      <label>Teléfono*</label>
+      <input type="tel" [(ngModel)]="monitor.Monitor.Telefono" class="form-control">
+      <div *ngIf="" class="alert alert-danger">
+        El teléfono es obligatorio.
+      </div>
+    </div>
+    <div class="form-group col-md-4 col-xs-12">
+      <label>Fecha Nacimiento</label>
+      <input type="date" [(ngModel)]="monitor.Monitor.FechaNacimiento" class="form-control">
+    </div>
+    <div class="form-group col-md-4 col-xs-12">
+      <label>Títulos</label>
+      <br>
+      <ss-multiselect-dropdown [options]="selTitulo.dataModel" [(ngModel)]="selTitulo.selectedModel" [settings]="selTitulo.mySettings"
+        [texts]="selTitulo.myTexts" [(ngModel)]="monitor.Titulos">
+      </ss-multiselect-dropdown>
     </div>
   </div>
-  <div class="form-group col-md-4 col-xs-12">
-    <label>Fecha Nacimiento</label>
-    <input type="date" [(ngModel)]="monitor.FechaNacimiento" class="form-control">
+  <div class="col-md-3 col-xs-12">
+    <app-generic-img-upload [imgConf]="imgConf"></app-generic-img-upload>
   </div>
-  <div class="form-group col-md-4 col-xs-12">
-    <label>Títulos</label>
-    <br>
-    <ss-multiselect-dropdown [options]="selTitulo.dataModel" [(ngModel)]="selTitulo.selectedModel" [settings]="selTitulo.mySettings"
-      [texts]="selTitulo.myTexts" [(ngModel)]="monitor.titulos">
-    </ss-multiselect-dropdown>
-  </div>
-  <div class="btnUpMargin row col-xs-12">
+  <div class="btnUpMargin col-xs-12">
     <button class="btn btn-success btn-lg btn-fill" (click)="savePersonal()" type="button">Guardar</button>
   </div>
 </div>

@@ -1,7 +1,7 @@
 import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Output } from '@angular/core';
 import { TokenService } from '../../auth/service/token.service';
 import { HttpClient } from '@angular/common/http';
-import { MonitorService, Monitor } from '../service/monitor.service';
+import { MonitorService, Monitor, MonitorModel } from '../service/monitor.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
 import { Router } from '@angular/router';
 import { FormsModule } from '@angular/forms';
@@ -30,7 +30,7 @@ export class MonitorCreaComponent implements OnInit {
     private router: Router, private fb: FormBuilder) {
     this.monitorForm = this.fb.group({
       usuario: new FormControl({ value: '', disabled: true }, Validators.required),
-      nombre: new FormControl(this.monitor.Nombre, [Validators.required]),
+      nombre: new FormControl('', [Validators.required]),
       apellidos: ['', Validators.required],
       email: ['', Validators.required && Validators.email],
       telefono: ['', Validators.required],
@@ -78,8 +78,24 @@ export class MonitorCreaComponent implements OnInit {
           IdTitulo: titulo
         });
       }
-      this.monitorService.postMonitor(this.monitorForm.value, titulos,
-        { Nombre: this.usuario, Email: this.monitorForm.value.email },
+      const monitor: MonitorModel = {
+        Monitor: {
+          Id: 0,
+          Nombre: this.monitorForm.value.nombre,
+          FechaNacimiento: this.monitorForm.value.fechaNacimiento,
+          FotoPerfil: '',
+          Apellidos: this.monitorForm.value.apellidos,
+          Telefono: this.monitorForm.value.telefono,
+        },
+        Usuario: {
+          Email: this.monitorForm.value.email,
+          Nombre: (this.monitorForm.value.nombre + '.' + this.monitorForm.value.apellidos).replace(' ', '-')
+        },
+        Titulos: titulos,
+        EstacionesDisponibles: [],
+        FechasDisponibles: []
+      };
+      this.monitorService.postMonitor(monitor,
         function (id) {
           this.router.navigate(['/monitor/' + id]);
         }.bind(this));
@@ -87,7 +103,7 @@ export class MonitorCreaComponent implements OnInit {
   }
 
   btnVolver() {
-    this.router.navigate(['/monitores/' + 1]);
+    this.router.navigate(['/monitores']);
   }
 
 }

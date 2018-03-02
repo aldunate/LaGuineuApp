@@ -46,11 +46,7 @@ import { CalendarModule } from 'angular-calendar';
 import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { GenericCalendarComponent } from './util/generic/calendario/generic-calendar.component';
-import { NuevaEscuelaComponent } from './escuela/nueva-escuela/nueva-escuela.component';
-import { EditarEscuelaComponent } from './escuela/editar-escuela/editar-escuela.component';
 import { EscuelaService } from './escuela/service/escuela.service';
-import { GestionEscuelaComponent } from './escuela/gestion-escuela/gestion-escuela.component';
-import { NuevaClaseComponent } from './clase/nueva-clase/nueva-clase.component';
 import { EstacionComponent } from './estacion/estacion/estacion.component';
 import { EstacionService } from './estacion/service/estacion.service';
 import { ClienteComponent } from './cliente/cliente/cliente.component';
@@ -68,6 +64,10 @@ import { HomeLayoutComponent } from './util/layout/home.layout';
 import { PrimeNGModule } from './util/module/primeNGModule';
 import { MonitorAjustesComponent } from './monitor/monitor-ajustes/monitor-ajustes.component';
 import { MonitorPersonalComponent } from './monitor/monitor-personal/monitor-personal.component';
+import { EscuelaComponent } from './escuela/escuela/escuela.component';
+import { ClasesComponent } from './clase/clases/clases.component';
+import { ClaseAsignarComponent } from './clase/clase-asignar/clase-asignar.component';
+import { ClaseNuevaComponent } from './clase/clase-nueva/clase-nueva.component';
 
 registerLocaleData(localeEs);
 
@@ -83,10 +83,6 @@ registerLocaleData(localeEs);
     LoginLayoutComponent,
     HomeLayoutComponent,
     GenericCalendarComponent,
-    NuevaEscuelaComponent,
-    EditarEscuelaComponent,
-    GestionEscuelaComponent,
-    NuevaClaseComponent,
     EstacionComponent,
     ClienteComponent,
     ClubComponent,
@@ -97,7 +93,11 @@ registerLocaleData(localeEs);
     FieldErrorComponent,
     MonitorAjustesComponent,
     MonitorComponent,
-    MonitorPersonalComponent
+    MonitorPersonalComponent,
+    EscuelaComponent,
+    ClasesComponent,
+    ClaseAsignarComponent,
+    ClaseNuevaComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,

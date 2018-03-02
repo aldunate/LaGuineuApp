@@ -4,8 +4,10 @@
 @import "../node_modules/datatables.net-dt/css/jquery.dataTables.css";
 
 .imgUpload{
-  max-width: 200px!important;
-  max-height: 200px!important;
+  max-width: 250px!important;
+  max-height: 250px!important;
+  width: 100%!important;
+  height: 100%!important;
 }
 
 .btnUpMargin{
