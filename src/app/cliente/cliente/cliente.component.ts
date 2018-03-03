@@ -49,27 +49,15 @@ export class ClienteComponent implements OnInit {
   constructor(private clubService: ClubService, private clienteService: ClienteService, private utilService: UtilService) {
     const idEscuela = 1;  // cambiar
     this.clubService.getClubs(idEscuela, this.respGetClubs.bind(this));
-    this.utilService.getNiveles(this.repGetNiveles.bind(this));
-    this.utilService.getDeportesEscuela(idEscuela, this.respGetDeportes.bind(this));
   }
 
   ngOnInit() {
   }
 
-  respGetDeportes(deportes) {
-    this.Deportes = deportes;
-    this.confMulti.deportes.myOptions = MultiSelect.iniDataModel(deportes, 'Id', 'Nombre');
-  }
-
-  repGetNiveles(niveles) {
-    this.Niveles = niveles;
-    this.confMulti.niveles.myOptions = MultiSelect.iniDataModel(niveles, 'Id', 'Nombre');
-  }
   respGetClubs(clubs) {
     this.Clubs = clubs;
     this.confMulti.clubs.myOptions = MultiSelect.iniDataModel(clubs, 'Id', 'Nombre');
   }
-
 
   crearCliente() {
     if (this.Cliente.Nombre !== '') {

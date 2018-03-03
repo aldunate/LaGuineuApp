@@ -37,5 +37,14 @@ export class EscuelaService {
       });
   }
 
+  getDeportesEscuela(idEscuela, respuesta) {
+    this.http.get(GlobalVar.uriApi + 'deporte', {
+      params: new HttpParams().set('idEscuela', idEscuela)
+    })
+      .subscribe((response) => {
+        respuesta(response);
+      });
+  }
+
 
 }

@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpParams } from '@angular/common/http';
+import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { BackendInterceptor } from '../../auth/service/backend.interceptor';
 import { GlobalVar } from '../../util/global';
 import { Observable } from 'rxjs/Observable';
@@ -21,6 +21,7 @@ export class MonitorModel {
   public Titulos: any[];
   public FechasDisponibles: any[];
   public EstacionesDisponibles: any[];
+  public Operacion: string;
 
   constructor() {
     /*this.Monitor = {
@@ -49,6 +50,30 @@ export class MonitorService {
 
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
+  postImgPerfil(fileImgPerfil) {
+    const file = fileImgPerfil.srcElement.files[0];
+    const data = {
+      fileName: file.name
+    };
+    const formData: FormData = new FormData();
+    formData.append('uploadFile', file, file.name);
+    formData.append('data', JSON.stringify(data));
+
+    this.http
+      .post(GlobalVar.uriApi + 'monitorPerfil', formData).subscribe(response => {
+        const r = response;
+      });
+  }
+
+  public getImage(idMonitor, response) {
+    this.http.get(GlobalVar.uriApi + 'monitorPerfil', {
+      params: new HttpParams().set('idMonitor', idMonitor)
+    }).subscribe(x => {
+      response(x);
+    });
+  }
+
+
   getMonitor(idMonitor) {
     this.http.get(GlobalVar.uriApi + 'monitor', {
       params: new HttpParams().set('id', idMonitor)
@@ -59,7 +84,6 @@ export class MonitorService {
   }
 
   postMonitor(monitor, respuesta) {
-    delete monitor.titulos;
     this.http.post(GlobalVar.uriApi + 'monitor', {
       Monitor: monitor.Monitor,
       Titulos: monitor.Titulos,

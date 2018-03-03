@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { MultiSelect, ConfMultiSelect, UtilFechas } from '../../util/global';
 import { UtilService } from '../../util/service/util.service';
-import { EstacionService } from '../../estacion/service/estacion.service';
 import { MonitorService } from '../service/monitor.service';
 import { Router } from '@angular/router';
 
@@ -17,9 +16,7 @@ export class MonitorComponent implements OnInit {
   monitorCargado = false;
 
   constructor(public monitorService: MonitorService,
-    private router: Router, private estacionService: EstacionService,
-    private utilService: UtilService) {
-
+    private router: Router, private utilService: UtilService) {
     const aux = this.router.url.split('/');
     this.idMonitor = Number.parseInt(aux[aux.length - 1]);
     this.getMonitor();
@@ -33,6 +30,14 @@ export class MonitorComponent implements OnInit {
     this.monitorService.monitor$.subscribe(monitor => {
       this.monitor = monitor;
       if (monitor.Monitor !== undefined) {
+        this.monitorService.getImage(monitor.Monitor.Id,
+          function (response) {
+            const x = response;
+          });
+        this.utilService.getEstaciones();
+        this.utilService.getDeportes();
+        this.utilService.getNiveles();
+        this.utilService.getTitulos();
         this.monitor.Monitor.edad = UtilFechas.calculaEdad(monitor.Monitor.FechaNacimiento);
         this.monitor.Monitor.edad += ' años';
         this.monitorCargado = true;

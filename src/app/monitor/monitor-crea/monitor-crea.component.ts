@@ -60,9 +60,9 @@ export class MonitorCreaComponent implements OnInit {
   get telefono() { return this.monitorForm.get('telefono'); }
 
   iniSelectedTitulos() {
-    this.utilService.getTitulos(function (titulos) {
+    this.utilService.niveles$.subscribe(titulos => {
       this.confSelEst.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
-    }.bind(this));
+    });
     this.confSelEst = MultiSelect.iniMultiSelect('título', 'títulos');
   }
 
@@ -85,7 +85,7 @@ export class MonitorCreaComponent implements OnInit {
           FechaNacimiento: this.monitorForm.value.fechaNacimiento,
           FotoPerfil: '',
           Apellidos: this.monitorForm.value.apellidos,
-          Telefono: this.monitorForm.value.telefono,
+          Telefono: this.monitorForm.value.telefono
         },
         Usuario: {
           Email: this.monitorForm.value.email,
@@ -93,7 +93,8 @@ export class MonitorCreaComponent implements OnInit {
         },
         Titulos: titulos,
         EstacionesDisponibles: [],
-        FechasDisponibles: []
+        FechasDisponibles: [],
+        Operacion: 'Crear'
       };
       this.monitorService.postMonitor(monitor,
         function (id) {

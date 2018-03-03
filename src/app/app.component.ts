@@ -6,6 +6,7 @@ import { Subscription } from 'rxjs/Subscription';
 import PerfectScrollbar from 'perfect-scrollbar';
 import { NavBarComponent } from './main/nav-bar/nav-bar.component';
 import { TokenService } from './auth/service/token.service';
+import { UtilService } from './util/service/util.service';
 // declare const $: any;
 
 @Component({
@@ -23,19 +24,20 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   @ViewChild(NavBarComponent) navbar: NavBarComponent;
 
-  constructor(public location: Location, private router: Router, private tokenService: TokenService) {
+  constructor(public location: Location, private router: Router,
+    private tokenService: TokenService,
+    private utilService: UtilService) {
     this.logueado = tokenService.logueado;
-    // true;
   }
   changeLogueado(evento) {
     this.logueado = evento;
   }
 
   ngOnInit() {
+
   }
   ngAfterViewInit() {
     if (this.logueado) {
-      // $.material.init();
       const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
       const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
 

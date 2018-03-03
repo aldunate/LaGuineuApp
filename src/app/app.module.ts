@@ -47,12 +47,11 @@ import { registerLocaleData } from '@angular/common';
 import localeEs from '@angular/common/locales/es';
 import { GenericCalendarComponent } from './util/generic/calendario/generic-calendar.component';
 import { EscuelaService } from './escuela/service/escuela.service';
-import { EstacionComponent } from './estacion/estacion/estacion.component';
-import { EstacionService } from './estacion/service/estacion.service';
 import { ClienteComponent } from './cliente/cliente/cliente.component';
 import { ClubComponent } from './club/club/club.component';
 import { ClienteService } from './cliente/service/cliente.service';
 import { ClubService } from './club/service/club.service';
+import { ClaseService } from './clase/service/clase.service';
 import { UtilService } from './util/service/util.service';
 import { FooterComponent } from './main/footer/footer.component';
 import { DatatableGenericComponent } from './util/generic/datatable-generic/datatable-generic.component';
@@ -83,7 +82,6 @@ registerLocaleData(localeEs);
     LoginLayoutComponent,
     HomeLayoutComponent,
     GenericCalendarComponent,
-    EstacionComponent,
     ClienteComponent,
     ClubComponent,
     FooterComponent,
@@ -122,10 +120,10 @@ registerLocaleData(localeEs);
     TokenService,
     MonitorService,
     EscuelaService,
-    EstacionService,
     ClienteService,
     ClubService,
     UtilService,
+    ClaseService,
     // ImgUploadComponent,
     // DatePicker
     // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},

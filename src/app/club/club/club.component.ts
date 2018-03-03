@@ -31,7 +31,6 @@ export class ClubComponent implements OnInit {
   constructor(private clubService: ClubService, private clienteService: ClienteService, private utilService: UtilService) {
     const idEscuela = 1; // Cambiar
     this.clienteService.getClientes(idEscuela, this.respGetClientes.bind(this));
-    this.utilService.getNiveles(this.repGetNiveles.bind(this));
   }
 
   ngOnInit() {

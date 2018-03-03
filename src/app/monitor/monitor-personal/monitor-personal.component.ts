@@ -36,14 +36,12 @@ export class MonitorPersonalComponent implements OnInit {
   }
 
   iniSelectedTitulos() {
-    this.utilService.getTitulos(
-      function (titulos) {
-        this.selTitulo.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
-        for (const titulo of this.monitor.Titulos) {
-          this.selTitulo.selectedModel.push(titulo.IdTitulo);
-        }
-      }.bind(this)
-    );
+    this.utilService.titulos$.subscribe(titulos => {
+      this.selTitulo.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
+      for (const titulo of this.monitor.Titulos) {
+        this.selTitulo.selectedModel.push(titulo.IdTitulo);
+      }
+    });
   }
 
   savePersonal() {
@@ -53,6 +51,7 @@ export class MonitorPersonalComponent implements OnInit {
         IdTitulo: titulo
       });
     }
+    this.monitor.Titulos = titulos;
     this.monitorService.postMonitor(this.monitor,
       function () {
 

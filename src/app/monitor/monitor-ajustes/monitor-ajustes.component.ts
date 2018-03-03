@@ -1,8 +1,8 @@
 import { Component, OnInit, Input } from '@angular/core';
 import { DatePicker, ConfigCalendario, ConfMultiSelect, MultiSelect, UtilCalendario } from '../../util/global';
 import { MonitorService, MonitorModel } from '../service/monitor.service';
-import { EstacionService } from '../../estacion/service/estacion.service';
 import { CalendarEvent } from 'calendar-utils';
+import { UtilService } from '../../util/service/util.service';
 
 @Component({
   selector: 'app-monitor-ajustes',
@@ -23,7 +23,7 @@ export class MonitorAjustesComponent implements OnInit {
   datePickerInicio = new DatePicker();
   datePickerFin = new DatePicker();
 
-  constructor(private monitorService: MonitorService, private estacionService: EstacionService, ) {
+  constructor(private monitorService: MonitorService, private utilService: UtilService) {
     this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
     this.monitorService.monitor$.subscribe(monitor => {
       this.monitor = monitor;
@@ -83,16 +83,16 @@ export class MonitorAjustesComponent implements OnInit {
   viewDateChange($event) { }
 
   iniSelectedEstacion() {
-    this.estacionService.getEstaciones(
-      function (estaciones) {
+    this.utilService.estaciones$.subscribe(estaciones => {
+      if (estaciones !== null) {
         this.confSelEst.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
         this.etiquetas = [];
         for (const estacion of this.monitor.EstacionesDisponibles) {
           this.confSelEst.selectedModel.push(estacion.IdEstacion);
           this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
         }
-      }.bind(this)
-    );
+      }
+    }).unsubscribe();
   }
 
   changeMultiselect(evento) {
