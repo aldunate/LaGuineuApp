@@ -284,3 +284,13 @@ export const MultiSelect = Object.freeze({
     return array;
   }
 });
+
+export const UtilFile = Object.freeze({
+  imageFromBlob(image: Blob) {
+    const reader = new FileReader();
+    if (image) {
+      reader.readAsDataURL(image);
+      return reader;
+    }
+  }
+});

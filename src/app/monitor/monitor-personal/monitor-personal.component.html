@@ -48,7 +48,7 @@
     </div>
   </div>
   <div class="col-md-3 col-xs-12">
-    <app-generic-img-upload [imgConf]="imgConf"></app-generic-img-upload>
+    <app-generic-img-upload *ngIf="imgConf.view" [imgConf]="imgConf"></app-generic-img-upload>
   </div>
   <div class="btnUpMargin col-xs-12">
     <button class="btn btn-success btn-lg btn-fill" (click)="savePersonal()" type="button">Guardar</button>

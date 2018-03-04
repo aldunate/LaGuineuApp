@@ -83,16 +83,21 @@ export class MonitorAjustesComponent implements OnInit {
   viewDateChange($event) { }
 
   iniSelectedEstacion() {
-    this.utilService.estaciones$.subscribe(estaciones => {
-      if (estaciones !== null) {
-        this.confSelEst.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
-        this.etiquetas = [];
-        for (const estacion of this.monitor.EstacionesDisponibles) {
-          this.confSelEst.selectedModel.push(estacion.IdEstacion);
-          this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
-        }
-      }
-    }).unsubscribe();
+    if (this.utilService._estaciones.length === 0) {
+      this.pushSelEstacion(this.utilService._estaciones);
+    } else {
+      this.utilService.estaciones$.subscribe(estaciones => {
+        this.pushSelEstacion(estaciones);
+      });
+    }
+  }
+  pushSelEstacion(estaciones) {
+    this.confSelEst.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
+    this.etiquetas = [];
+    for (const estacion of this.monitor.EstacionesDisponibles) {
+      this.confSelEst.selectedModel.push(estacion.IdEstacion);
+      this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
+    }
   }
 
   changeMultiselect(evento) {

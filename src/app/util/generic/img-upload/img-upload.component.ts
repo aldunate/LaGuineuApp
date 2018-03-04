@@ -18,7 +18,7 @@ export class ImgUploadComponent implements OnInit {
   loaded = false;
   imageLoaded = false;
 
-  constructor(private monitorSerivce: MonitorService) {
+  constructor() {
 
   }
 
@@ -46,7 +46,7 @@ export class ImgUploadComponent implements OnInit {
   }
 
   handleInputChange(e) {
-    this.monitorSerivce.postImgPerfil(e);
+    this.imgConf.sendImg(e);
 
     const file = e.dataTransfer ? e.dataTransfer.files[0] : e.target.files[0];
     const pattern = /image-*/;

@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { BackendInterceptor } from '../../auth/service/backend.interceptor';
-import { GlobalVar } from '../../util/global';
+import { GlobalVar, UtilFile } from '../../util/global';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
+import { RequestOptions, ResponseContentType } from '@angular/http';
 
 export class Monitor {
   public Id: number;
@@ -42,18 +43,23 @@ export class MonitorModel {
   }
 }
 
+
 @Injectable()
 export class MonitorService {
 
   private monitor = new BehaviorSubject<MonitorModel>(new MonitorModel());
   public monitor$ = this.monitor.asObservable();
 
+  private imgPerfil = new Subject<any>();
+  public imgPerfil$ = this.imgPerfil.asObservable();
+
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
-  postImgPerfil(fileImgPerfil) {
+  postImgPerfil(idMonitor, fileImgPerfil) {
     const file = fileImgPerfil.srcElement.files[0];
     const data = {
-      fileName: file.name
+      fotoPerfil: file.name,
+      idMonitor: idMonitor
     };
     const formData: FormData = new FormData();
     formData.append('uploadFile', file, file.name);
@@ -64,15 +70,13 @@ export class MonitorService {
         const r = response;
       });
   }
-
-  public getImage(idMonitor, response) {
-    this.http.get(GlobalVar.uriApi + 'monitorPerfil', {
-      params: new HttpParams().set('idMonitor', idMonitor)
-    }).subscribe(x => {
-      response(x);
+  getImgPerfil(strFileUrl) {
+    return this.http.get(GlobalVar.uriApi + 'monitorPerfil', {
+      responseType: 'blob', params: new HttpParams().set('strFileUrl', strFileUrl)
+    }).subscribe(respose => {
+      this.imgPerfil.next(UtilFile.imageFromBlob(respose));
     });
   }
-
 
   getMonitor(idMonitor) {
     this.http.get(GlobalVar.uriApi + 'monitor', {

@@ -11,14 +11,6 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class MonitoresComponent implements OnInit {
 
-  Escuela = {
-    Id: 0,
-    Nombre: '',
-    Direccion: '',
-    Telefono: '',
-    Email: '',
-    FotoPerfil: ''
-  };
   tablas = {
     monitor: UtilDataTable.iniDataTable(
       [
@@ -35,24 +27,13 @@ export class MonitoresComponent implements OnInit {
   };
 
 
-  constructor(private escuelaService: EscuelaService,
+  constructor(
     private monitorService: MonitorService,
     private router: Router, private route: ActivatedRoute) {
-
-    const aux = this.router.url.split('/');
-    this.Escuela.Id = Number.parseInt(aux[aux.length - 1]);
-    this.iniEscuela();
     this.iniMonitorTabla();
   }
 
   ngOnInit() {
-  }
-
-  iniEscuela() {
-    this.escuelaService.getEscuela(
-      function (escuela) {
-        this.Escuela = escuela;
-      }.bind(this));
   }
 
   iniMonitorTabla() {

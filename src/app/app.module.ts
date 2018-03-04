@@ -67,6 +67,8 @@ import { EscuelaComponent } from './escuela/escuela/escuela.component';
 import { ClasesComponent } from './clase/clases/clases.component';
 import { ClaseAsignarComponent } from './clase/clase-asignar/clase-asignar.component';
 import { ClaseNuevaComponent } from './clase/clase-nueva/clase-nueva.component';
+import { EscuelaAjustesComponent } from './escuela/escuela-ajustes/escuela-ajustes.component';
+import { EscuelaMuroComponent } from './escuela/escuela-muro/escuela-muro.component';
 
 registerLocaleData(localeEs);
 
@@ -95,7 +97,9 @@ registerLocaleData(localeEs);
     EscuelaComponent,
     ClasesComponent,
     ClaseAsignarComponent,
-    ClaseNuevaComponent
+    ClaseNuevaComponent,
+    EscuelaAjustesComponent,
+    EscuelaMuroComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,

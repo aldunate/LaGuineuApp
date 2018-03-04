@@ -7,6 +7,7 @@ import PerfectScrollbar from 'perfect-scrollbar';
 import { NavBarComponent } from './main/nav-bar/nav-bar.component';
 import { TokenService } from './auth/service/token.service';
 import { UtilService } from './util/service/util.service';
+import { EscuelaService } from './escuela/service/escuela.service';
 // declare const $: any;
 
 @Component({
@@ -26,7 +27,8 @@ export class AppComponent implements OnInit, AfterViewInit {
 
   constructor(public location: Location, private router: Router,
     private tokenService: TokenService,
-    private utilService: UtilService) {
+    private utilService: UtilService, private escuelaService: EscuelaService) {
+    this.escuelaService.getEscuela();
     this.logueado = tokenService.logueado;
   }
   changeLogueado(evento) {

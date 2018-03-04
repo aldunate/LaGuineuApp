@@ -1,3 +1,15 @@
-<p>
-  escuela works!
-</p>
+<div class="">
+  <mat-tab-group>
+    <mat-tab label="MURO">
+      <app-escuela-muro></app-escuela-muro>
+    </mat-tab>
+    <mat-tab label="AJUSTES">
+      <div class="col-xs-12 marginTop" *ngIf="escuelaCargado">
+        <app-escuela-ajustes></app-escuela-ajustes>
+      </div>
+    </mat-tab>
+    <mat-tab label="PERSONAL">
+
+    </mat-tab>
+  </mat-tab-group>
+</div>

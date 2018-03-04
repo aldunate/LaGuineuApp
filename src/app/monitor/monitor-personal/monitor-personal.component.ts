@@ -12,23 +12,32 @@ export class MonitorPersonalComponent implements OnInit {
 
   monitor: MonitorModel;
   selTitulo: ConfMultiSelect;
-  imgConf = {
-    src: '../../../assets/img/sinPerfil-660x660.png',
-    class: 'img-rounded img-responsive',
-    style: ''
-  };
+  imgConf: any;
 
   constructor(private monitorService: MonitorService, private utilService: UtilService) {
+    this.imgConf = {
+      src: '../../../assets/img/sinPerfil-660x660.png',
+      class: 'img-rounded img-responsive',
+      style: '',
+      view: true,
+      sendImg: function (imagen) {
+        this.monitorService.postImgPerfil(this.monitor.Monitor.Id, imagen);
+      }.bind(this)
+    };
+
     this.selTitulo = MultiSelect.iniMultiSelect('título', 'títulos');
     this.monitorService.monitor$.subscribe(monitor => {
       this.monitor = monitor;
       const aux: string = this.monitor.Monitor.FechaNacimiento.split('T')[0];
       this.monitor.Monitor.FechaNacimiento = aux;
-      if (this.monitor.Monitor.FotoPerfil !== undefined && this.monitor.Monitor.FotoPerfil !== ''
-        && this.monitor.Monitor.FotoPerfil !== null) {
-        this.imgConf.src = '../../../assets/img/perfiles/' + this.monitor.Monitor.FotoPerfil;
-      }
       this.iniSelectedTitulos();
+      this.monitorService.imgPerfil$.subscribe(src => {
+        if (src !== '') {
+          this.imgConf.view = false;
+          this.imgConf.src = src.__zone_symbol__originalInstance.result;
+          this.imgConf.view = true;
+        }
+      });
     });
   }
 
@@ -36,12 +45,19 @@ export class MonitorPersonalComponent implements OnInit {
   }
 
   iniSelectedTitulos() {
+    if (this.utilService._titulos.length === 0) {
+      this.monitor.Titulos = this.utilService._titulos;
+      this.pushSelModel();
+    }
     this.utilService.titulos$.subscribe(titulos => {
       this.selTitulo.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
-      for (const titulo of this.monitor.Titulos) {
-        this.selTitulo.selectedModel.push(titulo.IdTitulo);
-      }
+      this.pushSelModel();
     });
+  }
+  pushSelModel() {
+    for (const titulo of this.monitor.Titulos) {
+      this.selTitulo.selectedModel.push(titulo.IdTitulo);
+    }
   }
 
   savePersonal() {

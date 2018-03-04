@@ -2,14 +2,14 @@ import { Component, OnInit } from '@angular/core';
 import { EscuelaService, EscuelaModel } from '../service/escuela.service';
 
 @Component({
-  selector: 'app-escuela',
-  templateUrl: './escuela.component.html',
-  styleUrls: ['./escuela.component.css']
+  selector: 'app-escuela-muro',
+  templateUrl: './escuela-muro.component.html',
+  styleUrls: ['./escuela-muro.component.css']
 })
-export class EscuelaComponent implements OnInit {
+export class EscuelaMuroComponent implements OnInit {
 
-  escuelaCargado = true;
-  escuela: EscuelaModel;
+  private escuela: EscuelaModel;
+
   constructor(private escuelaService: EscuelaService) {
     if (this.escuelaService._escuela.Escuela !== undefined) {
       this.escuela = this.escuelaService._escuela;

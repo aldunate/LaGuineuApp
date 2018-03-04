@@ -14,6 +14,8 @@ export class MonitorComponent implements OnInit {
   monitor: any;
   idMonitor: number;
   monitorCargado = false;
+  imageToShow = true;
+  isImageLoading = true;
 
   constructor(public monitorService: MonitorService,
     private router: Router, private utilService: UtilService) {
@@ -30,10 +32,9 @@ export class MonitorComponent implements OnInit {
     this.monitorService.monitor$.subscribe(monitor => {
       this.monitor = monitor;
       if (monitor.Monitor !== undefined) {
-        this.monitorService.getImage(monitor.Monitor.Id,
-          function (response) {
-            const x = response;
-          });
+        if (monitor.Monitor.FotoPerfil !== '' && monitor.Monitor.FotoPerfil !== undefined) {
+          this.monitorService.getImgPerfil(monitor.Monitor.FotoPerfil);
+        }
         this.utilService.getEstaciones();
         this.utilService.getDeportes();
         this.utilService.getNiveles();
@@ -46,3 +47,4 @@ export class MonitorComponent implements OnInit {
   }
 
 }
+
