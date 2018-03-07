@@ -11,6 +11,7 @@ import { UtilService } from '../../util/service/util.service';
 export class MonitorPersonalComponent implements OnInit {
 
   monitor: MonitorModel;
+  titulos;
   selTitulo: ConfMultiSelect;
   imgConf: any;
 
@@ -24,37 +25,49 @@ export class MonitorPersonalComponent implements OnInit {
         this.monitorService.postImgPerfil(this.monitor.Monitor.Id, imagen);
       }.bind(this)
     };
-
     this.selTitulo = MultiSelect.iniMultiSelect('título', 'títulos');
-    this.monitorService.monitor$.subscribe(monitor => {
-      this.monitor = monitor;
-      const aux: string = this.monitor.Monitor.FechaNacimiento.split('T')[0];
-      this.monitor.Monitor.FechaNacimiento = aux;
-      this.iniSelectedTitulos();
-      this.monitorService.imgPerfil$.subscribe(src => {
-        if (src !== '') {
-          this.imgConf.view = false;
-          this.imgConf.src = src.__zone_symbol__originalInstance.result;
-          this.imgConf.view = true;
-        }
+    this.titulos = this.utilService.titulos.getValue();
+    if (this.titulos === null) {
+      this.utilService.titulos$.subscribe(titulos => {
+        this.selTitulo.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
+        this.inicio();
       });
+    } else {
+      this.selTitulo.dataModel = MultiSelect.iniDataModel(this.titulos, 'Id', 'Nombre');
+      this.inicio();
+    }
+  }
+  inicio() {
+    this.monitor = this.monitorService.monitor.getValue();
+    if (this.monitor === null) {
+      this.monitorService.monitor$.subscribe(monitor => {
+        this.monitor = monitor;
+        this.monitorCambios();
+      });
+    } else {
+      this.monitorCambios();
+    }
+  }
+
+
+  monitorCambios() {
+    this.monitorTitulos();
+    const aux: string = this.monitor.Monitor.FechaNacimiento.split('T')[0];
+    this.monitor.Monitor.FechaNacimiento = aux;
+    this.monitorService.imgPerfil$.subscribe(src => {
+      if (src !== '') {
+        this.imgConf.view = false;
+        this.imgConf.src = src.__zone_symbol__originalInstance.result;
+        this.imgConf.view = true;
+      }
     });
   }
 
   ngOnInit() {
   }
 
-  iniSelectedTitulos() {
-    if (this.utilService._titulos.length === 0) {
-      this.monitor.Titulos = this.utilService._titulos;
-      this.pushSelModel();
-    }
-    this.utilService.titulos$.subscribe(titulos => {
-      this.selTitulo.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
-      this.pushSelModel();
-    });
-  }
-  pushSelModel() {
+
+  monitorTitulos() {
     for (const titulo of this.monitor.Titulos) {
       this.selTitulo.selectedModel.push(titulo.IdTitulo);
     }

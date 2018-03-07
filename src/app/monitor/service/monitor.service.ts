@@ -25,21 +25,6 @@ export class MonitorModel {
   public Operacion: string;
 
   constructor() {
-    /*this.Monitor = {
-      Id: 0,
-      Nombre: '',
-      Apellidos: '',
-      FechaNacimiento: '',
-      FotoPerfil: '',
-      Telefono: ''
-    };
-    this.Usuario = {
-      Email: '',
-      Nombre: ''
-    };
-    this.FechasDisponibles = [];
-    this.EstacionesDisponibles = [];
-    this.Titulos = [];*/
   }
 }
 
@@ -47,7 +32,7 @@ export class MonitorModel {
 @Injectable()
 export class MonitorService {
 
-  private monitor = new BehaviorSubject<MonitorModel>(new MonitorModel());
+  public monitor = new BehaviorSubject<MonitorModel>(null);
   public monitor$ = this.monitor.asObservable();
 
   private imgPerfil = new Subject<any>();

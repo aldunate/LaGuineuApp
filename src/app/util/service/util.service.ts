@@ -11,27 +11,22 @@ export class UtilService {
 
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
-  private niveles = new Subject<any[]>();
+  public niveles = new BehaviorSubject<any[]>(null);
   public niveles$ = this.niveles.asObservable();
-  public _niveles = [];
 
-  private titulos = new Subject<any[]>();
+  public titulos = new BehaviorSubject<any[]>(null);
   public titulos$ = this.titulos.asObservable();
-  public _titulos = [];
 
-  private deportes = new Subject<any[]>();
+  public deportes = new BehaviorSubject<any[]>(null);
   public deportes$ = this.deportes.asObservable();
-  public _deportes = [];
 
-  private estaciones = new Subject<any[]>();
+  public estaciones = new BehaviorSubject<any[]>(null);
   public estaciones$ = this.estaciones.asObservable();
-  public _estaciones = [];
 
 
   getNiveles() {
     this.http.get(GlobalVar.uriApi + 'nivel')
       .subscribe((response: any[]) => {
-        this._niveles = response;
         this.niveles.next(response);
       });
   }
@@ -39,7 +34,6 @@ export class UtilService {
   getTitulos() {
     this.http.get(GlobalVar.uriApi + 'titulo')
       .subscribe((response: any[]) => {
-        this._titulos = response;
         this.titulos.next(response);
       });
   }
@@ -47,7 +41,6 @@ export class UtilService {
   getEstaciones() {
     this.http.get(GlobalVar.uriApi + 'estacion')
       .subscribe((estaciones: any[]) => {
-        this._estaciones = estaciones;
         this.estaciones.next(estaciones);
       });
   }
@@ -55,7 +48,6 @@ export class UtilService {
   getDeportes() {
     this.http.get(GlobalVar.uriApi + 'deporte')
       .subscribe((response: any[]) => {
-        this._deportes = response;
         this.deportes.next(response);
       });
   }

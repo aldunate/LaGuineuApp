@@ -28,8 +28,21 @@ export class AppComponent implements OnInit, AfterViewInit {
   constructor(public location: Location, private router: Router,
     private tokenService: TokenService,
     private utilService: UtilService, private escuelaService: EscuelaService) {
-    this.escuelaService.getEscuela();
     this.logueado = tokenService.logueado;
+    if (this.logueado) {
+      this.escuelaService.getEscuela();
+      this.utilService.getEstaciones();
+      this.utilService.getDeportes();
+      this.utilService.getNiveles();
+      this.utilService.getTitulos();
+    } else {
+      this.escuelaService.escuela$.subscribe(x => {
+        this.utilService.getEstaciones();
+        this.utilService.getDeportes();
+        this.utilService.getNiveles();
+        this.utilService.getTitulos();
+      });
+    }
   }
   changeLogueado(evento) {
     this.logueado = evento;
@@ -98,40 +111,5 @@ export class AppComponent implements OnInit, AfterViewInit {
     }
     return bool;
   }
-
-  /*
-   // Token
-   public _subscription: any;
-   public logueado: boolean;
-
-   constructor(private tokenService: TokenService) {
-     // Token
-     this._subscription = tokenService.onLoguin.subscribe((value) => {
-       this.logueado = value;
-       this.changeUserStatus();
-     });
-   }
-
-
-   changeUserStatus() {
-     if (this.logueado) {
-
-     } else {
-
-     }
-   }
-
-   logout() {
-     this.tokenService.remove();
-   }
-
-   ngOnInit() {
-     this.tokenService.leer();
-   }
-
-
-   info() { }
-   */
-
 }
 

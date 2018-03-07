@@ -8,15 +8,17 @@ import { EscuelaService, EscuelaModel } from '../service/escuela.service';
 })
 export class EscuelaComponent implements OnInit {
 
-  escuelaCargado = true;
+  escuelaCargado = false;
   escuela: EscuelaModel;
   constructor(private escuelaService: EscuelaService) {
-    if (this.escuelaService._escuela.Escuela !== undefined) {
-      this.escuela = this.escuelaService._escuela;
-    } else {
+    this.escuela = this.escuelaService.escuela.getValue();
+    if (this.escuela === null) {
       this.escuelaService.escuela$.subscribe(escuela => {
         this.escuela = escuela;
+        this.escuelaCargado = true;
       });
+    } else {
+      this.escuelaCargado = true;
     }
   }
 

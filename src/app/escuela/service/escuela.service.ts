@@ -3,6 +3,7 @@ import { HttpClient, HttpParams } from '@angular/common/http';
 import { BackendInterceptor } from '../../auth/service/backend.interceptor';
 import { GlobalVar, UtilFile } from '../../util/global';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
 export class Escuela {
   public Id: number;
@@ -14,25 +15,27 @@ export class Escuela {
 }
 
 export class EscuelaModel {
-  public Escuela: Escuela;
-  public FechasDisponibles: any[];
-  public EstacionesDisponibles: any[];
-  public Deportes: any;
+  public Escuela: Escuela = new Escuela();
+  public FechasDisponibles: any[] = [];
+  public EstacionesDisponibles: any[] = [];
+  public DeportesDisponibles: any = [];
   public Operacion: string;
-  constructor() { }
+  constructor() {
+
+  }
 }
 
 @Injectable()
 export class EscuelaService {
 
-  private escuela = new Subject<EscuelaModel>();
+  public escuela = new BehaviorSubject<EscuelaModel>(null);
   public escuela$ = this.escuela.asObservable();
-  public _escuela = new EscuelaModel;
 
   private imgPerfil = new Subject<any>();
   public imgPerfil$ = this.imgPerfil.asObservable();
 
-  constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
+  constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) {
+  }
 
   getEscuela() {
     this.http.get(GlobalVar.uriApi + 'escuela', {
@@ -64,10 +67,12 @@ export class EscuelaService {
     });
   }
 
-  postEscuela(escuela) {
+  postEscuela(escuela, resp) {
     this.http.post(GlobalVar.uriApi + 'escuela', escuela)
       .subscribe((response: EscuelaModel) => {
         this.escuela.next(response);
+        resp({ severity: 'success', summary: 'Cambios guardados', detail: 'Cambios guardados', life: 10 });
       });
+
   }
 }

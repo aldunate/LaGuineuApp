@@ -198,6 +198,7 @@ export class ConfMultiSelect {
   selectedModel: IMultiSelectOption[];  // Datos seleccionados
   mySettings: IMultiSelectSettings;
   myTexts: IMultiSelectTexts;
+  cargado = false;
 }
 
 export const MultiSelect = Object.freeze({
@@ -284,6 +285,7 @@ export const MultiSelect = Object.freeze({
     return array;
   }
 });
+
 
 export const UtilFile = Object.freeze({
   imageFromBlob(image: Blob) {

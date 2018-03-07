@@ -3,6 +3,8 @@ import { DatePicker, ConfigCalendario, ConfMultiSelect, MultiSelect, UtilCalenda
 import { MonitorService, MonitorModel } from '../service/monitor.service';
 import { CalendarEvent } from 'calendar-utils';
 import { UtilService } from '../../util/service/util.service';
+import { Message } from 'primeng/api';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-monitor-ajustes',
@@ -12,37 +14,71 @@ import { UtilService } from '../../util/service/util.service';
 export class MonitorAjustesComponent implements OnInit {
 
   monitor: MonitorModel;
+  panelOpenState = false;
+  menuAbierto = null;
+  monitorCargado = false;
+  msgs: Message[] = [];
 
   // Estaciones
-  menuAbierto = null;
-  etiquetas: any;
+  estaciones;
+  etiquetasEstaciones: any;
   confSelEst: ConfMultiSelect;
-  panelOpenState = false;
   // Calendario
   configCalendario = new ConfigCalendario();
   datePickerInicio = new DatePicker();
   datePickerFin = new DatePicker();
+  // Deportes
+  etiquetasDeportes: any;
+  selDeportes: ConfMultiSelect;
 
-  constructor(private monitorService: MonitorService, private utilService: UtilService) {
+  constructor(private monitorService: MonitorService, private utilService:
+    UtilService, private messageService: MessageService) {
+    this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
     this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
-    this.monitorService.monitor$.subscribe(monitor => {
-      this.monitor = monitor;
-      this.iniCalendario();
-    });
+    /* Calendario */
+    this.configCalendario.vistas.headerRight = false;
+    this.configCalendario.vistas.selectMonth = true;
+    this.configCalendario = UtilCalendario.iniCalendario(this.configCalendario);
+
+    /* Estacion */
+    this.estaciones = this.utilService.estaciones.getValue();
+    if (this.estaciones === null) {
+      this.utilService.estaciones$.subscribe(estaciones => {
+        this.confSelEst.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
+        this.inicio();
+      });
+    } else {
+      this.confSelEst.dataModel = MultiSelect.iniDataModel(this.estaciones, 'Id', 'Name');
+      this.inicio();
+    }
+  }
+
+  inicio() {
+    this.monitor = this.monitorService.monitor.getValue();
+    if (this.monitor.Monitor === null) {
+      this.monitorService.monitor$.subscribe(monitor => {
+        this.monitor = monitor;
+        this.reloadEvents();
+        this.monitorEstaciones();
+      });
+    } else {
+      this.reloadEvents();
+      this.monitorEstaciones();
+    }
   }
 
   ngOnInit() {
   }
 
+
   /* Calendario */
-  iniCalendario() {
-    this.configCalendario.vistas.headerRight = false;
-    this.configCalendario.vistas.selectMonth = true;
-    this.configCalendario = UtilCalendario.iniCalendario(this.configCalendario);
+
+
+  reloadEvents() {
     this.configCalendario.events = UtilCalendario.iniEvents(this.monitor.FechasDisponibles, 'Disponible');
     this.configCalendario.trigger.next();
-    this.iniSelectedEstacion();
   }
+
   changeDatePicker(fecha, id) {
     if (id === 'inicio') {
       if (this.datePickerFin.date !== undefined) {
@@ -82,28 +118,20 @@ export class MonitorAjustesComponent implements OnInit {
   }
   viewDateChange($event) { }
 
-  iniSelectedEstacion() {
-    if (this.utilService._estaciones.length === 0) {
-      this.pushSelEstacion(this.utilService._estaciones);
-    } else {
-      this.utilService.estaciones$.subscribe(estaciones => {
-        this.pushSelEstacion(estaciones);
-      });
-    }
-  }
-  pushSelEstacion(estaciones) {
-    this.confSelEst.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
-    this.etiquetas = [];
+  /* Estaciones */
+
+  monitorEstaciones() {
+    this.etiquetasEstaciones = [];
     for (const estacion of this.monitor.EstacionesDisponibles) {
       this.confSelEst.selectedModel.push(estacion.IdEstacion);
-      this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
+      this.etiquetasEstaciones.push(this.confSelEst.dataModel.find(x => x.id === estacion.IdEstacion));
     }
   }
 
-  changeMultiselect(evento) {
-    this.etiquetas = [];
+  changeMultiselectEstaciones(evento) {
+    this.etiquetasEstaciones = [];
     for (const id of this.confSelEst.selectedModel) {
-      this.etiquetas.push(this.confSelEst.dataModel.find(x => x.id === id));
+      this.etiquetasEstaciones.push(this.confSelEst.dataModel.find(x => x.id === id));
     }
   }
 

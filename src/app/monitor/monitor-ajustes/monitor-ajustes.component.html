@@ -1,23 +1,22 @@
+<p-growl [(value)]="msgs" [life]="100" [sticky]="true" ></p-growl>
 <div class="row">
   <div class="menuListDrop" [ngSwitch]="menuAbierto">
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'Estaciones') ? null : 'Estaciones'">
-      Estaciones disponibles <span class=""></span>
-      <ng-template #template1>
-        <h1> H1 </h1>
-      </ng-template>
+      Estaciones disponibles
+      <span class=""></span>
     </div>
     <div class="row col-xs-12" *ngSwitchCase="'Estaciones'">
       <div class="form-group col-xs-12">
         <label>Estaciones</label>
         <br>
         <ss-multiselect-dropdown [options]="confSelEst.dataModel" [(ngModel)]="confSelEst.selectedModel" [settings]="confSelEst.mySettings"
-          [texts]="confSelEst.myTexts" (ngModelChange)="changeMultiselect($event)">
+          [texts]="confSelEst.myTexts" (ngModelChange)="changeMultiselectEstaciones($event)">
         </ss-multiselect-dropdown>
       </div>
       <div class="col-md-9">
         <label style="margin-bottom:15px;"> Estaciones agregadas</label>
         <br>
-        <div class="selectedItem" *ngFor="let item of etiquetas">
+        <div class="selectedItem" *ngFor="let item of etiquetasEstaciones">
           <span> {{item.name}}
           </span>
         </div>
@@ -45,9 +44,9 @@
         <app-generic-calendar [configCalendario]="configCalendario">
         </app-generic-calendar>
       </div>
+      <div class="btnUpMargin col-xs-12">
+        <button class="btn btn-success btn-lg btn-fill" (click)="saveCalendario()" type="button">Guardar</button>
+      </div>
     </div>
-  </div>
-  <div class="btnUpMargin col-xs-12">
-    <button class="btn btn-success btn-lg btn-fill" (click)="saveCalendario()" type="button">Guardar ajustes</button>
   </div>
 </div>

@@ -1,7 +1,9 @@
+<p-growl [(value)]="msgs" [life]="100" [sticky]="true" ></p-growl>
 <div class="row">
   <div class="menuListDrop" [ngSwitch]="menuAbierto">
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'Estaciones') ? null : 'Estaciones'">
-      Estaciones disponibles <span class=""></span>
+      Estaciones disponibles
+      <span class=""></span>
       <ng-template #template1>
         <h1> H1 </h1>
       </ng-template>
@@ -12,16 +14,19 @@
         <br>
         <ss-multiselect-dropdown [options]="selEstacion.dataModel"
         [(ngModel)]="selEstacion.selectedModel" [settings]="selEstacion.mySettings"
-          [texts]="selEstacion.myTexts" (ngModelChange)="changeMultiselect($event)">
+          [texts]="selEstacion.myTexts" (ngModelChange)="changeMultiselectEstaciones($event)">
         </ss-multiselect-dropdown>
       </div>
       <div class="col-md-9">
         <label style="margin-bottom:15px;"> Estaciones agregadas</label>
         <br>
-        <div class="selectedItem" *ngFor="let item of etiquetas">
+        <div class="selectedItem" *ngFor="let item of etiquetasEstaciones">
           <span> {{item.name}}
           </span>
         </div>
+      </div>
+      <div class="btnUpMargin col-xs-12">
+        <button class="btn btn-success btn-lg btn-fill" (click)="saveEstaciones()" type="button">Guardar</button>
       </div>
     </div>
 
@@ -46,9 +51,35 @@
         <app-generic-calendar [configCalendario]="configCalendario">
         </app-generic-calendar>
       </div>
+      <div class="btnUpMargin col-xs-12">
+        <button class="btn btn-success btn-lg btn-fill" (click)="saveDisponibles()" type="button">Guardar</button>
+      </div>
     </div>
-  </div>
-  <div class="btnUpMargin col-xs-12">
-    <button class="btn btn-success btn-lg btn-fill" (click)="saveCalendario()" type="button">Guardar ajustes</button>
+    <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'DeportesDisponibles') ? null : 'DeportesDisponibles'">
+      Deportes disponibles
+    </div>
+    <div class="row col-xs-12" *ngSwitchCase="'DeportesDisponibles'">
+      <div class="col-xs-12">
+        <label>Deportes disponibles</label>
+        <br>
+        <ss-multiselect-dropdown [options]="selDeportes.dataModel"
+        [(ngModel)]="selDeportes.selectedModel" [settings]="selDeportes.mySettings"
+          [texts]="selDeportes.myTexts"
+           (ngModelChange)="changeMultiselectDeportes($event)">
+        </ss-multiselect-dropdown>
+      </div>
+
+      <div class="col-md-9">
+        <label style="margin-bottom:15px;"> Deportes agregados</label>
+        <br>
+        <div class="selectedItem" *ngFor="let item of etiquetasDeportes">
+          <span> {{item.name}}
+          </span>
+        </div>
+      </div>
+      <div class="btnUpMargin col-xs-12">
+        <button class="btn btn-success btn-lg btn-fill" (click)="saveDeportes()" type="button">Guardar</button>
+      </div>
+    </div>
   </div>
 </div>

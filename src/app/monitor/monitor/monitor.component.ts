@@ -1,4 +1,4 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
 import { MultiSelect, ConfMultiSelect, UtilFechas } from '../../util/global';
 import { UtilService } from '../../util/service/util.service';
 import { MonitorService } from '../service/monitor.service';
@@ -9,7 +9,7 @@ import { Router } from '@angular/router';
   templateUrl: './monitor.component.html',
   styleUrls: ['./monitor.component.css']
 })
-export class MonitorComponent implements OnInit {
+export class MonitorComponent implements OnDestroy {
 
   monitor: any;
   idMonitor: number;
@@ -22,29 +22,35 @@ export class MonitorComponent implements OnInit {
     const aux = this.router.url.split('/');
     this.idMonitor = Number.parseInt(aux[aux.length - 1]);
     this.getMonitor();
+
   }
 
-  ngOnInit() {
+  ngOnDestroy() {
+    this.monitorService.monitor.next(null);
   }
 
   getMonitor() {
-    this.monitorService.getMonitor(this.idMonitor);
-    this.monitorService.monitor$.subscribe(monitor => {
-      this.monitor = monitor;
-      if (monitor.Monitor !== undefined) {
-        if (monitor.Monitor.FotoPerfil !== '' && monitor.Monitor.FotoPerfil !== undefined) {
-          this.monitorService.getImgPerfil(monitor.Monitor.FotoPerfil);
+    this.monitor = this.monitorService.monitor.getValue();
+    if (this.monitor === null) {
+      this.monitorService.getMonitor(this.idMonitor);
+      this.monitorService.monitor$.subscribe(monitor => {
+        if (monitor !== null) {
+          this.monitor = monitor;
+          this.iniMonitor();
         }
-        this.utilService.getEstaciones();
-        this.utilService.getDeportes();
-        this.utilService.getNiveles();
-        this.utilService.getTitulos();
-        this.monitor.Monitor.edad = UtilFechas.calculaEdad(monitor.Monitor.FechaNacimiento);
-        this.monitor.Monitor.edad += ' años';
-        this.monitorCargado = true;
-      }
-    });
+      });
+    } else {
+      this.iniMonitor();
+    }
+  }
+
+  iniMonitor() {
+    if (this.monitor.Monitor.FotoPerfil !== '' && this.monitor.Monitor.FotoPerfil !== undefined) {
+      this.monitorService.getImgPerfil(this.monitor.Monitor.FotoPerfil);
+    }
+    this.monitor.Monitor.edad = UtilFechas.calculaEdad(this.monitor.Monitor.FechaNacimiento);
+    this.monitor.Monitor.edad += ' años';
+    this.monitorCargado = true;
   }
 
 }
-
