@@ -135,8 +135,7 @@ export class MonitorAjustesComponent implements OnInit {
     }
   }
 
-  saveCalendario() {
-    this.monitor.FechasDisponibles = [];
+  saveEstaciones() {
     this.monitor.EstacionesDisponibles = [];
     for (const idEstacion of this.confSelEst.selectedModel) {
       this.monitor.EstacionesDisponibles.push({
@@ -145,6 +144,13 @@ export class MonitorAjustesComponent implements OnInit {
         Id: 0
       });
     }
+    this.monitorService.postMonitor(this.monitor, function () {
+
+    });
+  }
+
+  saveCalendario() {
+    this.monitor.FechasDisponibles = [];
     for (const evento of this.configCalendario.events) {
       this.monitor.FechasDisponibles.push({
         FechaEvento: new Date(evento.start),

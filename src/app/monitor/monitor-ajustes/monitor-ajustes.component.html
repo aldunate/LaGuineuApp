@@ -1,4 +1,4 @@
-<p-growl [(value)]="msgs" [life]="100" [sticky]="true" ></p-growl>
+<p-growl [(value)]="msgs" [life]="100" [sticky]="true"></p-growl>
 <div class="row">
   <div class="menuListDrop" [ngSwitch]="menuAbierto">
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'Estaciones') ? null : 'Estaciones'">
@@ -20,6 +20,9 @@
           <span> {{item.name}}
           </span>
         </div>
+      </div>
+      <div class="btnUpMargin col-xs-12">
+        <button class="btn btn-success btn-lg btn-fill" (click)="saveEstaciones()" type="button">Guardar</button>
       </div>
     </div>
 
