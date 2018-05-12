@@ -13,36 +13,40 @@ import { UtilService } from '../../util/service/util.service';
 export class ClasesComponent {
 
 
-  tablaMonitor = UtilDataTable.iniDataTable(
+  tablaClases = UtilDataTable.iniDataTable(
     [
       UtilDataTable.iniFiltro('Estacion'),
       UtilDataTable.iniFiltro('Nivel')
     ],
     [
-      { title: 'Estacion', data: 'Clase.Estacion', type: 'string' },
-      { title: 'Nivel', data: 'Clase.Nivel', type: 'string' },
+      { title: 'Personas', data: 'Personas', type: 'string' },
+      { title: 'Identificador', data: 'Nombre', type: 'string' },
+      { title: 'Fecha', data: 'Fecha', type: 'string' },
+
+      { title: 'Estacion', data: 'Estacion', type: 'string' },
+      { title: 'Nivel', data: 'Nivel', type: 'string' },
       { title: '', data: 'btnIr', type: 'html', orderable: false, className: 'col-xs-1' }
     ]
   );
 
+
   constructor(private escuelaService: EscuelaService, private claseService: ClaseService,
     private router: Router, private utilService: UtilService) {
+    this.iniMonitorTabla();
 
   }
 
   iniMonitorTabla() {
-    this.claseService.getClasesEscuela();
-    this.claseService.clases$.subscribe(clases => {
-      for (const clase of clases) {
-        clase.Aux.btnIr = '<button  id="' + clase.Clase.Id + '" class="btn btn-primary"> Ver clase </button>';
-      }
-      this.tablaMonitor.dtDatos = clases;
-      this.tablaMonitor.dtOptions.data = clases;
-      this.tablaMonitor.dtOptions.aaData = clases;
-      this.tablaMonitor.dtTrigger.next();
-    });
+    this.claseService.getClasesEscuela(
+      function (clases) {
+        if (clases !== null) {
+          this.tablaClases.dtDatos = clases;
+          this.tablaClases.dtOptions.data = clases;
+          this.tablaClases.dtOptions.aaData = clases;
+          this.tablaClases.dtTrigger.next();
+        }
+      }.bind(this));
   }
-
   clickTable(event) {
     if (event.srcElement.localName === 'button') {
       const id = event.srcElement.id;
@@ -51,7 +55,7 @@ export class ClasesComponent {
   }
 
   addClase() {
-    this.router.navigate(['/crea-clase']);
+    this.router.navigate(['/clase-nueva']);
   }
 
 }

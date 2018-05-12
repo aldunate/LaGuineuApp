@@ -42,12 +42,15 @@ export class EscuelaAjustesComponent {
     this.selEstacion = MultiSelect.iniMultiSelect('estación', 'estaciones');
     this.estaciones = this.utilService.estaciones.getValue();
     if (this.estaciones === null) {
-      this.utilService.estaciones$.takeUntil(this.utilService.estaciones$).subscribe(estaciones => {
-        this.selEstacion.dataModel = MultiSelect.iniDataModel(estaciones, 'Id', 'Name');
-        this.estanCargados();
+      this.utilService.estaciones$.subscribe(estaciones => {
+        if (estaciones !== null) {
+          this.estaciones = estaciones;
+          this.selEstacion.cargado = true;
+          this.estanCargados();
+        }
       });
     } else {
-      this.selEstacion.dataModel = MultiSelect.iniDataModel(this.estaciones, 'Id', 'Name');
+      this.selEstacion.cargado = true;
     }
 
     /* Calendario */
@@ -59,12 +62,14 @@ export class EscuelaAjustesComponent {
     this.selDeportes = MultiSelect.iniMultiSelect('deporte', 'deportes');
     this.deportes = this.utilService.deportes.getValue();
     if (this.deportes === null) {
-      this.utilService.deportes$.takeUntil(this.utilService.deportes$).subscribe(deportes => {
-        this.selDeportes.dataModel = MultiSelect.iniDataModel(deportes, 'Id', 'Nombre');
-        this.estanCargados();
+      this.utilService.deportes$.subscribe(deportes => {
+        if (deportes !== null) {
+          this.deportes = deportes;
+          this.selDeportes.cargado = true;
+          this.estanCargados();
+        }
       });
     } else {
-      this.selDeportes.dataModel = MultiSelect.iniDataModel(this.deportes, 'Id', 'Nombre');
       this.selDeportes.cargado = true;
       this.estanCargados();
     }
@@ -76,19 +81,25 @@ export class EscuelaAjustesComponent {
     }
   }
   inicio() {
+    this.selDeportes.dataModel = MultiSelect.iniDataModel(this.deportes, 'Id', 'Nombre');
+    this.selEstacion.dataModel = MultiSelect.iniDataModel(this.estaciones, 'Id', 'Name');
     this.escuela = this.escuelaService.escuela.getValue();
-    if (this.escuelaService.escuela === null) {
+    if (this.escuela === null) {
       this.escuelaService.escuela$.subscribe(escuela => {
-        this.actualizaMonitor();
+        if (escuela !== null && !this.escuelaCargada) {
+          this.escuela = escuela;
+          this.escuelaCargada = true;
+          this.actualizaEscuela();
+        }
       });
     } else {
-      this.actualizaMonitor();
+      this.actualizaEscuela();
     }
   }
 
 
 
-  actualizaMonitor() {
+  actualizaEscuela() {
     /* Calendario */
     this.configCalendario.events = UtilCalendario.iniEvents(this.escuela.FechasDisponibles, 'Disponible');
     this.configCalendario.trigger.next();
@@ -96,9 +107,9 @@ export class EscuelaAjustesComponent {
     /* Estaciones */
     this.etiquetasEstaciones = [];
     for (const estacion of this.escuela.EstacionesDisponibles) {
-      this.selEstacion.selectedModel.push(estacion.IdEstacion);
-      this.etiquetasEstaciones.push(this.selEstacion.dataModel.find(x => x.id === estacion.IdEstacion));
+      this.selEstacion.selectedModel.push(estacion.Id);
     }
+    this.etiquetasEstaciones =  this.escuela.EstacionesDisponibles;
 
     /* Deportes */
     this.etiquetasDeportes = [];
@@ -174,7 +185,8 @@ export class EscuelaAjustesComponent {
   changeMultiselectEstaciones(evento) {
     this.etiquetasEstaciones = [];
     for (const id of this.selEstacion.selectedModel) {
-      this.etiquetasEstaciones.push(this.selEstacion.dataModel.find(x => x.id === id));
+      const e = this.selEstacion.dataModel.find(x => x.id === id);
+      this.etiquetasEstaciones.push({Id : e.id, Nombre : e.name});
     }
   }
 

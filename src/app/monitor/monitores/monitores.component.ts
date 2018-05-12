@@ -41,7 +41,7 @@ export class MonitoresComponent implements OnInit {
       function (monitores) {
         for (const monitor of monitores) {
           monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
-          monitor.btnIr = '<button  id="' + monitor.Id + '" class="btn btn-primary"> Ver monitor </button>';
+          monitor.btnIr = '<button  id="' + monitor.Id + '" class="btn  btn-primary"> ir </button>';
         }
         this.tablas.monitor.dtDatos = monitores;
         this.tablas.monitor.dtOptions.data = monitores;

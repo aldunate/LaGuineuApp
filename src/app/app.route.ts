@@ -13,6 +13,7 @@ import { HomeLayoutComponent } from './util/layout/home.layout';
 import { MonitorComponent } from './monitor/monitor/monitor.component';
 import { EscuelaComponent } from './escuela/escuela/escuela.component';
 import { ClasesComponent } from './clase/clases/clases.component';
+import { ClaseNuevaComponent } from './clase/clase-nueva/clase-nueva.component';
 
 
 declare interface RouteInfo {
@@ -35,6 +36,7 @@ const appRoutes: Routes = [
   { path: 'monitor/:id', component: MonitorComponent },
   { path: 'escuela', component: EscuelaComponent },
   { path: 'clases', component: ClasesComponent },
+  { path: 'clase-nueva', component: ClaseNuevaComponent },
   { path: 'cliente', component: ClienteComponent },
   { path: 'main', component: MainComponent },
   { path: '', component: MainComponent }

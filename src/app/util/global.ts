@@ -202,14 +202,32 @@ export class ConfMultiSelect {
 }
 
 export const MultiSelect = Object.freeze({
-  iniMultiSelect(labelSingular, labelPlural) {
-    const mySettings: IMultiSelectSettings = {
-      enableSearch: true,
-      checkedStyle: 'fontawesome',
-      buttonClasses: 'btn btn-default',
-      dynamicTitleMaxItems: 3,
-      displayAllSelectedText: true
-    };
+  iniMultiSelect(labelSingular, labelPlural, settings?: IMultiSelectSettings) {
+    let mySettings: IMultiSelectSettings;
+    if (settings !== undefined) {
+      if (settings.enableSearch === undefined) {
+        settings.enableSearch = true;
+      }
+      mySettings = {
+        enableSearch: settings.enableSearch,
+        checkedStyle: 'fontawesome',
+        buttonClasses: 'btn btn-default',
+        dynamicTitleMaxItems: 3,
+        displayAllSelectedText: true,
+        selectionLimit: settings.selectionLimit ? settings.selectionLimit : 0,
+        autoUnselect: true,
+        closeOnSelect: true
+      };
+    } else {
+      mySettings = {
+        enableSearch: true,
+        checkedStyle: 'fontawesome',
+        buttonClasses: 'btn btn-default',
+        dynamicTitleMaxItems: 3,
+        displayAllSelectedText: true
+      };
+    }
+
     // Text configuration
     const myTexts: IMultiSelectTexts = {
       checkAll: 'Seleccionar todas',
@@ -296,3 +314,11 @@ export const UtilFile = Object.freeze({
     }
   }
 });
+
+export const UtilMsgs = Object.freeze({
+  cambiosGuardados: { severity: 'success', summary: 'Cambios guardados', detail: 'Cambios guardados', life: 10 }
+
+});
+
+
+

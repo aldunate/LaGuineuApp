@@ -6,10 +6,20 @@ import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
+
+
+
 @Injectable()
 export class UtilService {
 
-  constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
+  public edades = [
+    { Id: 1, Nombre: 'Ns/Nc' },
+    { Id: 2, Nombre: '-3' },
+    { Id: 3, Nombre: '4 a 8' },
+    { Id: 4, Nombre: '9 a 13' },
+    { Id: 5, Nombre: '14 a 18' },
+    { Id: 6, Nombre: '+18' }
+  ];
 
   public niveles = new BehaviorSubject<any[]>(null);
   public niveles$ = this.niveles.asObservable();
@@ -23,6 +33,7 @@ export class UtilService {
   public estaciones = new BehaviorSubject<any[]>(null);
   public estaciones$ = this.estaciones.asObservable();
 
+  constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
   getNiveles() {
     this.http.get(GlobalVar.uriApi + 'nivel')
@@ -42,6 +53,23 @@ export class UtilService {
     this.http.get(GlobalVar.uriApi + 'estacion')
       .subscribe((estaciones: any[]) => {
         this.estaciones.next(estaciones);
+      });
+  }
+
+  getEstacionesEscuela(respuesta) {
+    this.http.get(GlobalVar.uriApi + 'estacion', {
+      params: new HttpParams().set('cualquiera', '0')
+    })
+      .subscribe((estaciones: any[]) => {
+        estaciones.forEach(estacion => {
+          this.estaciones.getValue().forEach(e => {
+            if (estacion.IdEstacion === e.Id) {
+              estacion.Nombre = e.Name;
+              return;
+            }
+          });
+        });
+        respuesta(estaciones);
       });
   }
 

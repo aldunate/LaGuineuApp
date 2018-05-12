@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { BackendInterceptor } from '../../auth/service/backend.interceptor';
-import { GlobalVar, UtilFile } from '../../util/global';
+import { GlobalVar, UtilFile, UtilMsgs } from '../../util/global';
 import { Subject } from 'rxjs/Subject';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 
@@ -71,7 +71,7 @@ export class EscuelaService {
     this.http.post(GlobalVar.uriApi + 'escuela', escuela)
       .subscribe((response: EscuelaModel) => {
         this.escuela.next(response);
-        resp({ severity: 'success', summary: 'Cambios guardados', detail: 'Cambios guardados', life: 10 });
+        resp(UtilMsgs.cambiosGuardados);
       });
 
   }

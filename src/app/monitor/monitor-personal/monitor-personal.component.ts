@@ -2,6 +2,7 @@ import { Component, OnInit, Input } from '@angular/core';
 import { ConfMultiSelect, MultiSelect } from '../../util/global';
 import { MonitorService, MonitorModel } from '../service/monitor.service';
 import { UtilService } from '../../util/service/util.service';
+import { Message } from 'primeng/api';
 
 @Component({
   selector: 'app-monitor-personal',
@@ -14,6 +15,7 @@ export class MonitorPersonalComponent implements OnInit {
   titulos;
   selTitulo: ConfMultiSelect;
   imgConf: any;
+  msgs: Message[] = [];
 
   constructor(private monitorService: MonitorService, private utilService: UtilService) {
     this.imgConf = {
@@ -29,15 +31,16 @@ export class MonitorPersonalComponent implements OnInit {
     this.titulos = this.utilService.titulos.getValue();
     if (this.titulos === null) {
       this.utilService.titulos$.subscribe(titulos => {
-        this.selTitulo.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
-        this.inicio();
+        if (titulos !== null) {
+          this.inicio();
+        }
       });
     } else {
-      this.selTitulo.dataModel = MultiSelect.iniDataModel(this.titulos, 'Id', 'Nombre');
       this.inicio();
     }
   }
   inicio() {
+    this.selTitulo.dataModel = MultiSelect.iniDataModel(this.titulos, 'Id', 'Nombre');
     this.monitor = this.monitorService.monitor.getValue();
     if (this.monitor === null) {
       this.monitorService.monitor$.subscribe(monitor => {
@@ -77,13 +80,14 @@ export class MonitorPersonalComponent implements OnInit {
     const titulos = [];
     for (const titulo of this.monitor.Titulos) {
       titulos.push({
-        IdTitulo: titulo
+        IdTitulo: titulo,
+        IdMonitor: this.monitor.Monitor.Id
       });
     }
     this.monitor.Titulos = titulos;
-    this.monitorService.postMonitor(this.monitor,
-      function () {
-
+    this.monitorService.postMonitor(this.monitor, 'Monitor',
+      function (confirmacion) {
+        this.msgs.push(confirmacion);
       });
   }
 

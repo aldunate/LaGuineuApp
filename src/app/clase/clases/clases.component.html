@@ -1,3 +1,22 @@
-<p>
-  clases works!
-</p>
+<div class="">
+  <mat-tab-group>
+    <mat-tab label="CLASES">
+      <div class="col-xs-12">
+        <div style="margin-bottom:20px;"></div>
+        <app-datatable-generic [dt]="tablaClases" (clickTable)="clickTable($event)">
+        </app-datatable-generic>
+      </div>
+    </mat-tab>
+    <mat-tab label="AÑADIR">
+      <div class="col-xs-12 marginTop">
+        <app-clase-nueva></app-clase-nueva>
+      </div>
+    </mat-tab>
+    <mat-tab label="ASIGNAR">
+      <div class="col-xs-12 marginTop">
+        <app-clase-asignar></app-clase-asignar>
+      </div>
+      <div style="margin-top: 2%;"></div>
+    </mat-tab>
+  </mat-tab-group>
+</div>

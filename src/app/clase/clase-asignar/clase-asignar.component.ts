@@ -1,4 +1,5 @@
 import { Component, OnInit } from '@angular/core';
+import { ConfigCalendario, UtilCalendario } from '../../util/global';
 
 @Component({
   selector: 'app-clase-asignar',
@@ -7,7 +8,16 @@ import { Component, OnInit } from '@angular/core';
 })
 export class ClaseAsignarComponent implements OnInit {
 
-  constructor() { }
+  // Calendario
+  configCalendario = new ConfigCalendario();
+
+  constructor() {
+    /* Calendario */
+    this.configCalendario.vistas.headerRight = false;
+    this.configCalendario.vistas.selectMonth = true;
+    this.configCalendario.view = 'day';
+    this.configCalendario = UtilCalendario.iniCalendario(this.configCalendario);
+  }
 
   ngOnInit() {
   }

@@ -73,7 +73,7 @@ export class NavBarComponent implements OnInit {
         return this.listTitles[item].title;
       }
     }
-    return 'Dashboard';
+    return 'Main';
   }
 
 }

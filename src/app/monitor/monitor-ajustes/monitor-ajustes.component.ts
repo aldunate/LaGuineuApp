@@ -70,10 +70,7 @@ export class MonitorAjustesComponent implements OnInit {
   ngOnInit() {
   }
 
-
   /* Calendario */
-
-
   reloadEvents() {
     this.configCalendario.events = UtilCalendario.iniEvents(this.monitor.FechasDisponibles, 'Disponible');
     this.configCalendario.trigger.next();
@@ -144,9 +141,10 @@ export class MonitorAjustesComponent implements OnInit {
         Id: 0
       });
     }
-    this.monitorService.postMonitor(this.monitor, function () {
-
-    });
+    this.monitorService.postMonitor(this.monitor, 'Estaciones',
+      function (confirmacion) {
+        this.msgs.push(confirmacion);
+      }.bind(this));
   }
 
   saveCalendario() {
@@ -158,9 +156,9 @@ export class MonitorAjustesComponent implements OnInit {
         Id: 0
       });
     }
-    this.monitorService.saveCalendario(this.monitor,
-      function (eventos) {
-
+    this.monitorService.postMonitor(this.monitor, 'Disponibles',
+      function (confirmacion) {
+        this.msgs.push(confirmacion);
       }.bind(this)
     );
   }

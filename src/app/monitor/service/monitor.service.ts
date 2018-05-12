@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpParams, HttpHeaders } from '@angular/common/http';
 import { BackendInterceptor } from '../../auth/service/backend.interceptor';
-import { GlobalVar, UtilFile } from '../../util/global';
+import { GlobalVar, UtilFile, UtilMsgs } from '../../util/global';
 import { Observable } from 'rxjs/Observable';
 import { BehaviorSubject } from 'rxjs/BehaviorSubject';
 import { Subject } from 'rxjs/Subject';
@@ -72,27 +72,17 @@ export class MonitorService {
       });
   }
 
-  postMonitor(monitor, respuesta) {
-    this.http.post(GlobalVar.uriApi + 'monitor', {
-      Monitor: monitor.Monitor,
-      Titulos: monitor.Titulos,
-      Usuario: monitor.Usuario
-    })
-      .subscribe((response) => {
-        respuesta(response);
+
+  postMonitor(monitor: MonitorModel, operacion, resp) {
+    monitor.Operacion = operacion;
+    this.http.post(GlobalVar.uriApi + 'monitor', monitor)
+      .subscribe((response: MonitorModel) => {
+        this.monitor.next(response);
+        resp(UtilMsgs.cambiosGuardados);
       });
+
   }
 
-  saveCalendario(monitor, respuesta) {
-    this.http.post(GlobalVar.uriApi + 'monitorCalendario', {
-      FechasDisponibles: monitor.FechasDisponibles,
-      EstacionesDisponibles: monitor.EstacionesDisponibles,
-      IdMonitor: monitor.Id
-    })
-      .subscribe((response) => {
-        respuesta(response);
-      });
-  }
   getMonitoresEscuela(respuesta) {
     this.http.get(GlobalVar.uriApi + 'monitor')
       .subscribe((response) => {
