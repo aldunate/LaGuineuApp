@@ -1,10 +1,10 @@
 <div>
   <div class="row">
     <div class="col-xs-12" style="margin-bottom: 2%;margin-top: 2%;">
-      <div class="col-xs-12" style="text-align: center;font-weight:bold;">
+      <div class="col-xs-12" style="text-align: center;font-weight:bold;" *ngIf="configCalendario.vistas.headerDate">
         <h4>{{ configCalendario.viewDate | calendarDate:(configCalendario.view + 'ViewTitle'):'es' | uppercase }} </h4>
       </div>
-      <div class="col-xs-12" style="text-align: center">
+      <div class="col-xs-12" style="text-align: center" *ngIf="configCalendario.vistas.headerChangeDate">
         <div class="btn-group">
           <div class="btn btn-primary" mwlCalendarPreviousView [view]="configCalendario.view" [(viewDate)]="configCalendario.viewDate"
             (viewDateChange)="viewDateChange.next(configCalendario.viewDate)">

@@ -2,6 +2,36 @@
 @import '../node_modules/@angular/material/prebuilt-themes/deeppurple-amber.css';
 @import "~angular-calendar/css/angular-calendar.css";
 @import "../node_modules/datatables.net-dt/css/jquery.dataTables.css";
+@import "../node_modules/weather-icons/css/weather-icons.min.css";
+@import "../node_modules/hover.css";
+
+
+.rowSelected{
+  background: rgb(187, 185, 185)!important;
+  font-weight: bolder!important;
+  color: rgb(5, 99, 78)!important;
+}
+ss-multiselect-dropdown{
+    z-index: 999!important;
+
+}
+ss-multiselect-dropdown ul{
+  z-index: 999!important;
+
+}
+.dropdown-menu{
+  z-index: 999!important;
+  display: block!important;
+}
+.dropdown-menu li{
+  z-index: 999!important;
+}
+
+.material-icons.md-18 { font-size: 18px; }
+.material-icons.md-24 { font-size: 24px; }
+.material-icons.md-36 { font-size: 36px; }
+.material-icons.md-48 { font-size: 48px; }
+
 
 .imgUpload{
   max-width: 250px!important;
@@ -25,8 +55,16 @@
   font-size: large!important;
   font-weight: bold;
   cursor: pointer;
-}
 
+  opacity:0.8;
+  transition:opacity 1s linear;
+}
+.divMenuDropdown:hover{
+  opacity: 1;
+  box-shadow: inset 0 0 0 1px #172f42;
+  -webkit-transition: box-shadow 1s; /* Safari */
+  transition: box-shadow 1s;
+}
 
 .navbar{
   margin: 0px!important;

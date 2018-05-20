@@ -1,8 +1,11 @@
-<p-growl [(value)]="msgs" [life]="100" [sticky]="true"></p-growl>
+<p-growl [(value)]="msgs" life="100" sticky="sticky"></p-growl>
+
 <div class="row">
   <div class="menuListDrop" [ngSwitch]="menuAbierto">
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'Estaciones') ? null : 'Estaciones'">
       Estaciones disponibles
+      <i class="material-icons md-24" style="float: right;"> {{(menuAbierto === 'Estaciones') ? 'arrow_drop_down': 'arrow_right'}}</i>
+
       <span class=""></span>
     </div>
     <div class="row col-xs-12" *ngSwitchCase="'Estaciones'">
@@ -28,6 +31,8 @@
 
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'FechasDisponibles') ? null : 'FechasDisponibles'">
       Fechas disponibles
+      <i class="material-icons md-24" style="float: right;"> {{(menuAbierto === 'Estaciones') ? 'arrow_drop_down': 'arrow_right'}}</i>
+
     </div>
     <div class="row col-xs-12" *ngSwitchCase="'FechasDisponibles'">
       <label>Fechas disponibles</label>

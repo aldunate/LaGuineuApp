@@ -78,7 +78,7 @@ export class MonitorService {
     this.http.post(GlobalVar.uriApi + 'monitor', monitor)
       .subscribe((response: MonitorModel) => {
         this.monitor.next(response);
-        resp(UtilMsgs.cambiosGuardados);
+        resp(UtilMsgs.cambiosGuardados, response);
       });
 
   }

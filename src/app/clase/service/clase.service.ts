@@ -5,6 +5,11 @@ import { BackendInterceptor } from '../../auth/service/backend.interceptor';
 import { GlobalVar, UtilMsgs } from '../../util/global';
 import { UtilService } from '../../util/service/util.service';
 
+export class ClaseModel {
+  public Clase: Clase;
+  public Monitores: any;
+  public Clientes: any;
+}
 
 export class Clase {
   public Id?: number;
@@ -20,6 +25,7 @@ export class Clase {
   public EsClub?: boolean;
   public Personas?: number;
   public Nombre?: string;
+  public btnIr?: string;
 }
 
 
@@ -45,9 +51,10 @@ export class ClaseService {
       });
   }
 
-  getClasesSinAsignar(response) {
+  getClasesEscuelaFecha(fecha: Date, response) {
+    const aux = fecha.getDate() + '/' + (fecha.getMonth() + 1) + '/' + fecha.getFullYear();
     this.http.get(GlobalVar.uriApi + 'clase', {
-      params: new HttpParams().set('operacion', 'SinAsignar')
+      params: new HttpParams().set('operacion', 'Fecha').set('fecha', aux)
     })
       .subscribe((clases: any[]) => {
         response(clases);
@@ -57,7 +64,7 @@ export class ClaseService {
 
   getClasesEscuela(response) {
     this.http.get(GlobalVar.uriApi + 'clase', {
-      params: new HttpParams().set('operacion', 'Todas')
+      params: new HttpParams().set('operacion', 'Todas').set('fecha', null)
     })
       .subscribe((clases: any[]) => {
         this.utilService.niveles$.subscribe(niveles => {
@@ -69,7 +76,7 @@ export class ClaseService {
                 return;
               }
             });
-            clase.btnIr = '<button  id="' + clase.Id + '" class="btn btn-primary"> Ver clase </button>';
+            clase.btnIr = '<button  id="' + clase.Id + '" class="btn btn-default btn-fill" > Ver clase </button>';
           });
         });
 
@@ -85,6 +92,14 @@ export class ClaseService {
           });
         });
         response(clases);
+      });
+  }
+
+  postAsignada(asignada) {
+
+    this.http.post(GlobalVar.uriApi + 'ClaseAsignar', asignada)
+      .subscribe((idClase) => {
+
       });
   }
 

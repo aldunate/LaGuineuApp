@@ -88,7 +88,9 @@ export const UtilDataTable = Object.freeze({
 export class ConfigCalendario {
   vistas = {
     headerRight: true,
-    selectMonth: false
+    selectMonth: false,
+    headerChangeDate: true,
+    headerDate: true
   };
   view = 'month';
   viewDate: Date = new Date();
@@ -208,11 +210,12 @@ export const MultiSelect = Object.freeze({
       if (settings.enableSearch === undefined) {
         settings.enableSearch = true;
       }
+
       mySettings = {
         enableSearch: settings.enableSearch,
         checkedStyle: 'fontawesome',
-        buttonClasses: 'btn btn-default',
-        dynamicTitleMaxItems: 3,
+        buttonClasses: settings.buttonClasses ? settings.buttonClasses : 'btn btn-default',
+        dynamicTitleMaxItems: settings.dynamicTitleMaxItems ? settings.dynamicTitleMaxItems : 3,
         displayAllSelectedText: true,
         selectionLimit: settings.selectionLimit ? settings.selectionLimit : 0,
         autoUnselect: true,

@@ -21,6 +21,12 @@ export class UtilService {
     { Id: 6, Nombre: '+18' }
   ];
 
+  public loading = new BehaviorSubject<any>(false);
+  public loading$ = this.loading.asObservable();
+
+  public textoSuperior = new BehaviorSubject<any>({ titulo: '', href: '' });
+  public textoSuperior$ = this.textoSuperior.asObservable();
+
   public niveles = new BehaviorSubject<any[]>(null);
   public niveles$ = this.niveles.asObservable();
 
@@ -30,8 +36,12 @@ export class UtilService {
   public deportes = new BehaviorSubject<any[]>(null);
   public deportes$ = this.deportes.asObservable();
 
+  public estacionesTodas = new BehaviorSubject<any[]>(null);
+  public estacionesTodas$ = this.estacionesTodas.asObservable();
+
   public estaciones = new BehaviorSubject<any[]>(null);
-  public estaciones$ = this.estaciones.asObservable();
+  public estaciones$ = this.estacionesTodas.asObservable();
+
 
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
@@ -51,27 +61,25 @@ export class UtilService {
 
   getEstaciones() {
     this.http.get(GlobalVar.uriApi + 'estacion')
-      .subscribe((estaciones: any[]) => {
-        this.estaciones.next(estaciones);
+      .subscribe((estacionesTodas: any[]) => {
+        this.estacionesTodas.next(estacionesTodas);
       });
   }
 
-  getEstacionesEscuela(respuesta) {
+  getEstacionTiempo(respuesta, lat?, lon?) {
+    if (lat === undefined || lon === undefined) {
+      lat = 0;
+      lon = 0;
+    }
     this.http.get(GlobalVar.uriApi + 'estacion', {
-      params: new HttpParams().set('cualquiera', '0')
+      params: new HttpParams().set('lat', lat).set('lon', lon)
     })
-      .subscribe((estaciones: any[]) => {
-        estaciones.forEach(estacion => {
-          this.estaciones.getValue().forEach(e => {
-            if (estacion.IdEstacion === e.Id) {
-              estacion.Nombre = e.Name;
-              return;
-            }
-          });
-        });
-        respuesta(estaciones);
+      .subscribe(resp => {
+        respuesta(resp);
       });
+
   }
+
 
   getDeportes() {
     this.http.get(GlobalVar.uriApi + 'deporte')
@@ -80,4 +88,7 @@ export class UtilService {
       });
   }
 
+  setTextoSuperior(texto) {
+    this.textoSuperior.next(texto);
+  }
 }

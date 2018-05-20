@@ -1,4 +1,6 @@
-<form (ngSubmit)="crearMonitor()" class="" [formGroup]="monitorForm" novalidate>
+<p-growl [(value)]="msgs" sticky="sticky" life="10000"></p-growl>
+
+<form  class="" [formGroup]="monitorForm" novalidate>
   <div class="row">
     <div class="col-xs-12">
       <div class="col-xs-12">
@@ -6,13 +8,6 @@
       </div>
       <h4 class="col-xs-12"> Nuevo Monitor </h4>
       <div class="col-xs-12">
-        <div class="form-group row">
-          <div class="col-md-5 col-xs-12">
-            <label>Usuario</label>
-            <input class="form-control" formControlName="usuario" type="text"
-            [value]="(monitorForm.value.nombre +'.'+ monitorForm.value.apellidos).replace(' ','-')">
-          </div>
-        </div>
         <div class="row">
           <div class="form-group col-md-5 col-xs-6">
             <label>Nombre*</label>
@@ -67,7 +62,7 @@
         </div>
         <div style="margin-top:10px"></div>
         <div class="col-xs-12 row">
-          <button class="btn btn-success" type="submit"> Crear Monitor</button>
+          <button class="btn btn-success" (click)="crearMonitor()" type="button"> Crear Monitor</button>
         </div>
       </div>
     </div>

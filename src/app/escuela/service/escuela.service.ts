@@ -55,7 +55,7 @@ export class EscuelaService {
     formData.append('data', JSON.stringify(data));
 
     this.http
-      .post(GlobalVar.uriApi + 'monitorPerfil', formData).subscribe(response => {
+      .post(GlobalVar.uriApi + 'escuelaPerfil', formData).subscribe(response => {
         const r = response;
       });
   }

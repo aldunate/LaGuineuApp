@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ROUTES } from '../../app.route';
+import { TokenService } from '../../auth/service/token.service';
 
 declare const $: any;
 
@@ -12,13 +13,18 @@ declare const $: any;
 export class SideBarComponent implements OnInit {
   public menuItems: any[];
 
+  constructor(private tokenService: TokenService) { }
   ngOnInit() {
-      this.menuItems = ROUTES.filter(menuItem => menuItem);
+    this.menuItems = ROUTES.filter(menuItem => menuItem);
   }
+  cerrarSesion() {
+    this.tokenService.remove();
+  }
+
   isNotMobileMenu() {
-      if ($(window).width() > 991) {
-          return false;
-      }
-      return true;
+    if ($(window).width() > 991) {
+      return false;
+    }
+    return true;
   }
 }

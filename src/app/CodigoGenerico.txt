@@ -47,3 +47,85 @@
   <img src="fallbackImage.png" alt="Fallbackimage">
 </ng-template>
 
+
+
+
+
+
+
+
+CARD
+<div class="col-xs-4">
+  <div *ngFor="let monitor of monitores">
+    {{monitor.Nombre}}
+    <div class="container">
+      <div class="card">
+        <div class="card-head">
+          <div class="product-detail">
+            <span class="back-text"></span>
+          </div>
+          <div class="card-body">
+            <div class="product-desc">
+              <span class="product-title">
+                {{monitor.Nombre}}
+                <b>{{monitor.Apellidos}}</b>
+                <span class="badge">
+                  New
+                </span>
+              </span>
+              <span class="product-caption">
+                Basket Ball Collection
+              </span>
+              <span class="product-rating">
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star"></i>
+                <i class="fa fa-star grey"></i>
+              </span>
+            </div>
+            <div class="product-properties">
+              <span class="product-size">
+                <h4>Size</h4>
+                <ul class="ul-size">
+                  <li>
+                    <a href="#">7</a>
+                  </li>
+                  <li>
+                    <a href="#">8</a>
+                  </li>
+                  <li>
+                    <a href="#">9</a>
+                  </li>
+                  <li>
+                    <a href="#" class="active">10</a>
+                  </li>
+                  <li>
+                    <a href="#">11</a>
+                  </li>
+                </ul>
+              </span>
+              <span class="product-color">
+                <h4>Colour</h4>
+                <ul class="ul-color">
+                  <li>
+                    <a href="#" class="orange active"></a>
+                  </li>
+                  <li>
+                    <a href="#" class="green"></a>
+                  </li>
+                  <li>
+                    <a href="#" class="yellow"></a>
+                  </li>
+                </ul>
+              </span>
+              <span class="product-price">
+                USD
+                <b>23,453</b>
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>

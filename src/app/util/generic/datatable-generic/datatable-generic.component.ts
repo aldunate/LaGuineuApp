@@ -12,6 +12,7 @@ import { forEach } from '@angular/router/src/utils/collection';
 import { MonitorService } from '../../../monitor/service/monitor.service';
 import { DataTableDirective } from 'angular-datatables';
 
+
 @Component({
   selector: 'app-datatable-generic',
   templateUrl: './datatable-generic.component.html',
@@ -22,10 +23,13 @@ export class DatatableGenericComponent implements OnInit {
   @Output() clickTable = new EventEmitter<any>();
   @Input() dt: any;
 
+  @Output() datos = new Subject();
+
   @ViewChild(DataTableDirective)
   datatableElement: DataTableDirective;
 
   constructor(private monitorService: MonitorService, private router: Router) {
+
   }
 
   inputChange(evento) {
@@ -34,18 +38,32 @@ export class DatatableGenericComponent implements OnInit {
       this.dt.dtOptions.aaData = this.dt.dtDatos;
       for (const filtro of this.dt.dtFiltros) {
         if (filtro.type === 'text') {
-          this.dt.dtOptions.aaData = this.dt.dtOptions.aaData.filter(x =>
-            x[filtro.data].toLocaleLowerCase().includes(filtro.model.toLocaleLowerCase()));
+          this.dt.dtOptions.aaData = this.dt.dtOptions.aaData.filter(x => {
+            if (x[filtro.data] !== null) {
+              return x[filtro.data].toLocaleLowerCase().includes(filtro.model.toLocaleLowerCase());
+            }
+          });
         }
       }
       this.dt.dtTrigger.next();
     });
   }
 
+
   clickOnTable(event) {
-      this.clickTable.emit(event);
+    this.clickTable.emit(event);
   }
   ngOnInit() {
+    let n = 2;
+    this.dt.dtTrigger.subscribe(datos => {
+      n = 3;
+      if (datos !== undefined) {
+        this.datatableElement.dtInstance.then((dtInstance: DataTables.Api) => {
+          dtInstance.destroy();
+          this.dt.dtOptions.aaData = datos;
+        });
+      }
+    });
   }
 
 }

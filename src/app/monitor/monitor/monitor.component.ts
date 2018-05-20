@@ -22,7 +22,6 @@ export class MonitorComponent implements OnDestroy {
     const aux = this.router.url.split('/');
     this.idMonitor = Number.parseInt(aux[aux.length - 1]);
     this.getMonitor();
-
   }
 
   ngOnDestroy() {
@@ -30,18 +29,17 @@ export class MonitorComponent implements OnDestroy {
   }
 
   getMonitor() {
-    this.monitor = this.monitorService.monitor.getValue();
-    if (this.monitor === null) {
-      this.monitorService.getMonitor(this.idMonitor);
-      this.monitorService.monitor$.subscribe(monitor => {
-        if (monitor !== null) {
-          this.monitor = monitor;
-          this.iniMonitor();
-        }
-      });
-    } else {
-      this.iniMonitor();
-    }
+    this.monitorService.getMonitor(this.idMonitor);
+    this.monitorService.monitor$.subscribe(monitor => {
+      if (monitor !== null) {
+        this.monitor = monitor;
+        this.utilService.setTextoSuperior({
+          titulo: monitor.Monitor.Nombre + ' ' + monitor.Monitor.Apellidos,
+          href: 'monitor/' + monitor.Monitor.Id
+        });
+        this.iniMonitor();
+      }
+    });
   }
 
   iniMonitor() {

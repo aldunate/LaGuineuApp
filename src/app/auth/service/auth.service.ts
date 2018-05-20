@@ -9,10 +9,10 @@ export class AuthService {
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 
 
-  login(usuario, password, respuesta) {
+  login(email, password, respuesta) {
     this.http.post(GlobalVar.uriApi + 'login', {
       'Password': password,
-      'Nombre': usuario
+      'Email': email
     })
       .subscribe((response) => respuesta(response));
   }

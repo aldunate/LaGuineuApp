@@ -2,7 +2,6 @@ import { Component, OnInit } from '@angular/core';
 import { Clase, ClaseService } from '../service/clase.service';
 import { FormGroup, FormBuilder, FormControl, Validators } from '@angular/forms';
 import { ConfMultiSelect, MultiSelect, DatePicker, ConfigCalendario, UtilCalendario } from '../../util/global';
-import { TokenService } from '../../auth/service/token.service';
 import { HttpClient } from '@angular/common/http';
 import { MonitorService } from '../../monitor/service/monitor.service';
 import { UtilService } from '../../util/service/util.service';
@@ -40,9 +39,6 @@ export class ClaseNuevaComponent implements OnInit {
     private router: Router) {
 
     this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
-
-
-
     /* Estacion */
     this.escuelaService.escuela$.subscribe(
       escuela => {
@@ -73,11 +69,16 @@ export class ClaseNuevaComponent implements OnInit {
       Duracion: this.clase.Duracion,
       HoraInicio: this.clase.HoraInicio,
       HoraFin: this.clase.HoraFin,
-      // No les puedo hacer un casting -> siempre seran enteros
-      IdEdades: this.confMulti.edades.selectedModel[0],
-      IdEstacion: this.confMulti.estaciones.selectedModel[0],
-      IdNivel: this.confMulti.niveles.selectedModel[0]
     };
+    if (this.confMulti.estaciones.selectedModel.length > 0) {
+      clase.IdEstacion = Number.parseInt(this.confMulti.estaciones.selectedModel[0] + '');
+    }
+    if (this.confMulti.niveles.selectedModel.length > 0) {
+      clase.IdNivel = Number.parseInt(this.confMulti.niveles.selectedModel[0] + '');
+    }
+    if (this.confMulti.edades.selectedModel.length > 0) {
+      clase.IdEdades = Number.parseInt(this.confMulti.edades.selectedModel[0] + '');
+    }
     this.claseService.postClase(clase,
       function (confirmacion, id) {
         this.msgs.push(confirmacion);

@@ -1,20 +1,16 @@
-<p-growl [(value)]="msgs" [life]="100" [sticky]="true" ></p-growl>
+<p-growl [(value)]="msgs" [life]="100" [sticky]="true"></p-growl>
 <div class="row">
   <div class="menuListDrop" [ngSwitch]="menuAbierto">
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'Estaciones') ? null : 'Estaciones'">
       Estaciones disponibles
-      <span class=""></span>
-      <ng-template #template1>
-        <h1> H1 </h1>
-      </ng-template>
+      <i class="material-icons md-24" style="float: right;"> {{(menuAbierto === 'Estaciones') ? 'arrow_drop_down': 'arrow_right'}}</i>
     </div>
 
     <div class="row col-xs-12" *ngSwitchCase="'Estaciones'">
       <div class="form-group col-xs-12">
         <label>Estaciones</label>
         <br>
-        <ss-multiselect-dropdown [options]="selEstacion.dataModel"
-        [(ngModel)]="selEstacion.selectedModel" [settings]="selEstacion.mySettings"
+        <ss-multiselect-dropdown [options]="selEstacion.dataModel" [(ngModel)]="selEstacion.selectedModel" [settings]="selEstacion.mySettings"
           [texts]="selEstacion.myTexts" (ngModelChange)="changeMultiselectEstaciones($event)">
         </ss-multiselect-dropdown>
       </div>
@@ -33,6 +29,7 @@
 
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'FechasDisponibles') ? null : 'FechasDisponibles'">
       Fechas disponibles
+      <i class="material-icons md-24" style="float: right;"> {{(menuAbierto === 'FechasDisponibles') ? 'arrow_drop_down': 'arrow_right'}}</i>
     </div>
     <div class="row col-xs-12" *ngSwitchCase="'FechasDisponibles'">
       <label>Fechas disponibles</label>
@@ -58,15 +55,14 @@
     </div>
     <div class="col-xs-12 form-group form-control divMenuDropdown" (click)="menuAbierto = (menuAbierto === 'DeportesDisponibles') ? null : 'DeportesDisponibles'">
       Deportes disponibles
+      <i class="material-icons md-24" style="float: right;"> {{(menuAbierto === 'DeportesDisponibles') ? 'arrow_drop_down': 'arrow_right'}}</i>
     </div>
     <div class="row col-xs-12" *ngSwitchCase="'DeportesDisponibles'">
       <div class="col-xs-12">
         <label>Deportes disponibles</label>
         <br>
-        <ss-multiselect-dropdown [options]="selDeportes.dataModel"
-        [(ngModel)]="selDeportes.selectedModel" [settings]="selDeportes.mySettings"
-          [texts]="selDeportes.myTexts"
-           (ngModelChange)="changeMultiselectDeportes($event)">
+        <ss-multiselect-dropdown [options]="selDeportes.dataModel" [(ngModel)]="selDeportes.selectedModel" [settings]="selDeportes.mySettings"
+          [texts]="selDeportes.myTexts" (ngModelChange)="changeMultiselectDeportes($event)">
         </ss-multiselect-dropdown>
       </div>
 

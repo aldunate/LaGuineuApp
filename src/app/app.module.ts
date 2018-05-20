@@ -22,6 +22,8 @@ import { DataTablesModule } from 'angular-datatables';
 // Adolfo Plugins
 import { ImgUploadComponent } from './util/generic/img-upload/img-upload.component';
 // Ng PRime
+// Loadings plugin
+import { LoadersCssModule } from 'angular2-loaders-css';
 
 
 // Components adolfo
@@ -69,7 +71,10 @@ import { ClaseAsignarComponent } from './clase/clase-asignar/clase-asignar.compo
 import { ClaseNuevaComponent } from './clase/clase-nueva/clase-nueva.component';
 import { EscuelaAjustesComponent } from './escuela/escuela-ajustes/escuela-ajustes.component';
 import { EscuelaMuroComponent } from './escuela/escuela-muro/escuela-muro.component';
-import { ClaseComponent } from './clase/clase/clase.component';
+import { EscuelaPersonalComponent } from './escuela/escuela-personal/escuela-personal.component';
+import { UsuariosComponent } from './usuario/usuarios/usuarios.component';
+import { UsuarioNuevoComponent } from './usuario/usuario-nuevo/usuario-nuevo.component';
+import { UsuarioComponent } from './usuario/usuario/usuario.component';
 
 registerLocaleData(localeEs);
 
@@ -101,7 +106,10 @@ registerLocaleData(localeEs);
     ClaseNuevaComponent,
     EscuelaAjustesComponent,
     EscuelaMuroComponent,
-    ClaseComponent
+    EscuelaPersonalComponent,
+    UsuariosComponent,
+    UsuarioNuevoComponent,
+    UsuarioComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,
@@ -114,7 +122,9 @@ registerLocaleData(localeEs);
     CalendarModule.forRoot(),
     CommonModule,
     // Datatable
-    DataTablesModule
+    DataTablesModule,
+    // Loadings plugin
+    LoadersCssModule
   ],
   providers: [
     UsuarioService,

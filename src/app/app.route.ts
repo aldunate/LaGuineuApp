@@ -14,6 +14,9 @@ import { MonitorComponent } from './monitor/monitor/monitor.component';
 import { EscuelaComponent } from './escuela/escuela/escuela.component';
 import { ClasesComponent } from './clase/clases/clases.component';
 import { ClaseNuevaComponent } from './clase/clase-nueva/clase-nueva.component';
+import { UsuariosComponent } from './usuario/usuarios/usuarios.component';
+import { UsuarioNuevoComponent } from './usuario/usuario-nuevo/usuario-nuevo.component';
+import { UsuarioComponent } from './usuario/usuario/usuario.component';
 
 
 declare interface RouteInfo {
@@ -23,11 +26,23 @@ declare interface RouteInfo {
   class: string;
 }
 export const ROUTES: RouteInfo[] = [
-  { path: 'main', title: 'Main', icon: 'Porque', class: '' },
-  { path: 'clases', title: 'Clases', icon: 'notifications', class: '' },
-  { path: 'monitores', title: 'Monitores', icon: 'notifications', class: '' },
-  { path: 'escuela', title: 'Escuela', icon: 'notifications', class: '' },
+  { path: 'main', title: 'Main', icon: 'dashboard', class: '' },
+  { path: 'clases', title: 'Clases', icon: 'library_books', class: '' },
+  { path: 'monitores', title: 'Monitores', icon: 'accessibility_new', class: '' },
+  { path: 'escuela', title: 'Escuela', icon: 'school', class: '' },
+  { path: 'usuarios', title: 'Usuarios', icon: 'account_box', class: '' }
 ];
+
+export const textoSuperior = [
+  { path: 'main', title: 'Main' },
+  { path: 'clases', title: 'Clases' },
+  { path: 'monitores', title: 'Monitores' },
+  { path: 'escuela', title: 'Escuela' },
+  { path: 'crea-monitor', title: 'Nuevo monitor' },
+  { path: 'nuevo-usuario', title: 'Nuevo usuario' },
+  { path: 'usuarios', title: 'Usuarios' },
+];
+
 
 const appRoutes: Routes = [
   { path: 'registro', component: RegistroComponent },
@@ -38,6 +53,9 @@ const appRoutes: Routes = [
   { path: 'clases', component: ClasesComponent },
   { path: 'clase-nueva', component: ClaseNuevaComponent },
   { path: 'cliente', component: ClienteComponent },
+  { path: 'usuarios', component: UsuariosComponent },
+  { path: 'usuario/:id', component: UsuarioComponent },
+  { path: 'nuevo-usuario', component: UsuarioNuevoComponent },
   { path: 'main', component: MainComponent },
   { path: '', component: MainComponent }
 ];

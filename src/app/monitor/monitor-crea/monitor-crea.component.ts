@@ -1,5 +1,4 @@
 import { Component, OnInit, ElementRef, AfterViewInit, ViewChild, Output } from '@angular/core';
-import { TokenService } from '../../auth/service/token.service';
 import { HttpClient } from '@angular/common/http';
 import { MonitorService, Monitor, MonitorModel } from '../service/monitor.service';
 import { FormControl, FormGroup, Validators, FormBuilder } from '@angular/forms';
@@ -10,6 +9,8 @@ import { MatDatepickerInputEvent, MatDatepicker } from '@angular/material';
 import { DateAdapter, MAT_DATE_FORMATS, MAT_DATE_LOCALE } from '@angular/material/core';
 import { ConfMultiSelect, MultiSelect } from '../../util/global';
 import { UtilService } from '../../util/service/util.service';
+import { Message } from 'primeng/api';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-monitor-crea',
@@ -23,11 +24,16 @@ export class MonitorCreaComponent implements OnInit {
   monitorForm: FormGroup;
   confSelEst: ConfMultiSelect;
   usuario: string;
+  msgs: Message[] = [];
 
-  constructor(private http: HttpClient, private tokenService: TokenService,
+
+  constructor(private http: HttpClient,
     private monitorService: MonitorService,
     private utilService: UtilService,
-    private router: Router, private fb: FormBuilder) {
+    private router: Router, private fb: FormBuilder, private messageService: MessageService) {
+
+    this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+
     this.monitorForm = this.fb.group({
       usuario: new FormControl({ value: '', disabled: true }, Validators.required),
       nombre: new FormControl('', [Validators.required]),
@@ -37,6 +43,7 @@ export class MonitorCreaComponent implements OnInit {
       fechaNacimiento: '',
       titulos: [[]]
     });
+
     this.monitorForm.get('nombre').valueChanges.forEach(
       (value: string) => {
         this.monitorForm.value.usuario = value + '.' + this.monitorForm.value.apellidos;
@@ -61,8 +68,10 @@ export class MonitorCreaComponent implements OnInit {
 
   iniSelectedTitulos() {
     this.confSelEst = MultiSelect.iniMultiSelect('título', 'títulos');
-    this.utilService.niveles$.subscribe(titulos => {
-      this.confSelEst.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
+    this.utilService.titulos$.subscribe(titulos => {
+      if (titulos !== null) {
+        this.confSelEst.dataModel = MultiSelect.iniDataModel(titulos, 'Id', 'Nombre');
+      }
     });
   }
 
@@ -89,7 +98,6 @@ export class MonitorCreaComponent implements OnInit {
         },
         Usuario: {
           Email: this.monitorForm.value.email,
-          Nombre: (this.monitorForm.value.nombre + '.' + this.monitorForm.value.apellidos).replace(' ', '-')
         },
         Titulos: titulos,
         EstacionesDisponibles: [],
@@ -97,8 +105,9 @@ export class MonitorCreaComponent implements OnInit {
         Operacion: 'Crear'
       };
       this.monitorService.postMonitor(monitor, 'Crear',
-        function (id) {
-          this.router.navigate(['/monitor/' + id]);
+        function (confirmacion, m) {
+          this.msgs.push(confirmacion);
+          this.router.navigate(['/monitor/' + m.Monitor.Id]);
         }.bind(this));
     }
   }

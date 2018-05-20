@@ -33,8 +33,8 @@ export class MonitorAjustesComponent implements OnInit {
 
   constructor(private monitorService: MonitorService, private utilService:
     UtilService, private messageService: MessageService) {
-    this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
-    this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
+      this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+      this.confSelEst = MultiSelect.iniMultiSelect('estación', 'estaciones');
     /* Calendario */
     this.configCalendario.vistas.headerRight = false;
     this.configCalendario.vistas.selectMonth = true;
@@ -142,7 +142,7 @@ export class MonitorAjustesComponent implements OnInit {
       });
     }
     this.monitorService.postMonitor(this.monitor, 'Estaciones',
-      function (confirmacion) {
+      function (confirmacion, monitor) {
         this.msgs.push(confirmacion);
       }.bind(this));
   }
@@ -157,7 +157,7 @@ export class MonitorAjustesComponent implements OnInit {
       });
     }
     this.monitorService.postMonitor(this.monitor, 'Disponibles',
-      function (confirmacion) {
+      function (confirmacion, monitor) {
         this.msgs.push(confirmacion);
       }.bind(this)
     );

@@ -15,11 +15,12 @@ label{
       width: 100%;
     }
 
-     .image {
+     .imgUpload {
+      opacity: 0.7;
       cursor: pointer; /* "hand" cursor */
     }
 
-     .image:hover {
+     .imgUpload:hover {
       display: block;
       opacity: 0.4;
       -webkit-transition: opacity 1s ease-out;

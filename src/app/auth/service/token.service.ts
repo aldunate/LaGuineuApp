@@ -3,31 +3,45 @@ import { Injectable } from '@angular/core';
 import * as Cookies from 'es-cookie';
 import { Output } from '@angular/core/src/metadata/directives';
 import { Subject } from 'rxjs/Subject';
+import { BehaviorSubject } from 'rxjs/BehaviorSubject';
+import { HttpClient } from '@angular/common/http';
+import { GlobalVar } from '../../util/global';
 
 @Injectable()
 export class TokenService {
-  onLoguin: Subject<boolean> = new Subject<boolean>();
-  public logueado: boolean;
+
+  public logueado = new BehaviorSubject<boolean>(false);
   public token: string;
   public exp: Date;
   public crea: Date;
-  constructor() {
+
+  constructor(private httpClient: HttpClient) {
     this.leer();
   }
 
   onLogueado(logueado: boolean) {
-    this.logueado = logueado;
-    this.onLoguin.next(logueado);
+    if (this.logueado.value !== logueado) {
+      this.logueado.next(logueado);
+    }
+  }
+
+  getToken() {
+    this.httpClient.get(GlobalVar.uriApi + 'token').subscribe(
+      (token: boolean) => {
+        this.onLogueado(token);
+      }
+    );
   }
 
   leer() {
     this.expiro();
     this.token = Cookies.get('LaGuineu');
     if (this.token !== undefined) {
-      this.onLogueado(true);
       localStorage.setItem('LaGuineu', this.token);
+      return true;
     } else {
       this.remove();
+      return false;
     }
   }
 

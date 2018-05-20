@@ -3,8 +3,14 @@
     <mat-tab label="CLASES">
       <div class="col-xs-12">
         <div style="margin-bottom:20px;"></div>
-        <app-datatable-generic [dt]="tablaClases" (clickTable)="clickTable($event)">
-        </app-datatable-generic>
+        <br>
+        <span class="col-xs-12" style="border-bottom: 1px solid rgb(59, 28, 28);padding:0">Buscador</span>
+        <div style="margin-bottom:20px;"></div>
+
+        <br>
+        <div class="col-xs-12 row">
+          <app-datatable-generic [dt]="tablaClases" (clickTable)="clickTable($event)"></app-datatable-generic>
+        </div>
       </div>
     </mat-tab>
     <mat-tab label="AÑADIR">

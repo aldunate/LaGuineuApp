@@ -3,6 +3,7 @@ import { ConfMultiSelect, MultiSelect } from '../../util/global';
 import { MonitorService, MonitorModel } from '../service/monitor.service';
 import { UtilService } from '../../util/service/util.service';
 import { Message } from 'primeng/api';
+import { MessageService } from 'primeng/components/common/messageservice';
 
 @Component({
   selector: 'app-monitor-personal',
@@ -17,7 +18,20 @@ export class MonitorPersonalComponent implements OnInit {
   imgConf: any;
   msgs: Message[] = [];
 
-  constructor(private monitorService: MonitorService, private utilService: UtilService) {
+  constructor(private monitorService: MonitorService, private utilService: UtilService,
+    private messageService: MessageService) {
+    this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+
+    this.monitorService.imgPerfil$.subscribe(src => {
+      if (src !== '') {
+        this.imgConf.view = false;
+        setTimeout(function () {
+          this.imgConf.src = src.__zone_symbol__originalInstance.result;
+          this.imgConf.view = true;
+        }.bind(this), 100);
+      }
+    });
+    this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
     this.imgConf = {
       src: '../../../assets/img/sinPerfil-660x660.png',
       class: 'img-rounded img-responsive',
@@ -55,18 +69,14 @@ export class MonitorPersonalComponent implements OnInit {
 
   monitorCambios() {
     this.monitorTitulos();
-    const aux: string = this.monitor.Monitor.FechaNacimiento.split('T')[0];
-    this.monitor.Monitor.FechaNacimiento = aux;
-    this.monitorService.imgPerfil$.subscribe(src => {
-      if (src !== '') {
-        this.imgConf.view = false;
-        this.imgConf.src = src.__zone_symbol__originalInstance.result;
-        this.imgConf.view = true;
-      }
-    });
+    let aux = this.monitor.Monitor.FechaNacimiento;
+    if (aux !== null) {
+      aux = aux.split('T')[0];
+      this.monitor.Monitor.FechaNacimiento = aux;
+    }
   }
-
   ngOnInit() {
+
   }
 
 
@@ -80,15 +90,15 @@ export class MonitorPersonalComponent implements OnInit {
     const titulos = [];
     for (const titulo of this.monitor.Titulos) {
       titulos.push({
-        IdTitulo: titulo,
+        IdTitulo: titulo.Id ? titulo.Id : titulo,
         IdMonitor: this.monitor.Monitor.Id
       });
     }
-    this.monitor.Titulos = titulos;
+    this.monitor.Titulos = new Array(titulos);
     this.monitorService.postMonitor(this.monitor, 'Monitor',
-      function (confirmacion) {
+      function (confirmacion, monitor) {
         this.msgs.push(confirmacion);
-      });
+      }.bind(this));
   }
 
 }

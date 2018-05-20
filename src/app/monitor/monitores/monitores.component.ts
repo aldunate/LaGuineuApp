@@ -26,7 +26,6 @@ export class MonitoresComponent implements OnInit {
     )
   };
 
-
   constructor(
     private monitorService: MonitorService,
     private router: Router, private route: ActivatedRoute) {
@@ -41,7 +40,7 @@ export class MonitoresComponent implements OnInit {
       function (monitores) {
         for (const monitor of monitores) {
           monitor.edad = UtilFechas.calculaEdad(monitor.FechaNacimiento);
-          monitor.btnIr = '<button  id="' + monitor.Id + '" class="btn  btn-primary"> ir </button>';
+          monitor.btnIr = '<button  id="' + monitor.Id + '" class="btn btn-fill  btn-default"> Ver monitor </button>';
         }
         this.tablas.monitor.dtDatos = monitores;
         this.tablas.monitor.dtOptions.data = monitores;
@@ -51,6 +50,7 @@ export class MonitoresComponent implements OnInit {
   }
 
   clickTable(event) {
+
     if (event.srcElement.localName === 'button') {
       const id = event.srcElement.id;
       this.router.navigate(['/monitor/' + id]);
