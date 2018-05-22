@@ -1,0 +1,12 @@
+<div class="col-xs-12">
+    <button (click)="addClub()" class="btn btn-success">Añadir club</button>
+    <div style="margin-bottom:20px;"></div>
+    <br>
+    <span class="col-xs-12" style="border-bottom: 1px solid rgb(59, 28, 28);padding:0">Buscador</span>
+    <div style="margin-bottom:8px;"></div>
+    <br>
+    <div>
+      <app-datatable-generic [dt]="tblClubes" (clickTable)="clickTable($event)">
+      </app-datatable-generic>
+    </div>
+  </div>

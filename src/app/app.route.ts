@@ -17,6 +17,11 @@ import { ClaseNuevaComponent } from './clase/clase-nueva/clase-nueva.component';
 import { UsuariosComponent } from './usuario/usuarios/usuarios.component';
 import { UsuarioNuevoComponent } from './usuario/usuario-nuevo/usuario-nuevo.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
+import { ClientesComponent } from './cliente/clientes/clientes.component';
+import { ClienteNuevoComponent } from './cliente/cliente-nuevo/cliente-nuevo.component';
+import { ClubComponent } from './club/club/club.component';
+import { ClubesComponent } from './club/clubes/clubes.component';
+import { ClubNuevoComponent } from './club/club-nuevo/club-nuevo.component';
 
 
 declare interface RouteInfo {
@@ -29,6 +34,8 @@ export const ROUTES: RouteInfo[] = [
   { path: 'main', title: 'Main', icon: 'dashboard', class: '' },
   { path: 'clases', title: 'Clases', icon: 'library_books', class: '' },
   { path: 'monitores', title: 'Monitores', icon: 'accessibility_new', class: '' },
+  { path: 'clientes', title: 'Clientes', icon: 'supervisor_account', class: '' },
+  { path: 'clubes', title: 'Clubes', icon: 'weekend', class: '' },
   { path: 'escuela', title: 'Escuela', icon: 'school', class: '' },
   { path: 'usuarios', title: 'Usuarios', icon: 'account_box', class: '' }
 ];
@@ -41,6 +48,8 @@ export const textoSuperior = [
   { path: 'crea-monitor', title: 'Nuevo monitor' },
   { path: 'nuevo-usuario', title: 'Nuevo usuario' },
   { path: 'usuarios', title: 'Usuarios' },
+  { path: 'clientes', title: 'Clientes' },
+  { path: 'clubes', title: 'Clubes' },
 ];
 
 
@@ -52,7 +61,11 @@ const appRoutes: Routes = [
   { path: 'escuela', component: EscuelaComponent },
   { path: 'clases', component: ClasesComponent },
   { path: 'clase-nueva', component: ClaseNuevaComponent },
-  { path: 'cliente', component: ClienteComponent },
+  { path: 'clientes', component: ClientesComponent },
+  { path: 'cliente/:id', component: ClienteComponent },
+  { path: 'clubes', component: ClubesComponent },
+  { path: 'club/:id', component: ClubComponent },
+  { path: 'club-nuevo', component: ClubNuevoComponent },
   { path: 'usuarios', component: UsuariosComponent },
   { path: 'usuario/:id', component: UsuarioComponent },
   { path: 'nuevo-usuario', component: UsuarioNuevoComponent },

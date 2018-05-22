@@ -1,0 +1,40 @@
+<p-growl [(value)]="msgs" sticky="sticky" life="10000"></p-growl>
+
+<div class="row">
+  <div class="col-xs-12">
+    <div class="col-xs-12">
+      <button (click)="btnVolver()" class="btn btn-default">Volver</button>
+    </div>
+    <h4 class="col-xs-12"> Nuevo Club </h4>
+    <div class="col-xs-12">
+      <form class="" [formGroup]="clubForm" novalidate>
+        <div class="row">
+          <div class="form-group col-md-5 col-xs-6">
+            <label>Nombre*</label>
+            <input type="nombre" formControlName="nombre" class="form-control">
+            <div *ngIf="(nombre.invalid &&
+                 (nombre.dirty || nombre.touched))  " class="alert alert-danger">
+              <div *ngIf="nombre.errors['nombre']">
+                El nombre es necesario.
+              </div>
+            </div>
+          </div>
+        </div>
+      </form>
+      <div class="row">
+        <div class="col-xs-12">
+          <label>Clientes</label>
+          <br>
+          <ss-multiselect-dropdown [options]="confMulti.clientes.dataModel" [(ngModel)]="confMulti.clientes.selectedModel" [settings]="confMulti.clientes.mySettings"
+            [texts]="confMulti.clientes.myTexts" selectionLimit="1">
+          </ss-multiselect-dropdown>
+        </div>
+      </div>
+      <div style="margin-top:10px"></div>
+      <div class="col-xs-12 row">
+        <button class="btn btn-success" (click)="nuevoCliente()" type="button"> Crear club</button>
+      </div>
+    </div>
+  </div>
+  <div style="margin-top: 2%;"></div>
+</div>

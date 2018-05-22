@@ -75,6 +75,10 @@ import { EscuelaPersonalComponent } from './escuela/escuela-personal/escuela-per
 import { UsuariosComponent } from './usuario/usuarios/usuarios.component';
 import { UsuarioNuevoComponent } from './usuario/usuario-nuevo/usuario-nuevo.component';
 import { UsuarioComponent } from './usuario/usuario/usuario.component';
+import { ClientesComponent } from './cliente/clientes/clientes.component';
+import { ClienteNuevoComponent } from './cliente/cliente-nuevo/cliente-nuevo.component';
+import { ClubesComponent } from './club/clubes/clubes.component';
+import { ClubNuevoComponent } from './club/club-nuevo/club-nuevo.component';
 
 registerLocaleData(localeEs);
 
@@ -109,7 +113,11 @@ registerLocaleData(localeEs);
     EscuelaPersonalComponent,
     UsuariosComponent,
     UsuarioNuevoComponent,
-    UsuarioComponent
+    UsuarioComponent,
+    ClientesComponent,
+    ClienteNuevoComponent,
+    ClubesComponent,
+    ClubNuevoComponent
   ],
   imports: [
     BrowserModule, BrowserAnimationsModule, HttpClientModule, FormsModule,

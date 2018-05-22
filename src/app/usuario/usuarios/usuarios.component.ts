@@ -41,12 +41,13 @@ export class UsuariosComponent implements OnInit {
           if (element.Nombre === null) element.Nombre = '';
           // tslint:disable-next-line:curly
           if (element.Email === null) element.Email = '';
+          if (element.IdMonitor !== 0) {
+            element.tipo = 'Monitor';
+            // tslint:disable-next-line:curly
+            if (element.EsGestor !== null) element.tipo += ' y Gestor';
+          }
           // tslint:disable-next-line:curly
-          if (element.IdMonitor !== null) element.tipo = 'Monitor';
-          // tslint:disable-next-line:curly
-          if (element.IdCliente !== null) element.tipo = 'Cliente';
-          // tslint:disable-next-line:curly
-          if (element.EsGestor !== null) element.tipo += ' y Gestor';
+          if (element.IdCliente !== 0) element.tipo = 'Cliente';
           element.btnIr = '<button  id="' + element.Id + '" class="btn btn-fill  btn-default"> Ver usuario </button>';
         });
         this.tablas.monitor.dtDatos = usuarios;
@@ -59,7 +60,7 @@ export class UsuariosComponent implements OnInit {
   clickTable(event) {
     if (event.srcElement.localName === 'button') {
       const id = event.srcElement.id;
-    this.router.navigate(['/usuario/' + id]);
+      this.router.navigate(['/usuario/' + id]);
     }
 
   }
