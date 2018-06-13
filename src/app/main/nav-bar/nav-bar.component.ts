@@ -2,7 +2,7 @@ import { Component, OnInit, Input, ElementRef, OnDestroy } from '@angular/core';
 import { TokenService } from '../../auth/service/token.service';
 import { Location, LocationStrategy, PathLocationStrategy } from '@angular/common';
 import { ROUTES, textoSuperior } from '../../app.route';
-import { UtilService } from '../../util/service/util.service';
+import { UtilService, Notificacion } from '../../util/service/util.service';
 import { Router, NavigationStart, NavigationEnd, NavigationError } from '@angular/router';
 import { Usuario, UsuarioService } from '../../usuario/service/usuario.service';
 
@@ -22,9 +22,15 @@ export class NavBarComponent implements OnInit, OnDestroy {
     path: '',
     title: '#'
   };
+  notificaciones = new Array<Notificacion>();
 
   constructor(location: Location, private element: ElementRef, private tokenService: TokenService,
     private utilService: UtilService, private router: Router, private usuarioService: UsuarioService) {
+
+    this.utilService.notificaciones.subscribe(notificaciones => {
+      this.notificaciones = notificaciones;
+    });
+    this.utilService.notificaciones.next([{ alerta: 'Faltan clases por asignar', enlace: 'clases' }]);
 
     this.router.events.subscribe(event => {
       if (event instanceof NavigationStart) {

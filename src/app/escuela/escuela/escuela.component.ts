@@ -27,7 +27,7 @@ export class EscuelaComponent implements OnInit {
 
   inicio() {
     this.utilService.setTextoSuperior({
-      titulo: this.escuela.Escuela.Nombre,
+      titulo: 'Escuela ' + this.escuela.Escuela.Nombre,
       href: 'escuela'
     });
   }

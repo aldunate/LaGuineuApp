@@ -25,6 +25,7 @@ export class MonitorCreaComponent implements OnInit {
   confSelEst: ConfMultiSelect;
   usuario: string;
   msgs: Message[] = [];
+  emailExiste = false;
 
 
   constructor(private http: HttpClient,
@@ -106,8 +107,13 @@ export class MonitorCreaComponent implements OnInit {
       };
       this.monitorService.postMonitor(monitor, 'Crear',
         function (confirmacion, m) {
-          this.msgs.push(confirmacion);
-          this.router.navigate(['/monitor/' + m.Monitor.Id]);
+          if (m !== null) {
+            this.msgs.push(confirmacion);
+            this.router.navigate(['/monitor/' + m.Monitor.Id]);
+          } else {
+            this.emailExiste = true;
+          }
+
         }.bind(this));
     }
   }

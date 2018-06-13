@@ -1,66 +1,150 @@
 <p-growl [(value)]="msgs" [life]="100" [sticky]="true"></p-growl>
 <div class="row">
   <div class="col-xs-12">
-    <h4 class="col-xs-12"> Añadir clase</h4>
-    <div class="col-xs-12">
-      <div class="row">
-        <div class="col-md-2 col-xs-4">
-          <label>Personas*</label>
-          <input [(ngModel)]="clase.Personas" class="form-control" type="number">
+    <div class="col-md-6 col-xs-12 preCard">
+      <div class="col-xs-12 cardFecha">
+        <div class="row">
+          <label>Fecha</label>
         </div>
-        <div class="form-group col-md-4 col-xs-6">
-          <label>Nombre identificador</label>
-          <input [(ngModel)]="clase.Nombre" type="text" class="form-control">
+        <button class="btn btn-xs col-xs-2 btn-primary btn-fill" (click)="changeDay()" mwlCalendarPreviousView [view]="configCalendario.view"
+          [(viewDate)]="configCalendario.viewDate" (viewDateChange)="viewDateChange.next(configCalendario.viewDate)">
+          <i class="material-icons md-18">
+            arrow_back
+          </i>
+        </button>
+        <div class="col-xs-8">
+          <h5>{{configCalendario.viewDate | date:'dd MMMM yyyy'}}</h5>
         </div>
-      </div>
-      <div class="form-group row">
-        <div class="form-group col-md-3 col-xs-6">
-          <label>Fecha*</label>
-          <input [(ngModel)]="clase.Fecha" type="date" class="form-control">
-        </div>
-        <div class="form-group col-md-2 col-xs-3">
-          <label>Duración</label>
-          <input [(ngModel)]="clase.Duracion" type="text" class="form-control">
-        </div>
-        <div class="form-group col-md-2 col-xs-3">
-          <label>Hora inicio</label>
-          <input [(ngModel)]="clase.HoraInicio" type="text" class="form-control">
-        </div>
-        <div class="form-group col-md-2 col-xs-3">
-          <label>Hora fin</label>
-          <input [(ngModel)]="clase.HoraFin" type="text" class="form-control">
-        </div>
-      </div>
-
-      <div class="row">
-        <div class="col-md-3 form-group">
-          <label>Edades</label>
-          <br>
-          <ss-multiselect-dropdown [options]="confMulti.edades.dataModel" [(ngModel)]="confMulti.edades.selectedModel" [settings]="confMulti.edades.mySettings"
-            [texts]="confMulti.edades.myTexts" selectionLimit="1">
-          </ss-multiselect-dropdown>
-        </div>
-        <div class="col-md-3 form-group">
-          <label>Nivel</label>
-          <br>
-          <ss-multiselect-dropdown [options]="confMulti.niveles.dataModel" [(ngModel)]="confMulti.niveles.selectedModel" [settings]="confMulti.niveles.mySettings"
-            [texts]="confMulti.niveles.myTexts" selectionLimit="1">
-          </ss-multiselect-dropdown>
-        </div>
-        <div class="col-md-3 form-group">
-          <label>Estaciones</label>
-          <br>
-          <ss-multiselect-dropdown [options]="confMulti.estaciones.dataModel" [(ngModel)]="confMulti.estaciones.selectedModel" [settings]="confMulti.estaciones.mySettings"
-            [texts]="confMulti.estaciones.myTexts" selectionLimit="1">
-          </ss-multiselect-dropdown>
-        </div>
-      </div>
-      <div style="margin-top:10px"></div>
-      <div class="col-xs-12 row">
-        <button class="btn btn-success" (click)="crearClase()" type="submit"> Añadir clase</button>
+        <button class="btn btn-xs col-xs-2 btn-primary btn-fill" (click)="changeDay()" mwlCalendarNextView [view]="configCalendario.view"
+          [(viewDate)]="configCalendario.viewDate" (viewDateChange)="viewDateChange.next(configCalendario.viewDate)">
+          <i class="material-icons md-18">
+            arrow_forward
+          </i>
+        </button>
       </div>
     </div>
+    <div class="col-xs-12 col-md-6">
+      <div class="col-xs-12 cardEstacion">
+        <div class="row">
+          <label>Estación</label>
+        </div>
+        <button type="button" class="btn btn-xs col-xs-2 btn-primary btn-fill" (click)="changeEstacion(-1)">
+          <i class="material-icons md-18">
+            arrow_back
+          </i>
+        </button>
+        <div class="col-xs-8">
+          <h5>{{estacionSelect.Nombre}}</h5>
+        </div>
+        <button type="button" class="btn btn-xs col-xs-2 btn-primary btn-fill" (click)="changeEstacion(1)">
+          <i class="material-icons md-18 ">
+            arrow_forward
+          </i>
+        </button>
+        <div class="col-xs-12" *ngIf="dia.disponible">
+          <div class="col-xs-6" *ngFor="let hora of dia.horas">
+            <i [class]="'wi wi-day-'+ weatherIcons[hora.weather[0].id].icon"></i>
+            {{ hora.hora }}
+          </div>
+        </div>
+        <div *ngIf="!dia.disponible">
+          <label>Pronostico del tiempo no disponible</label>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<div class="col-xs-12 row mat-tab">
+
+  <label class="col-xs-12 h4"> {{ txtTituloFuncion}}</label>
+
+  <div style="display: none">
+    <div class="form-group col-md-3 col-xs-6">
+      <label>Fecha*</label>
+      <input [(ngModel)]="clase.Fecha" type="date" class="form-control">
+    </div>
+  </div>
+  <div class="row"></div>
+  <div class="form-group col-md-2 col-xs-6">
+    <label>Duración*</label>
+    <input (keyup)="changeHoras('Duracion'); compruebaFormulario('Duracion')" [(ngModel)]="clase.Duracion" type="number" class="form-control">
+    <div *ngIf="error.duracion" class="alert alert-danger">
+      Indique la duración de la clase.
+    </div>
+  </div>
+
+  <div class="form-group col-md-2 col-xs-6">
+    <label>Hora inicio</label>
+    <input (keyup)="changeHoras('Inicio')" [(ngModel)]="clase.HoraInicio" type="number" class="form-control" min="1" max="24">
+  </div>
+  <div class="form-group col-md-2 col-xs-6">
+    <label>Hora fin</label>
+    <input (keyup)="changeHoras('Fin')" [(ngModel)]="clase.HoraFin" type="number" class="form-control" min="1" max="24">
+  </div>
+  <div class="row"></div>
+  <div class="col-md-2 col-xs-12">
+    <label>Alumnos*</label>
+    <input [(ngModel)]="clase.Personas" (keyup)="compruebaFormulario('Alumnos')" class="form-control" type="number">
+    <div *ngIf="error.alumnos" class="alert alert-danger">
+      Indique los alumnos que asistiran a la clase.
+    </div>
+  </div>
+  <div class="form-group col-md-6 col-xs-12">
+    <label>Nombre identificador</label>
+    <input [(ngModel)]="clase.Nombre" (keyup)="compruebaFormulario('Nombre')" type="text" class="form-control">
+    <div *ngIf="error.nombre" class="alert alert-danger">
+      Indique el nombre identificador de la clase.
+    </div>
+  </div>
+  <div class="row"></div>
+  <div class="col-md-3 form-group">
+    <label>Edades</label>
+    <br>
+    <select class="btn btn-default btn-fill" [(ngModel)]="clase.IdEdades">
+      <option *ngFor="let e of selects.edades" [value]="e.Id">{{e.Nombre}}</option>
+    </select>
+  </div>
+  <div class="col-md-3 form-group">
+    <label>Nivel</label>
+    <br>
+    <select class="btn btn-default btn-fill" [(ngModel)]="clase.IdNivel">
+      <option *ngFor="let e of selects.niveles" [value]="e.Id">{{e.Nombre}}</option>
+    </select>
+  </div>
+  <div class="col-xs-12 ">
+    <label>Monitores</label>
+    <br>
+    <!--
+    <div *ngIf="monitorDisabled">
+      <span> Necesita seleccionar primero la clase, para posteriormente asignarle un monitor.</span>
+    </div>
+    -->
+    <!--  *ngIf="!monitorDisabled" -->
+    <div class="col-md-6 col-xs-12 row">
+      <ss-multiselect-dropdown [options]="confSelMon.dataModel" [(ngModel)]="confSelMon.selectedModel" [settings]="confSelMon.mySettings"
+        [texts]="confSelMon.myTexts">
+      </ss-multiselect-dropdown>
+    </div>
+  </div>
+  <div class="row"></div>
+  <div style="margin-top:40px"></div>
+  <div class="col-xs-6">
+    <button class="btn btn-success btn-fill" (click)="crearClase()" type="submit"> {{txtBtnGuardar}}</button>
+  </div>
+  <div class="col-xs-6">
+    <button class="btn btn-danger btn-fill" *ngIf="modificando" (click)="borrarClase()" type="submit"> Eliminar clase</button>
   </div>
   <div style="margin-top: 2%;"></div>
 </div>
 
+<div class="col-xs-12">
+  <div style="margin-top: 2%;"></div>
+  <label class="h5">Clases para el día {{configCalendario.viewDate | date:'EEEE dd MMMM'}} en la estación {{estacionSelect.Nombre}}</label>
+
+  <app-datatable-generic [dt]="tablaClases" (clickTable)="clickTable($event)"></app-datatable-generic>
+</div>
+
+<mwl-calendar-day-view style="display: none;" [dayStartHour]="8" [dayEndHour]="17" [refresh]="configCalendario.trigger" [viewDate]="configCalendario.viewDate"
+  [events]="configCalendario.events" [locale]="configCalendario.locale">
+</mwl-calendar-day-view>

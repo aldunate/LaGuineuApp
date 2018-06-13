@@ -5,6 +5,23 @@
 @import "../node_modules/weather-icons/css/weather-icons.min.css";
 @import "../node_modules/hover.css";
 
+table thead tr th{
+  font-size: normal!important;
+  padding: 0.3%!important;
+}
+table thead tr{
+  font-size: smaller!important;
+  font-weight: normal!important;
+  padding: 0.3%!important;
+}
+tbody tr td button{
+  border-radius: 0!important;
+}
+
+.btn{
+  border-radius: 0!important;
+}
+
 
 .rowSelected{
   background: rgb(187, 185, 185)!important;

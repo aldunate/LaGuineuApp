@@ -7,6 +7,10 @@ import { Subject } from 'rxjs/Subject';
 import { Observable } from 'rxjs/Observable';
 
 
+export class Notificacion {
+  public enlace: string;
+  public alerta: string;
+}
 
 
 @Injectable()
@@ -42,6 +46,8 @@ export class UtilService {
   public estaciones = new BehaviorSubject<any[]>(null);
   public estaciones$ = this.estacionesTodas.asObservable();
 
+  public notificaciones = new BehaviorSubject<Notificacion[]>(null);
+  public notificaciones$ = this.notificaciones.asObservable();
 
   constructor(private http: HttpClient, private backendInterceptor: BackendInterceptor) { }
 

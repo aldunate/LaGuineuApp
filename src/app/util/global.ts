@@ -20,7 +20,7 @@ export const GlobalVar = Object.freeze({
 import { Subject } from 'rxjs/Subject';
 
 export const UtilDataTable = Object.freeze({
-  iniDataTable(filtros, columnas) {
+  iniDataTable(filtros, columnas, config?) {
     return {
       dtOptions: {
         pagingType: 'full_numbers',
@@ -165,6 +165,11 @@ export const UtilFechas = Object.freeze({
     birthdate = new Date(fecha);
     const timeDiff = new Date().getFullYear() - birthdate.getFullYear();
     return timeDiff;
+  },
+  esMismoDia(d1, d2) {
+    return d1.getFullYear() === d2.getFullYear() &&
+      d1.getMonth() === d2.getMonth() &&
+      d1.getDate() === d2.getDate();
   },
   espAdate(fecha: string) {
     /* Formato dd/mm/yyyy a Date*/

@@ -36,6 +36,7 @@ import * as $ from 'jquery';
 
 export class ClaseAsignarComponent implements OnInit {
 
+
   // Calendario
   configCalendario = new ConfigCalendario();
   viewChange: EventEmitter<string> = new EventEmitter();
@@ -48,11 +49,12 @@ export class ClaseAsignarComponent implements OnInit {
   // Tabla sin asignar
   tablaSinAsignar = UtilDataTable.iniDataTable(
     [
-      UtilDataTable.iniFiltro('Nombre'),
+      // UtilDataTable.iniFiltro('Nombre'),
     ],
     [
-      { title: 'Personas', data: 'Personas', type: 'string' },
+      { title: 'Alumnos', data: 'Personas', type: 'string' },
       { title: 'Nombre', data: 'Nombre', type: 'string' },
+      { title: 'Estación', data: 'IdEstacion', type: 'string' },
       { title: '', data: 'btnIr', type: 'html', orderable: false, className: 'col-xs-1' }
     ]
   );
@@ -116,7 +118,6 @@ export class ClaseAsignarComponent implements OnInit {
   eventClicked(event) {
   }
   eventTimes($event) {
-
   }
   hourSegmentClicked(fecha) {
     if (this.seleccion !== null) {
@@ -243,7 +244,11 @@ export class ClaseAsignarComponent implements OnInit {
   }
 
   postAsignada(clase) {
-    this.claseService.postAsignada(clase);
+    this.claseService.postAsignada(clase,
+      function (idClase) {
+        this.monitorDisabled = false;
+        this.getClasesEscuelaFecha();
+      }.bind(this));
   }
 
   rellenarTiempo(fecha: Date) {
@@ -377,5 +382,6 @@ export class ClaseAsignarComponent implements OnInit {
         this.rellenarTiempo(this.configCalendario.viewDate);
       }.bind(this));
   }
+
 
 }

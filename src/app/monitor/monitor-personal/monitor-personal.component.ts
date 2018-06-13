@@ -17,6 +17,7 @@ export class MonitorPersonalComponent implements OnInit {
   selTitulo: ConfMultiSelect;
   imgConf: any;
   msgs: Message[] = [];
+  existeEmail = false;
 
   constructor(private monitorService: MonitorService, private utilService: UtilService,
     private messageService: MessageService) {
@@ -97,7 +98,12 @@ export class MonitorPersonalComponent implements OnInit {
     this.monitor.Titulos = new Array(titulos);
     this.monitorService.postMonitor(this.monitor, 'Monitor',
       function (confirmacion, monitor) {
-        this.msgs.push(confirmacion);
+        if (monitor === null) {
+          this.existeEmail = true;
+        } else {
+          this.existeEmail = false;
+          this.msgs.push(confirmacion);
+        }
       }.bind(this));
   }
 

@@ -1,11 +1,19 @@
 
 
-.card{
-  padding: 1%;
+.table > thead > tr > th {
+  border-bottom-width: 0;
+  font-size: medium!important;
+  font-weight: normal!important;
 }
 .cardFecha{
   text-align: center;
+  height: 100%!important;
 }
+.cardEstacion{
+  text-align: center;
+  height: 100%!important;
+}
+
 .cardClase{
   padding: 1%;
   margin: 2%;

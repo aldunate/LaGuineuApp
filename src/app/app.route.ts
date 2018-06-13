@@ -16,7 +16,6 @@ import { ClasesComponent } from './clase/clases/clases.component';
 import { ClaseNuevaComponent } from './clase/clase-nueva/clase-nueva.component';
 import { UsuariosComponent } from './usuario/usuarios/usuarios.component';
 import { UsuarioNuevoComponent } from './usuario/usuario-nuevo/usuario-nuevo.component';
-import { UsuarioComponent } from './usuario/usuario/usuario.component';
 import { ClientesComponent } from './cliente/clientes/clientes.component';
 import { ClienteNuevoComponent } from './cliente/cliente-nuevo/cliente-nuevo.component';
 import { ClubComponent } from './club/club/club.component';
@@ -49,6 +48,7 @@ export const textoSuperior = [
   { path: 'nuevo-usuario', title: 'Nuevo usuario' },
   { path: 'usuarios', title: 'Usuarios' },
   { path: 'clientes', title: 'Clientes' },
+  { path: 'cliente-nuevo', title: 'Nuevo cliente' },
   { path: 'clubes', title: 'Clubes' },
 ];
 
@@ -62,12 +62,13 @@ const appRoutes: Routes = [
   { path: 'clases', component: ClasesComponent },
   { path: 'clase-nueva', component: ClaseNuevaComponent },
   { path: 'clientes', component: ClientesComponent },
-  { path: 'cliente/:id', component: ClienteComponent },
+  { path: 'cliente/:id', component: ClienteNuevoComponent },
+  { path: 'cliente-nuevo', component: ClienteNuevoComponent },
   { path: 'clubes', component: ClubesComponent },
-  { path: 'club/:id', component: ClubComponent },
+  { path: 'club/:id', component: ClubNuevoComponent },
   { path: 'club-nuevo', component: ClubNuevoComponent },
   { path: 'usuarios', component: UsuariosComponent },
-  { path: 'usuario/:id', component: UsuarioComponent },
+  { path: 'usuario/:id', component: UsuarioNuevoComponent },
   { path: 'nuevo-usuario', component: UsuarioNuevoComponent },
   { path: 'main', component: MainComponent },
   { path: '', component: MainComponent }

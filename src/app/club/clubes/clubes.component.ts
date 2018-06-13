@@ -33,7 +33,7 @@ export class ClubesComponent implements OnInit {
     this.clubService.getClubesEscuela(
       function (clubs) {
         for (const club of clubs) {
-          club.btnIr = '<button  id="' + club.Id + '" class="btn btn-fill  btn-default"> Ver club </button>';
+          club.btnIr = '<button  id="' + club.Id + '" class="btn btn-fill  btn-default"> Modificar club </button>';
         }
         this.tblClubes.dtDatos = clubs;
         this.tblClubes.dtOptions.data = clubs;

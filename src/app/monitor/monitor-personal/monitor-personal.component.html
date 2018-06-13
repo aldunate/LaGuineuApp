@@ -13,6 +13,9 @@
           Introduzca un email valido
         </div>
       </div>
+      <div *ngIf="existeEmail" class="alert alert-danger">
+        Este email no esta disponible.
+      </div>
     </div>
     <div class="form-group col-md-4 col-xs-12">
       <label>Nombre*</label>

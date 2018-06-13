@@ -19,7 +19,9 @@ export class ClienteNuevoComponent implements OnInit {
   clienteForm: FormGroup;
   usuario: string;
   msgs: Message[] = [];
-
+  idCliente: number;
+  txtBtnGuardar = 'Crear cliente';
+  existeEmail = false;
 
   constructor(private http: HttpClient,
     private clienteSerivce: ClienteService,
@@ -27,7 +29,14 @@ export class ClienteNuevoComponent implements OnInit {
     private router: Router, private fb: FormBuilder, private messageService: MessageService) {
 
     this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+    const aux = this.router.url.split('/');
+    this.idCliente = Number.parseInt(aux[aux.length - 1]);
 
+    if (!isNaN(this.idCliente)) {
+      this.clienteSerivce.getCliente(this.idCliente, function (cliente) {
+        this.setCliente(cliente);
+      }.bind(this));
+    }
     this.clienteForm = this.fb.group({
       nombre: new FormControl(''),
       apellidos: [''],
@@ -46,6 +55,7 @@ export class ClienteNuevoComponent implements OnInit {
         this.clienteForm.value.usuario = this.clienteForm.value.nombre + '.' + value;
       }
     );
+
   }
 
   ngOnInit() {
@@ -57,14 +67,44 @@ export class ClienteNuevoComponent implements OnInit {
   get telefono() { return this.clienteForm.get('telefono'); }
 
 
+  setCliente(cliente) {
+    // 1986-08-29T00:00:00" does not conform to the required format, "yyyy-MM-dd".
+    this.utilService.setTextoSuperior({
+      titulo: 'Cliente ' + cliente.Nombre + ' ' + cliente.Apellidos,
+      href: 'cliente/' + cliente.Id
+    });
+    this.txtBtnGuardar = 'Modificar cliente';
+
+    const aux = (cliente.FechaNacimiento.split('T')[0]).split('-');
+    cliente.FechaNacimiento = aux[0] + '-' + aux[1] + '-' + aux[2];
+    this.clienteForm = this.fb.group({
+      nombre: new FormControl(cliente.Nombre),
+      apellidos: [cliente.Apellidos],
+      email: [cliente.Email, Validators.required && Validators.email],
+      telefono: [cliente.Telefono],
+      fechaNacimiento: cliente.FechaNacimiento
+    });
+  }
+
   nuevoCliente() {
     Object.keys(this.clienteForm.controls).forEach(field => { // {1}
       const control = this.clienteForm.get(field);            // {2}
       control.markAsTouched({ onlySelf: true });       // {3}
     });
     if (this.clienteForm.valid) {
+      let aux;
+      let auxId;
+      if (isNaN(this.idCliente)) {
+        aux = 'Crear';
+        auxId = 0;
+      } else {
+        aux = 'Editar';
+        auxId = this.idCliente;
+      }
+
       const cliente: ClienteModel = {
         Cliente: {
+          Id: auxId,
           Nombre: this.clienteForm.value.nombre,
           FechaNacimiento: this.clienteForm.value.fechaNacimiento,
           Apellidos: this.clienteForm.value.apellidos,
@@ -73,12 +113,18 @@ export class ClienteNuevoComponent implements OnInit {
         Usuario: {
           Email: this.clienteForm.value.email,
         },
-        Operacion: 'Crear'
+        Operacion: aux
       };
       this.clienteSerivce.postCliente(cliente,
         function (confirmacion, idCliente) {
-          this.msgs.push(confirmacion);
-          this.router.navigate(['/cliente/' + idCliente]);
+          if (idCliente !== 0) {
+            this.msgs.push(confirmacion);
+            this.existeEmail = false;
+            this.router.navigate(['/clientes']);
+          } else {
+            this.existeEmail = true;
+          }
+
         }.bind(this));
     }
   }

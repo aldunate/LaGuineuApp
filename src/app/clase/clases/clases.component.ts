@@ -15,11 +15,13 @@ export class ClasesComponent {
 
   tablaClases = UtilDataTable.iniDataTable(
     [
+      UtilDataTable.iniFiltro('Nombre', 'Identificador'),
+      UtilDataTable.iniFiltro('Fecha', 'Fecha', undefined, 'date'),
       UtilDataTable.iniFiltro('Estacion'),
-      UtilDataTable.iniFiltro('Nivel')
+      UtilDataTable.iniFiltro('Nivel'),
     ],
     [
-      { title: 'Personas', data: 'Personas', type: 'string' },
+      { title: 'Alumnos', data: 'Personas', type: 'string' },
       { title: 'Identificador', data: 'Nombre', type: 'string' },
       { title: 'Fecha', data: 'Fecha', type: 'string' },
 
@@ -40,6 +42,12 @@ export class ClasesComponent {
     this.claseService.getClasesEscuela(
       function (clases) {
         if (clases !== null) {
+          clases.forEach(element => {
+            if (element.Fecha !== '' && element.Fecha !== undefined && element.Fecha !== null) {
+              element.Fecha = element.Fecha.split('T')[0].split('-');
+              element.Fecha = element.Fecha[2] + '/' + element.Fecha[1] + '/' + element.Fecha[0];
+            }
+          });
           this.tablaClases.dtDatos = clases;
           this.tablaClases.dtOptions.data = clases;
           this.tablaClases.dtOptions.aaData = clases;

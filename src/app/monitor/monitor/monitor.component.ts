@@ -34,7 +34,7 @@ export class MonitorComponent implements OnDestroy {
       if (monitor !== null) {
         this.monitor = monitor;
         this.utilService.setTextoSuperior({
-          titulo: monitor.Monitor.Nombre + ' ' + monitor.Monitor.Apellidos,
+          titulo: 'Monitor ' + monitor.Monitor.Nombre + ' ' + monitor.Monitor.Apellidos,
           href: 'monitor/' + monitor.Monitor.Id
         });
         this.iniMonitor();

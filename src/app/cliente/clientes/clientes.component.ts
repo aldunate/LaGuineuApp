@@ -37,7 +37,7 @@ export class ClientesComponent implements OnInit {
       function (clientes) {
         for (const cliente of clientes) {
           cliente.edad = UtilFechas.calculaEdad(cliente.FechaNacimiento);
-          cliente.btnIr = '<button  id="' + cliente.Id + '" class="btn btn-fill  btn-default"> Ver cliente </button>';
+          cliente.btnIr = '<button  id="' + cliente.Id + '" class="btn btn-fill  btn-default"> Modificar cliente </button>';
         }
         this.tblClientes.dtDatos = clientes;
         this.tblClientes.dtOptions.data = clientes;

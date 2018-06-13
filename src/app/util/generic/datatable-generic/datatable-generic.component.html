@@ -2,7 +2,7 @@
   <div  *ngFor="let filtro of dt.dtFiltros"
    [class]="'form-black label-floating is-empty' + filtro.class">
     <label class="control-label">{{filtro.label}}</label>
-    <input (keyup)="inputChange($event)" [(ngModel)]="filtro.model"
+    <input (change)="inputChange($event)" [(ngModel)]="filtro.model"
     [type]="filtro.type" class="form-control" [placeholder]="filtro.placeholder">
   </div>
 </div>

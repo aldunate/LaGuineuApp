@@ -7,7 +7,7 @@ import { UtilService } from '../../util/service/util.service';
 import { Router } from '@angular/router';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { MultiSelect } from '../../util/global';
-import { ClienteService } from '../../cliente/service/cliente.service';
+import { ClienteService, Cliente } from '../../cliente/service/cliente.service';
 
 @Component({
   selector: 'app-club-nuevo',
@@ -22,6 +22,8 @@ export class ClubNuevoComponent implements OnInit {
   confMulti = {
     clientes: MultiSelect.iniMultiSelect('cliente', 'clientes')
   };
+  idClub: number;
+  txtBtnGuardar = 'Crear club';
 
 
   constructor(private http: HttpClient, private clubService: ClubService, private utilService: UtilService,
@@ -29,6 +31,9 @@ export class ClubNuevoComponent implements OnInit {
     private clienteService: ClienteService) {
 
     this.messageService.add({ severity: 'success', summary: 'Service Message', detail: 'Via MessageService' });
+
+    const aux = this.router.url.split('/');
+    this.idClub = Number.parseInt(aux[aux.length - 1]);
     this.clubForm = this.fb.group({
       nombre: ['', Validators.required],
     });
@@ -36,11 +41,26 @@ export class ClubNuevoComponent implements OnInit {
     this.clienteService.getClientesEscuela(
       function (clientes) {
         this.confMulti.clientes.dataModel = MultiSelect.iniDataModel(clientes, 'Id', 'Nombre');
+        if (!isNaN(this.idClub)) {
+
+          this.clubService.getGlub(this.idClub,
+            function (club) {
+              this.club = club.Club;
+              this.clubForm = this.fb.group({
+                nombre: [this.club.Nombre, Validators.required],
+              });
+              club.Clientes.forEach(element => {
+                this.confMulti.clientes.selectedModel.push(element.IdCliente);
+              });
+              this.utilService.setTextoSuperior({
+                titulo: 'Club ' + club.Club.Nombre,
+                href: 'club/' + club.Club.Id
+              });
+              this.txtBtnGuardar = 'Modificar club';
+            }.bind(this));
+        }
       }.bind(this)
     );
-
-
-
   }
 
   ngOnInit() {
@@ -55,29 +75,36 @@ export class ClubNuevoComponent implements OnInit {
       control.markAsTouched({ onlySelf: true });       // {3}
     });
     if (this.clubForm.valid) {
-      const c = [];
+      let aux = 'Crear';
+      let id = 0;
+      if (!isNaN(this.idClub)) {
+        aux = 'Editar';
+        id = this.idClub;
+      }
+      const c = new Array<Cliente>();
       this.confMulti.clientes.selectedModel.forEach(idCliente => {
         c.push({
-          IdCliente: idCliente
+          Id: Number.parseInt(idCliente.toString())
         });
       });
       const club: ClubModel = {
         Club: {
+          Id: id,
           Nombre: this.clubForm.value.nombre.toString(),
         },
         Clientes: c,
-        Operacion: 'Crear'
+        Operacion: aux
       };
       this.clubService.postClub(club,
         function (confirmacion, idCliente) {
           this.msgs.push(confirmacion);
-          this.router.navigate(['/cliente/' + idCliente]);
+          this.router.navigate(['/clubes']);
         }.bind(this));
     }
   }
 
   btnVolver() {
-    this.router.navigate(['/clientes']);
+    this.router.navigate(['/clubes']);
   }
 
 }

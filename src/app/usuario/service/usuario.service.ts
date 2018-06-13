@@ -40,8 +40,13 @@ export class UsuarioService {
       });
   }
 
-  postUsuario(usuario, operacion, resp) {
-    this.http.post(GlobalVar.uriApi + 'usuario', usuario)
+  postUsuario(usuario: Usuario, operacion: string, resp) {
+    const pu = {
+      Usuario: usuario,
+      Operacion: operacion
+    };
+
+    this.http.post(GlobalVar.uriApi + 'usuario', pu)
       .subscribe((user) => {
         resp(UtilMsgs.cambiosGuardados, user);
       });

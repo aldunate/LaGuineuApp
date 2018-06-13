@@ -9,6 +9,7 @@ export class ClaseModel {
   public Clase: Clase;
   public Monitores: any;
   public Clientes: any;
+  public Operacion: string;
 }
 
 export class Clase {
@@ -16,7 +17,7 @@ export class Clase {
   public IdEstacion?: number;
   public IdEdades?: number;
   public Estacion?: string;
-  public Fecha?: string;
+  public Fecha?: Date;
   public HoraInicio?: string;
   public HoraFin?: string;
   public Duracion?: string;
@@ -48,6 +49,15 @@ export class ClaseService {
     })
       .subscribe((clase: any) => {
         this.clase.next(clase);
+      });
+  }
+
+  deleteClase(idClase, resp) {
+    this.http.delete(GlobalVar.uriApi + 'clase', {
+      params: new HttpParams().set('idClase', idClase)
+    })
+      .subscribe(x => {
+        resp(x);
       });
   }
 
@@ -95,11 +105,10 @@ export class ClaseService {
       });
   }
 
-  postAsignada(asignada) {
-
+  postAsignada(asignada, respuesta) {
     this.http.post(GlobalVar.uriApi + 'ClaseAsignar', asignada)
       .subscribe((idClase) => {
-
+        respuesta(idClase);
       });
   }
 

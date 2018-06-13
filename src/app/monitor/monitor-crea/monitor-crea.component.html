@@ -37,6 +37,9 @@
               </div>
 
             </div>
+            <div *ngIf="emailExiste" class="alert alert-danger">
+              Ya existe un usuario con este email
+            </div>
           </div>
           <div class="form-group col-md-5 col-xs-6">
             <label>Teléfono*</label>

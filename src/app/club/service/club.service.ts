@@ -6,6 +6,7 @@ import { Cliente } from '../../cliente/service/cliente.service';
 
 export class Club {
   public Nombre: string;
+  public Id?: number;
   public IdNivel?: number;
   public nivel?: string;
 }
@@ -24,6 +25,14 @@ export class ClubService {
 
   getClubesEscuela(respuesta) {
     this.http.get(GlobalVar.uriApi + 'club')
+      .subscribe((response) => {
+        respuesta(response);
+      });
+  }
+  getGlub(idClub, respuesta) {
+    this.http.get(GlobalVar.uriApi + 'club', {
+      params: new HttpParams().set('id', idClub),
+    })
       .subscribe((response) => {
         respuesta(response);
       });

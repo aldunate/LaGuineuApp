@@ -5,7 +5,7 @@ import { platformBrowserDynamic } from '@angular/platform-browser-dynamic';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { BrowserModule } from '@angular/platform-browser';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { NgModule } from '@angular/core';
+import { NgModule, LOCALE_ID } from '@angular/core';
 import { HttpClientModule, HTTP_INTERCEPTORS } from '@angular/common/http';
 import { RouterModule, Routes } from '@angular/router';
 
@@ -74,7 +74,6 @@ import { EscuelaMuroComponent } from './escuela/escuela-muro/escuela-muro.compon
 import { EscuelaPersonalComponent } from './escuela/escuela-personal/escuela-personal.component';
 import { UsuariosComponent } from './usuario/usuarios/usuarios.component';
 import { UsuarioNuevoComponent } from './usuario/usuario-nuevo/usuario-nuevo.component';
-import { UsuarioComponent } from './usuario/usuario/usuario.component';
 import { ClientesComponent } from './cliente/clientes/clientes.component';
 import { ClienteNuevoComponent } from './cliente/cliente-nuevo/cliente-nuevo.component';
 import { ClubesComponent } from './club/clubes/clubes.component';
@@ -113,7 +112,6 @@ registerLocaleData(localeEs);
     EscuelaPersonalComponent,
     UsuariosComponent,
     UsuarioNuevoComponent,
-    UsuarioComponent,
     ClientesComponent,
     ClienteNuevoComponent,
     ClubesComponent,
@@ -153,6 +151,7 @@ registerLocaleData(localeEs);
     // {provide: DateAdapter, useClass: MomentDateAdapter, deps: [MAT_DATE_LOCALE]},
     { provide: MAT_DATE_LOCALE, useValue: 'es' },
     { provide: MAT_DATE_FORMATS, useValue: MY_FORMATS },
+    { provide: LOCALE_ID, useValue: 'es' }
   ],
   bootstrap: [AppComponent]
 })

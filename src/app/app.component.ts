@@ -67,10 +67,8 @@ export class AppComponent implements OnInit, AfterViewInit {
   }
 
   iniView() {
-    /*
-    const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
+    /*const elemMainPanel = <HTMLElement>document.querySelector('.main-panel');
     const elemSidebar = <HTMLElement>document.querySelector('.sidebar .sidebar-wrapper');
-
     this.location.subscribe((ev: PopStateEvent) => {
       this.lastPoppedUrl = ev.url;
     });

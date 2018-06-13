@@ -39,9 +39,20 @@ export class ClienteService {
   }
 
   postCliente(cliente, respuesta) {
-    this.http.post(GlobalVar.uriApi + 'cliente', cliente )
+    this.http.post(GlobalVar.uriApi + 'cliente', cliente)
       .subscribe((response) => {
         respuesta(UtilMsgs.cambiosGuardados, response);
       });
   }
+
+  getCliente(idCliente, respuesta) {
+    this.http.get(GlobalVar.uriApi + 'cliente', {
+      params: new HttpParams().set('id', idCliente)
+    })
+      .subscribe((response) => {
+        respuesta(response);
+      });
+  }
+
+
 }

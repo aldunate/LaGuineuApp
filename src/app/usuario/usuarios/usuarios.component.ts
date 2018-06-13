@@ -48,7 +48,7 @@ export class UsuariosComponent implements OnInit {
           }
           // tslint:disable-next-line:curly
           if (element.IdCliente !== 0) element.tipo = 'Cliente';
-          element.btnIr = '<button  id="' + element.Id + '" class="btn btn-fill  btn-default"> Ver usuario </button>';
+          element.btnIr = '<button  id="' + element.Id + '" class="btn btn-fill  btn-default"> Modificar usuario </button>';
         });
         this.tablas.monitor.dtDatos = usuarios;
         this.tablas.monitor.dtOptions.data = usuarios;
