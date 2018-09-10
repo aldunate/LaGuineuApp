@@ -1,8 +1,9 @@
 import { Component, OnInit } from '@angular/core';
-import { EscuelaModel, Escuela, EscuelaService } from '../service/escuela.service';
+import { EscuelaService } from '../service/escuela.service';
 import { Message } from 'primeng/api';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { UtilService } from '../../util/service/util.service';
+import { Escuela, EscuelaModel } from '../../models/escuela.model';
 
 @Component({
   selector: 'app-escuela-personal',
@@ -37,16 +38,10 @@ export class EscuelaPersonalComponent implements OnInit {
         }.bind(this), 100);
       }
     });
-
-    this.escuela = this.escuelaService.escuela.getValue().Escuela;
-    if (this.escuela === null) {
-      this.escuelaService.escuela$.subscribe(escuela => {
-        this.escuela = escuela.Escuela;
-        this.inicio();
-      });
-    } else {
+    this.escuelaService.escuela$.subscribe(escuela => {
+      this.escuela = escuela.Escuela;
       this.inicio();
-    }
+    });
   }
 
   inicio() {

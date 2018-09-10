@@ -1,7 +1,7 @@
 
 export function uriApiFun(apiDir: string) {
   const mockBackend = true;
-  const uriApi = 'http://localhost:59911/api/';
+  const uriApi = 'http://localhost:60859/api/';
   const uriJson = '../jsonApi/';
 
   if (mockBackend) {
@@ -12,7 +12,7 @@ export function uriApiFun(apiDir: string) {
 
 export const GlobalVar = Object.freeze({
   mockBackend: false,
-  uriApi: 'http://localhost:59911/api/',
+  uriApi: 'http://localhost:60859/api/',
   // uriApi: 'file:///home/computadora/JoinderNote/src/app/util/jsonApi/',
   jsonApi: 'file:///home/computadora/JoinderNote/src/app/util/jsonApi/',
   imgPerfil: '../../../assets/img/perfiles/'

@@ -295,7 +295,7 @@ export class ClaseAsignarComponent implements OnInit {
   }
 
   getEstaciones() {
-    this.escuelaService.escuela.subscribe(
+    this.escuelaService.escuela$.subscribe(
       escuela => {
         if (escuela !== null) {
           this.estaciones = escuela.EstacionesDisponibles;

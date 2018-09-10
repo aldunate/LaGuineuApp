@@ -31,6 +31,7 @@ export class UsuarioNuevoComponent {
     passIncorrecto: false,
     valid: false
   };
+  puedeGestor = false;
 
   constructor(public usuarioService: UsuarioService, private messageService: MessageService,
     private router: Router, private fb: FormBuilder, private utilService: UtilService) {
@@ -43,6 +44,7 @@ export class UsuarioNuevoComponent {
       this.isEditUser = true;
       this.changePassword = true;
     } else {
+      this.puedeGestor = true;
       this.isEditUser = false;
       this.txtBtnGuardar = 'Crear usuario';
       this.changePassword = false;
@@ -62,11 +64,14 @@ export class UsuarioNuevoComponent {
     this.usuarioService.getUsuario(this.idUsuario,
       function (usuario) {
         this.usuario = usuario;
+        this.puedeGestor = true;
         if (usuario.IdMonitor !== undefined) {
           this.tipoUsuaro = 'Monitor';
+          this.puedeGestor = false;
         }
         if (usuario.IdCliente !== undefined) {
           this.tipoUsuaro = 'Cliente';
+          this.puedeGestor = false;
         }
         this.usuarioForm.controls['email'].setValue(usuario.Email);
         this.usuarioForm.controls['esGestor'].setValue(usuario.EsGestor ? true : false);

@@ -6,7 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { MonitorService } from '../../monitor/service/monitor.service';
 import { UtilService } from '../../util/service/util.service';
 import { Router } from '@angular/router';
-import { EscuelaService, Escuela } from '../../escuela/service/escuela.service';
+import { EscuelaService } from '../../escuela/service/escuela.service';
 import { duration } from 'moment';
 import { Message } from 'primeng/api';
 import { MessageService } from 'primeng/components/common/messageservice';
@@ -397,7 +397,7 @@ export class ClaseNuevaComponent implements OnInit {
   }
 
   getEstaciones() {
-    this.escuelaService.escuela.subscribe(
+    this.escuelaService.escuela$.subscribe(
       escuela => {
         if (escuela !== null) {
           this.estaciones = escuela.EstacionesDisponibles;

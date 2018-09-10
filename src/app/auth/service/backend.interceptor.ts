@@ -29,9 +29,8 @@ export class BackendInterceptor implements HttpInterceptor {
           }
         });
       }
-
-
     }
+    console.log(request);
     return next.handle(request);
   }
 }

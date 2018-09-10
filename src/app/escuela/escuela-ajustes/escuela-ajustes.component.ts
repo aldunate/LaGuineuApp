@@ -1,10 +1,11 @@
 import { Component, OnInit, Input } from '@angular/core';
-import { EscuelaModel, EscuelaService } from '../service/escuela.service';
+import { EscuelaService } from '../service/escuela.service';
 import { ConfMultiSelect, ConfigCalendario, DatePicker, MultiSelect, UtilCalendario } from '../../util/global';
 import { UtilService } from '../../util/service/util.service';
 import { CalendarEvent } from 'calendar-utils';
 import { MessageService } from 'primeng/components/common/messageservice';
 import { Message } from 'primeng/api';
+import { EscuelaModel } from '../../models/escuela.model';
 
 @Component({
   selector: 'app-escuela-ajustes',
@@ -83,18 +84,13 @@ export class EscuelaAjustesComponent {
     }
   }
   inicio() {
-    this.escuela = this.escuelaService.escuela.getValue();
-    if (this.escuela === null) {
-      this.escuelaService.escuela$.subscribe(escuela => {
-        if (escuela !== null && !this.escuelaCargada) {
-          this.escuela = escuela;
-          this.escuelaCargada = true;
-          this.actualizaEscuela();
-        }
-      });
-    } else {
-      this.actualizaEscuela();
-    }
+    this.escuelaService.escuela$.subscribe(escuela => {
+      if (escuela !== null && !this.escuelaCargada) {
+        this.escuela = escuela;
+        this.escuelaCargada = true;
+        this.actualizaEscuela();
+      }
+    });
   }
 
 

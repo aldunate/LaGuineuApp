@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
-import { EscuelaService, EscuelaModel } from '../service/escuela.service';
+import { EscuelaService } from '../service/escuela.service';
+import { EscuelaModel } from '../../models/escuela.model';
 
 @Component({
   selector: 'app-escuela-muro',
