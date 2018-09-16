@@ -1,0 +1,90 @@
+AWSTemplateFormatVersion: '2010-09-09'
+Transform: AWS::Serverless-2016-10-31
+Description: Aws Congnito Components for Identification Server
+Parameters:
+  TagProject:
+    Type: String
+    Description: "Tagging for the stack and its resources"
+  AppName:
+    Type: String
+    Default: LaGuineu
+    Description: "Cognito user pools app client name"
+Resources:
+  CognitoUserPool:
+    Type: AWS::Cognito::UserPool
+    Properties:
+      UserPoolName: !Join [ "", [!Ref AppName, "-UserPool"] ]
+      AdminCreateUserConfig:
+        AllowAdminCreateUserOnly: false
+      AutoVerifiedAttributes: 
+        - "email"
+      MfaConfiguration: "OFF"
+      UsernameAttributes:
+        - "email" 
+        - "phone_number"  
+      UserPoolTags:
+          "Project": !Ref TagProject        
+
+  CognitoUserPoolClient:
+    Type: AWS::Cognito::UserPoolClient
+    DependsOn: CognitoUserPool
+    Properties:
+      ClientName: !Join [ "", [ !Ref AppName, "-ClientName"] ]
+      UserPoolId: !Ref CognitoUserPool
+      GenerateSecret: false
+
+  CognitoIdentityPool:
+    Type: AWS::Cognito::IdentityPool
+    Properties:
+      AllowUnauthenticatedIdentities: true
+      CognitoIdentityProviders:
+        - ClientId: !Ref CognitoUserPoolClient
+          ProviderName: !GetAtt CognitoUserPool.ProviderName
+
+  CognitoIdentityPoolRoles:
+    Type: AWS::Cognito::IdentityPoolRoleAttachment
+    DependsOn: CognitoIdentityPool
+    Properties:
+      IdentityPoolId: !Ref CognitoIdentityPool
+      Roles:
+        authenticated: !GetAtt UnauthenticatedRole.Arn
+        unauthenticated: !GetAtt UnauthenticatedRole.Arn
+
+  UnauthenticatedRole:
+    Type: AWS::IAM::Role
+    Properties:
+      AssumeRolePolicyDocument:
+        Version: '2012-10-17'
+        Statement:
+        - Effect: Allow
+          Principal:
+            Federated: cognito-identity.amazonaws.com
+          Action: sts:AssumeRoleWithWebIdentity
+          Condition:
+            StringEquals:
+              cognito-identity.amazonaws.com:aud: !Ref CognitoIdentityPool
+            ForAnyValue:StringLike:
+              cognito-identity.amazonaws.com:amr: unauthenticated
+      Policies:
+        -
+          PolicyName: LaGuineuServerlessUnauthenticatedApi
+          PolicyDocument:
+            Version: '2012-10-17'
+            Statement:
+            - Effect: Allow
+              Action:
+              - mobileanalytics:PutEvents
+              - cognito-sync:*
+              Resource:
+              - "*"
+
+Outputs:
+  LaGuineuIdentityPoolId:
+    Description: Cognito Identity Pool ID
+    Value: !Ref CognitoIdentityPool
+  LaGuineuPoolsId:
+    Description: Cognito User Pools ID
+    Value: !Ref CognitoUserPool
+  LaGuineuClientId:
+    Description: Cognito User Pools App Client ID
+    Value: !Ref CognitoUserPoolClient
