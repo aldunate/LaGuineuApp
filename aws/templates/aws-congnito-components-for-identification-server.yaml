@@ -23,7 +23,14 @@ Resources:
         - "email" 
         - "phone_number"  
       UserPoolTags:
-          "Project": !Ref TagProject        
+          "Project": !Ref TagProject
+      Policies: 
+        PasswordPolicy:
+          MinimumLength: 6
+          RequireLowercase: false
+          RequireNumbers: false
+          RequireSymbols: false
+          RequireUppercase: false
 
   CognitoUserPoolClient:
     Type: AWS::Cognito::UserPoolClient
