@@ -1,6 +1,3 @@
-
-
-
 <div class="full-page login-page wrapper" style="background-image: url('../../../assets/img/background.jpeg');background-repeat: no-repeat;
   background-size:cover;
   background-position:inherit;">
@@ -49,6 +46,17 @@
                   <br>
                   <a style="color:rgb(13, 13, 170)">Adolfo Aldunate</a>
                 </div>
+              </div>
+            </div>
+          </form>
+          <form (ngSubmit)="loginMaxPruebas()" [formGroup]="subscribeForm" class="ng-untouched ng-pristine ng-valid" novalidate>
+            <div class="card" data-background="color" data-color="red">
+              <div class="form-group">
+                <label>PRUEBAS MAX Email</label>
+                <input class="form-control input-no-border" formControlName="userName" placeholder="actions">
+              </div>
+              <div class="card-footer text-center">
+                <button class="btn btn-fill btn-wd " type="submit">Subscribe User</button>
               </div>
             </div>
           </form>
