@@ -1,6 +1,6 @@
 AWSTemplateFormatVersion: '2010-09-09'
 Transform: AWS::Serverless-2016-10-31
-Description: Aws Congnito Components for Identification Server
+Description: Aws Congnito Components for Identification Server & Dynamo Table for user session
 Parameters:
   TagProject:
     Type: String
@@ -10,6 +10,32 @@ Parameters:
     Default: LaGuineu
     Description: "Cognito user pools app client name"
 Resources:
+  UserSessionDynamoTable:
+    Type: AWS::DynamoDB::Table
+    Properties:
+      TableName: LaguineuUserSession
+      AttributeDefinitions:
+        - 
+          AttributeName: userId
+          AttributeType: S
+        -
+          AttributeName: activityDate
+          AttributeType: S
+      KeySchema:
+        -
+          AttributeName: userId
+          KeyType: HASH
+        -
+          AttributeName: activityDate
+          KeyType: RANGE
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+      Tags:
+        -
+         Key: "Project"
+         Value: !Ref TagProject        
+
   CognitoUserPool:
     Type: AWS::Cognito::UserPool
     Properties:
